@@ -1,5 +1,7 @@
 ---
 title: agents-cli 라이프사이클과 AI 시대 SDLC
+type: 개념
+description: "agents-cli의 8단계 개발 라이프사이클을 2026년 AI 시대 새 SDLC의 참조 구현으로 읽는 정리"
 ---
 
 # agents-cli 라이프사이클과 AI 시대 SDLC
