@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:  # 배포 flake 시 gh workflow run deploy.yml 로 수동 재실행 (재시도 불가 상황 대비)
 
 permissions:
   contents: read
@@ -12,7 +13,7 @@ permissions:
 
 concurrency:
   group: "pages"
-  cancel-in-progress: true  # 여러 세션이 몰아서 push하면 오래된 빌드를 취소하고 최신만 배포 → Pages "try again later" 몰림 완화
+  cancel-in-progress: false  # 직렬 큐잉으로 배포 충돌 회피 + 실패해도 재시도 가능 (cancel-in-progress:true는 배포 중 취소로 "재시도 불가" 유발)
 
 jobs:
   build:
