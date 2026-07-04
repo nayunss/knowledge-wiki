@@ -46,7 +46,7 @@ article p  { font-size: var(--fs-base); line-height: 1.8; }
 .section-label { font-family: var(--headerFont); font-size: var(--fs-lg); font-weight: 700; color: var(--dark); letter-spacing: normal; margin: 2.6rem 0 1rem; padding: 0; border: none; }
 
 // 카드
-.post-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(255px, 1fr)); gap: 1rem; background: none; border: none; margin: 0; }
+.post-grid { container-type: inline-size; display: grid; grid-template-columns: repeat(auto-fill, minmax(255px, 1fr)); gap: 1rem; background: none; border: none; margin: 0; }
 .post-card { display: flex; flex-direction: column; gap: 0.55rem; background: var(--light); border: 1px solid var(--lightgray); border-radius: var(--radius); padding: 1.5rem; text-decoration: none !important; box-shadow: 0 1px 2px rgba(0,0,0,.03); transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
 .post-card:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(60,50,40,.10); border-color: var(--tertiary); }
 .post-card.feature { grid-column: 1/-1; padding: 2rem; }
@@ -71,3 +71,11 @@ blockquote { border-left: 3px solid var(--tertiary); border-radius: 0 var(--radi
   }
 }
 :root:has(.masthead) .center { max-width: 100% !important; }
+
+// 피처 카드: 그리드(=카드) 폭이 넓어지면 2단으로 재배치 — 제목 좌 / 설명 우 (텍스트가 폭 따라 이동)
+@container (min-width: 680px) {
+  .post-card.feature { display: grid; grid-template-columns: 1.15fr 1fr; column-gap: 3rem; align-items: center; }
+  .post-card.feature .post-type  { grid-column: 1; grid-row: 1; align-self: end; }
+  .post-card.feature .post-title { grid-column: 1; grid-row: 2; }
+  .post-card.feature .post-dek   { grid-column: 2; grid-row: 1 / span 2; align-self: center; max-width: none; }
+}
