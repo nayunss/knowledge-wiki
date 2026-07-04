@@ -46,10 +46,10 @@ title: 지식 위키
 <p class="section-label">실전 · 도구</p>
 
 <div class="post-grid">
-  <a class="post-card" href="프로덕션-ai-에이전트-만들기">
+  <a class="post-card" href="프로덕션-ai-에이전트-기본-개념">
     <span class="post-type">개념</span>
-    <span class="post-title">프로덕션 AI 에이전트 만들기</span>
-    <span class="post-dek">LLM→에이전트→프로덕션까지 12장 흐름을 재구성한 지도 (O'Reilly 정의 가이드).</span>
+    <span class="post-title">프로덕션 AI 에이전트의 기본 개념</span>
+    <span class="post-dek">LLM→에이전트→프로덕션까지 필요한 기본 개념을 재구성 (O'Reilly 정의 가이드).</span>
   </a>
   <a class="post-card" href="google-agents-cli">
     <span class="post-type">도구</span>

@@ -1,12 +1,12 @@
 ---
-title: 프로덕션 AI 에이전트 만들기 (12장 지도)
+title: 프로덕션 AI 에이전트의 기본 개념
 type: 개념
-description: "O'Reilly 'AI Agents: The Definitive Guide' 코드 레포를 읽고 LLM에서 에이전트로, 프로토타입에서 프로덕션까지의 12장 흐름을 재구성·검증한 지도"
+description: "O'Reilly 'AI Agents: The Definitive Guide' 코드 레포를 읽고, LLM에서 에이전트로·프로토타입에서 프로덕션까지 필요한 기본 개념을 재구성·검증한 정리"
 tags: [ai-agents, langgraph, mcp, 평가, 거버넌스, 프로덕션]
 resource: https://github.com/Nicolepcx/ai-agents-the-definitive-guide
 ---
 
-# 프로덕션 AI 에이전트 만들기 (12장 지도)
+# 프로덕션 AI 에이전트의 기본 개념
 
 O'Reilly 책 *AI Agents: The Definitive Guide*의 공개 코드 레포(챕터별 Jupyter 노트북 35개)를 읽고, 거기서 다루는 개념 지도를 **직접 재서술**한 노트다. 책 본문이 아니라 코드 노트북의 개념·사용 도구만 뽑아 정리했고, 등장하는 프레임워크·주장·수치는 문서 끝의 독립 출처로 따로 검증했다. 표현이 아니라 뼈대만 가져왔다.
 
