@@ -1,5 +1,7 @@
 ---
 title: LLM 위키 구조
+type: 개념
+description: 이 저장소를 위키·RAG·편집 세 렌즈로 쓰는 단일 원본 구조 개요
 tags:
   - meta
 ---

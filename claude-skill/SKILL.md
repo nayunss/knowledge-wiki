@@ -20,10 +20,17 @@ description: Add or edit a note in the user's personal knowledge wiki (Quartz + 
    TMP=$(mktemp -d)
    git clone --depth 1 "$(cat ~/.claude/wiki-note-repo.txt)" "$TMP"
    ```
-3. `"$TMP/content/"` 아래에 `.md` 노트를 쓴다:
+3. `"$TMP/content/"` 아래에 `.md` 노트를 쓴다 (OKF 규약 — Open Knowledge Format 차용):
    - 파일명은 주제를 담은 kebab-case + `.md`.
-   - 맨 위에 front matter: `---\ntitle: 제목\n---`.
-   - 관련 노트는 `[[다른-노트]]` 위키링크로 연결. 아직 없는 노트를 링크해도 됨(Quartz가 stub로 표시).
+   - front matter(YAML):
+     - `title:` 표시 제목
+     - `type:` 개념 종류 — `개념`/`도구`/`설계결정`/`레퍼런스`/`플레이북` 등 (자유값이되 서술적으로). 라우팅·필터·index 그룹핑에 쓰임.
+     - `description:` 한 줄 요약 — index·검색 스니펫·미리보기·RAG 근거에 쓰임.
+     - `tags:` (선택)
+     - 특정 도구/레포/API를 다루는 노트면 `resource:` 정식 URL.
+   - 본문은 **구조적 마크다운 우선**(제목·목록·표·코드블록 > 프로즈) — 사람·에이전트 검색에 유리.
+   - 관련 노트는 `[[다른-노트]]` 위키링크로 연결. 없는 노트를 링크해도 됨(Quartz가 stub로 표시 = 아직 안 쓴 지식).
+   - 외부 출처는 맨 아래 `## 출처` 섹션에 목록으로 정리.
    - **기존 노트 편집**이면 clone 안의 해당 파일을 먼저 읽고 수정한다.
 4. 커밋 후 **동시성 안전 푸시** (다른 터미널/챗이 동시에 push해도 안전 — 락·큐 없이 rebase 재시도):
    ```bash
