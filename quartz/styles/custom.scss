@@ -77,3 +77,12 @@ blockquote {
 .page-title {
   font-family: var(--headerFont);
 }
+
+// 짧은 화면에서 목차·그래프 뷰가 잘리고 더 이상 스크롤되지 않던 문제 수정.
+// 데스크톱 사이드바는 height:100vh + position:sticky인데 overflow가 없어,
+// 뷰포트보다 내용이 길면 잘려 보였다. 내부 세로 스크롤을 허용한다.
+// (모바일에선 사이드바 height가 unset이라 이 규칙은 발동하지 않음 — 안전)
+.sidebar {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
