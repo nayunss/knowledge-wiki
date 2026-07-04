@@ -1,89 +1,44 @@
 @use "./variables.scss" as *;
 
-// 폰트 변수 강제 (obsidian 테마 resource-style이 --headerFont를 덮는 문제 우회)
-// 제목·본문 모두 IBM Plex Sans KR로 통일 (코드만 같은 패밀리의 IBM Plex Mono)
 :root {
   --headerFont: "IBM Plex Sans KR", -apple-system, sans-serif !important;
   --bodyFont: "IBM Plex Sans KR", -apple-system, sans-serif !important;
   --codeFont: "IBM Plex Mono", ui-monospace, monospace !important;
 }
 
-// ─────────────────────────────────────────────────────────────
-// 기술 노트 — 단일 폰트(IBM Plex Sans KR) 통일
-// 액센트: 만년필 잉크블루 (AI 기본값 brass/terracotta 회피 — taste Pre-Flight)
-// 시그니처: 원고지 여백 괘선 + 잉크블루 상호참조 + 모노스페이스 주석(코드/메타)
-// 위계는 폰트 패밀리가 아니라 굵기·크기로 표현
-// ─────────────────────────────────────────────────────────────
+// ═══ 에디토리얼 매거진 — 단일 폰트(IBM Plex Sans KR), 크기·굵기로 위계, 잉크블루 액센트 ═══
 
-// 제목: 본문과 같은 패밀리, 굵기·크기로 위계 + 섹션 구분 헤어라인
 h1, h2, h3, h4, h5, h6, .page-title, .article-title, article h1 {
-  font-family: "IBM Plex Sans KR", -apple-system, sans-serif !important;
-  letter-spacing: -0.01em;
-  font-weight: 700;
+  font-family: var(--headerFont) !important; letter-spacing: -0.02em; font-weight: 700; line-height: 1.15;
 }
-article h2 {
-  padding-bottom: 0.3rem;
-  border-bottom: 1px solid var(--lightgray);
-}
+.article-title, article h1 { font-size: 2.6rem; margin-bottom: 0.25rem; }
+article h2 { font-size: 1.5rem; margin-top: 2.4rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--lightgray); }
+article h3 { font-size: 1.15rem; margin-top: 1.8rem; }
+article p { line-height: 1.75; }
+article > p:first-of-type { font-size: 1.12rem; color: var(--dark); }
 
-// 본문: 원고지 왼쪽 여백 괘선 (노트의 정체)
-.center article {
-  border-left: 1px solid var(--lightgray);
-  padding-left: 1.75rem;
-}
-@media #{$mobile} {
-  .center article { border-left: none; padding-left: 0; }
-}
+.content-meta { font-family: var(--codeFont); font-size: 0.76rem; color: var(--gray); letter-spacing: 0.06em; text-transform: uppercase; }
 
-// 위키링크(내부 링크): 황동 잉크로 손글씨 상호참조처럼
-a.internal {
-  background-color: transparent;
-  color: var(--tertiary);
-  text-decoration: none;
-  border-bottom: 1px dotted var(--tertiary);
-  padding: 0;
-  font-weight: 500;
-  &:hover { border-bottom-style: solid; }
-}
+.masthead { padding: 1rem 0 2rem; border-bottom: 3px solid var(--dark); margin-bottom: 2.5rem; }
+.masthead-eyebrow { font-family: var(--codeFont); font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--tertiary); margin: 0 0 0.7rem; }
+.masthead-title { font-size: clamp(2.8rem, 7vw, 4.6rem) !important; line-height: 1.02 !important; margin: 0 !important; letter-spacing: -0.03em; }
+.masthead-dek { font-size: 1.15rem; color: var(--gray); margin: 0.9rem 0 0; max-width: 42ch; }
 
-// 태그: 모노스페이스 기술 라벨 (문예 본문 속 '기술' 대비)
-.tags a,
-li a.internal.tag-link {
-  font-family: var(--codeFont);
-  font-size: 0.72rem;
-  color: var(--gray);
-  background: transparent;
-  border: 1px solid var(--lightgray);
-  border-radius: 0;
-  padding: 0.12rem 0.45rem;
-  &:hover { color: var(--tertiary); border-color: var(--tertiary); }
-}
+.section-label { font-family: var(--codeFont); font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--dark); font-weight: 600; margin: 2.5rem 0 0.9rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--dark); }
 
-// 메타데이터(날짜·읽기시간): 모노스페이스 주석
-.content-meta {
-  font-family: var(--codeFont);
-  font-size: 0.8rem;
-  color: var(--gray);
-  letter-spacing: 0.01em;
-}
+.post-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--lightgray); border: 1px solid var(--lightgray); margin: 0; }
+.post-card { display: flex; flex-direction: column; gap: 0.5rem; background: var(--light); padding: 1.4rem 1.35rem; text-decoration: none !important; border: none !important; transition: background 0.15s; }
+.post-card:hover { background: var(--highlight); }
+.post-card.feature { grid-column: 1 / -1; padding: 2rem 1.8rem; }
+.post-type { font-family: var(--codeFont); font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--tertiary); }
+.post-title { font-weight: 700; font-size: 1.3rem; color: var(--dark) !important; line-height: 1.22; letter-spacing: -0.01em; }
+.post-card.feature .post-title { font-size: 2rem; }
+.post-dek { color: var(--gray); font-size: 0.9rem; line-height: 1.55; }
+.post-card.feature .post-dek { font-size: 1.05rem; max-width: 52ch; }
+@media #{$mobile} { .post-grid { grid-template-columns: 1fr; } }
 
-// 인용: 여백 노트처럼 (세리프 이탤릭 + 황동 괘선)
-blockquote {
-  border-left: 2px solid var(--tertiary);
-  font-style: italic;
-  color: var(--darkgray);
-}
-
-// 사이트 타이틀도 세리프 무게감
-.page-title {
-  font-family: var(--headerFont);
-}
-
-// 짧은 화면에서 목차·그래프 뷰가 잘리고 더 이상 스크롤되지 않던 문제 수정.
-// 데스크톱 사이드바는 height:100vh + position:sticky인데 overflow가 없어,
-// 뷰포트보다 내용이 길면 잘려 보였다. 내부 세로 스크롤을 허용한다.
-// (모바일에선 사이드바 height가 unset이라 이 규칙은 발동하지 않음 — 안전)
-.sidebar {
-  overflow-y: auto;
-  overflow-x: hidden;
-}
+a.internal { background: transparent; color: var(--tertiary); text-decoration: none; border-bottom: 1px dotted var(--tertiary); font-weight: 500; &:hover { border-bottom-style: solid; } }
+.tags a, li a.internal.tag-link { font-family: var(--codeFont); font-size: 0.72rem; color: var(--gray); background: transparent; border: 1px solid var(--lightgray); border-radius: 0; padding: 0.12rem 0.45rem; &:hover { color: var(--tertiary); border-color: var(--tertiary); } }
+blockquote { border-left: 3px solid var(--tertiary); font-style: italic; color: var(--darkgray); }
+.backlinks, .graph { margin-top: 2rem; }
+.sidebar { overflow-y: auto; overflow-x: hidden; }

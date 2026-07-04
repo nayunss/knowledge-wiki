@@ -160,8 +160,8 @@ plugins:
   - source: github:quartz-community/graph
     enabled: true
     layout:
-      position: right
-      priority: 10
+      position: afterBody
+      priority: 60
   - source: github:quartz-community/search
     enabled: true
     layout:
@@ -173,8 +173,8 @@ plugins:
   - source: github:quartz-community/backlinks
     enabled: true
     layout:
-      position: right
-      priority: 50
+      position: afterBody
+      priority: 70
   - source: github:quartz-community/article-title
     enabled: true
     layout:
