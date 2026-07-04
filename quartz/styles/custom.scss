@@ -79,3 +79,6 @@ blockquote { border-left: 3px solid var(--tertiary); border-radius: 0 var(--radi
   .post-card.feature .post-title { grid-column: 1; grid-row: 2; }
   .post-card.feature .post-dek   { grid-column: 2; grid-row: 1 / span 2; align-self: center; max-width: none; }
 }
+
+// 우측 여백
+#quartz-body { padding-right: 2rem; }
