@@ -8,37 +8,14 @@ title: 지식 위키
   <p class="masthead-dek">AI가 작성한 노트를 md 단일 원본으로 모아 위키·RAG·블로그 세 렌즈로 읽는 곳.</p>
 </div>
 
+<p class="section-label">AI 엔지니어링</p>
+
 <div class="post-grid">
   <a class="post-card feature" href="ai-엔지니어링/에이전틱-엔지니어링">
     <span class="post-type">개념</span>
     <span class="post-title">에이전틱 엔지니어링</span>
     <span class="post-dek">AI 에이전트를 설계·구축·운영하는 공학. 모델+하네스, 컨텍스트 관리, 평가·신뢰성을 묶은 우산 개념.</span>
   </a>
-</div>
-
-<p class="section-label">핵심</p>
-
-<div class="post-grid">
-  <a class="post-card" href="llm-wiki-구조">
-    <span class="post-type">개념</span>
-    <span class="post-title">LLM 위키 구조</span>
-    <span class="post-dek">이 저장소를 위키·RAG·블로그 세 렌즈로 쓰는 단일 원본 구조.</span>
-  </a>
-  <a class="post-card" href="위키-설계-결정">
-    <span class="post-type">설계결정</span>
-    <span class="post-title">위키 설계 결정</span>
-    <span class="post-dek">노션 대신 md 단일 원본을 택한 이유와 핵심 판단들.</span>
-  </a>
-  <a class="post-card" href="claude-project-github-연결">
-    <span class="post-type">개념</span>
-    <span class="post-title">Claude Project × GitHub</span>
-    <span class="post-dek">레포를 붙이면 답변이 어떻게 만들어지나 — RAG 렌즈의 원리.</span>
-  </a>
-</div>
-
-<p class="section-label">AI 엔지니어링 4계층</p>
-
-<div class="post-grid">
   <a class="post-card" href="ai-엔지니어링/ai-엔지니어링-4계층">
     <span class="post-type">개념</span>
     <span class="post-title">AI 엔지니어링 4계층</span>
@@ -63,6 +40,26 @@ title: 지식 위키
     <span class="post-type">개념</span>
     <span class="post-title">루프 엔지니어링</span>
     <span class="post-dek">완료 조건까지 반복 실행시키는 제어 흐름. 최상층.</span>
+  </a>
+</div>
+
+<p class="section-label">핵심</p>
+
+<div class="post-grid">
+  <a class="post-card" href="llm-wiki-구조">
+    <span class="post-type">개념</span>
+    <span class="post-title">LLM 위키 구조</span>
+    <span class="post-dek">이 저장소를 위키·RAG·블로그 세 렌즈로 쓰는 단일 원본 구조.</span>
+  </a>
+  <a class="post-card" href="위키-설계-결정">
+    <span class="post-type">설계결정</span>
+    <span class="post-title">위키 설계 결정</span>
+    <span class="post-dek">노션 대신 md 단일 원본을 택한 이유와 핵심 판단들.</span>
+  </a>
+  <a class="post-card" href="claude-project-github-연결">
+    <span class="post-type">개념</span>
+    <span class="post-title">Claude Project × GitHub</span>
+    <span class="post-dek">레포를 붙이면 답변이 어떻게 만들어지나 — RAG 렌즈의 원리.</span>
   </a>
 </div>
 
