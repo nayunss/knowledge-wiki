@@ -12,7 +12,7 @@ permissions:
 
 concurrency:
   group: "pages"
-  cancel-in-progress: false
+  cancel-in-progress: true  # 여러 세션이 몰아서 push하면 오래된 빌드를 취소하고 최신만 배포 → Pages "try again later" 몰림 완화
 
 jobs:
   build:
