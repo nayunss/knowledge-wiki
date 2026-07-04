@@ -1,5 +1,12 @@
 @use "./variables.scss" as *;
 
+// 폰트 변수 강제 (obsidian 테마 resource-style이 --headerFont를 덮는 문제 우회)
+:root {
+  --headerFont: "Gowun Batang", serif !important;
+  --bodyFont: "IBM Plex Sans KR", -apple-system, sans-serif !important;
+  --codeFont: "IBM Plex Mono", ui-monospace, monospace !important;
+}
+
 // ─────────────────────────────────────────────────────────────
 // 문예적 기술 노트 — Literary Technical Notebook
 // 세리프 제목(Gowun Batang, 한글 명조) + 한글 산세리프 본문(IBM Plex Sans KR)
