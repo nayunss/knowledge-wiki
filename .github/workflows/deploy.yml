@@ -28,6 +28,8 @@ jobs:
         run: npm ci || (echo "retry npm ci" && sleep 5 && npm ci)
       - name: Install Quartz plugins
         run: npx quartz plugin install || (echo "retry plugin install" && sleep 5 && npx quartz plugin install)
+      - name: Sanitize Korean markdown (CJK 렌더링 깨짐 자동 교정)
+        run: node scripts/fix-korean-markdown.mjs
       - name: Build Quartz
         run: npx quartz build
       - name: Upload artifact
