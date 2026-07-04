@@ -1,3 +1,71 @@
 @use "./variables.scss" as *;
 
-// put your custom CSS here!
+// ─────────────────────────────────────────────────────────────
+// 문예적 기술 노트 — Literary Technical Notebook
+// 세리프 제목(Gowun Batang, 한글 명조) + 한글 산세리프 본문(IBM Plex Sans KR)
+// 액센트: 만년필 잉크블루 (AI 기본값 brass/terracotta 회피 — taste Pre-Flight)
+// 시그니처: 원고지 여백 괘선 + 잉크블루 상호참조 + 모노스페이스 주석
+// ─────────────────────────────────────────────────────────────
+
+// 제목: 문예적 세리프, 섹션 구분 헤어라인
+h1, h2, h3, h4, .page-title {
+  letter-spacing: -0.01em;
+  font-weight: 700;
+}
+article h2 {
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--lightgray);
+}
+
+// 본문: 원고지 왼쪽 여백 괘선 (노트의 정체)
+.center article {
+  border-left: 1px solid var(--lightgray);
+  padding-left: 1.75rem;
+}
+@media #{$mobile} {
+  .center article { border-left: none; padding-left: 0; }
+}
+
+// 위키링크(내부 링크): 황동 잉크로 손글씨 상호참조처럼
+a.internal {
+  background-color: transparent;
+  color: var(--tertiary);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--tertiary);
+  padding: 0;
+  font-weight: 500;
+  &:hover { border-bottom-style: solid; }
+}
+
+// 태그: 모노스페이스 기술 라벨 (문예 본문 속 '기술' 대비)
+.tags a,
+li a.internal.tag-link {
+  font-family: var(--codeFont);
+  font-size: 0.72rem;
+  color: var(--gray);
+  background: transparent;
+  border: 1px solid var(--lightgray);
+  border-radius: 0;
+  padding: 0.12rem 0.45rem;
+  &:hover { color: var(--tertiary); border-color: var(--tertiary); }
+}
+
+// 메타데이터(날짜·읽기시간): 모노스페이스 주석
+.content-meta {
+  font-family: var(--codeFont);
+  font-size: 0.8rem;
+  color: var(--gray);
+  letter-spacing: 0.01em;
+}
+
+// 인용: 여백 노트처럼 (세리프 이탤릭 + 황동 괘선)
+blockquote {
+  border-left: 2px solid var(--tertiary);
+  font-style: italic;
+  color: var(--darkgray);
+}
+
+// 사이트 타이틀도 세리프 무게감
+.page-title {
+  font-family: var(--headerFont);
+}

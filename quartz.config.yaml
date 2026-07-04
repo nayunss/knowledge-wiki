@@ -6,7 +6,7 @@ configuration:
   enablePopovers: true
   analytics:
     provider: plausible
-  locale: en-US
+  locale: ko-KR
   baseUrl: nayunss.github.io/knowledge-wiki
   ignorePatterns:
     - private
@@ -16,30 +16,30 @@ configuration:
     fontOrigin: googleFonts
     cdnCaching: true
     typography:
-      header: Schibsted Grotesk
-      body: Source Sans Pro
+      header: Gowun Batang
+      body: IBM Plex Sans KR
       code: IBM Plex Mono
     colors:
       lightMode:
-        light: "#faf8f8"
-        lightgray: "#e5e5e5"
-        gray: "#b8b8b8"
-        darkgray: "#4e4e4e"
-        dark: "#2b2b2b"
-        secondary: "#284b63"
-        tertiary: "#84a59d"
-        highlight: rgba(143, 159, 169, 0.15)
-        textHighlight: "#fff23688"
+        light: "#f3efe6"
+        lightgray: "#dcd6c8"
+        gray: "#948b78"
+        darkgray: "#33373f"
+        dark: "#1c2029"
+        secondary: "#2f4c7a"
+        tertiary: "#5878ab"
+        highlight: rgba(47, 76, 122, 0.10)
+        textHighlight: "#aac2e688"
       darkMode:
-        light: "#161618"
-        lightgray: "#393639"
-        gray: "#646464"
-        darkgray: "#d4d4d4"
-        dark: "#ebebec"
-        secondary: "#7b97aa"
-        tertiary: "#84a59d"
-        highlight: rgba(143, 159, 169, 0.15)
-        textHighlight: "#b3aa0288"
+        light: "#17181d"
+        lightgray: "#2a2d34"
+        gray: "#6a6f7a"
+        darkgray: "#ccd2db"
+        dark: "#eef1f6"
+        secondary: "#7fa0d0"
+        tertiary: "#9db8e0"
+        highlight: rgba(127, 160, 208, 0.12)
+        textHighlight: "#7fa0d044"
 plugins:
   - source: github:quartz-community/created-modified-date
     enabled: true
