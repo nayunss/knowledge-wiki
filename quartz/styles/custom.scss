@@ -1,5 +1,8 @@
 @use "./variables.scss" as *;
 
+// Gowun Batang 직접 로드 (fonts 플러그인이 공백 인코딩을 틀려 로드 실패하던 문제 우회)
+@import url("https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap");
+
 // 폰트 변수 강제 (obsidian 테마 resource-style이 --headerFont를 덮는 문제 우회)
 :root {
   --headerFont: "Gowun Batang", serif !important;
@@ -15,7 +18,8 @@
 // ─────────────────────────────────────────────────────────────
 
 // 제목: 문예적 세리프, 섹션 구분 헤어라인
-h1, h2, h3, h4, .page-title {
+h1, h2, h3, h4, h5, h6, .page-title, .article-title, article h1 {
+  font-family: "Gowun Batang", serif !important;
   letter-spacing: -0.01em;
   font-weight: 700;
 }
