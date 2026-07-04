@@ -40,7 +40,7 @@ article p  { font-size: var(--fs-base); line-height: 1.8; }
 .masthead { padding: 1.5rem 0; margin-bottom: 1.5rem; }
 .masthead-eyebrow { font-family: var(--headerFont); font-size: var(--fs-sm); font-weight: 600; color: var(--tertiary); margin: 0 0 0.5rem; }
 .masthead-title { font-size: var(--fs-hero) !important; line-height: 1.2 !important; margin: 0 !important; letter-spacing: normal; }
-.masthead-dek { font-size: var(--fs-md); color: var(--gray); margin: 0.85rem 0 0; max-width: 46ch; line-height: 1.55; }
+.masthead-dek { font-size: var(--fs-md); color: var(--gray); margin: 0.85rem 0 0; line-height: 1.55; }
 
 // 섹션 라벨
 .section-label { font-family: var(--headerFont); font-size: var(--fs-lg); font-weight: 700; color: var(--dark); letter-spacing: normal; margin: 2.6rem 0 1rem; padding: 0; border: none; }
