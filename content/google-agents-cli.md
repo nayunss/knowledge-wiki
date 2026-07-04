@@ -6,6 +6,8 @@ title: Google agents-cli
 
 구글이 2026년 4월 21일 공개(4월 22일 Cloud Next 2026에서 발표)한 오픈소스 도구. **"어떤 코딩 어시스턴트든 Google Cloud 위에서 AI 에이전트를 만들고·평가하고·배포하는 전문가로 바꿔주는 CLI + 스킬 묶음"**이다. 기존 오픈소스 `agent-starter-pack`의 후속작이며, starter-pack은 유지보수 전용 모드로 전환됐다.
 
+> 에이전트를 "만드는 도구"이고, 그 에이전트를 어떻게 팀·반복으로 설계하느냐는 [[하네스-vs-루프-엔지니어링]] 참고. · [[index|홈]]
+
 - 저장소: `github.com/google/agents-cli`
 - 문서: `google.github.io/agents-cli`
 - 최신: v0.6.1 (2026-06-28 기준, 공개 71일간 13번 업데이트)
