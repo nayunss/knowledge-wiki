@@ -1,22 +1,23 @@
 @use "./variables.scss" as *;
 
 // 폰트 변수 강제 (obsidian 테마 resource-style이 --headerFont를 덮는 문제 우회)
+// 제목·본문 모두 IBM Plex Sans KR로 통일 (코드만 같은 패밀리의 IBM Plex Mono)
 :root {
-  --headerFont: "Gowun Batang", serif !important;
+  --headerFont: "IBM Plex Sans KR", -apple-system, sans-serif !important;
   --bodyFont: "IBM Plex Sans KR", -apple-system, sans-serif !important;
   --codeFont: "IBM Plex Mono", ui-monospace, monospace !important;
 }
 
 // ─────────────────────────────────────────────────────────────
-// 문예적 기술 노트 — Literary Technical Notebook
-// 세리프 제목(Gowun Batang, 한글 명조) + 한글 산세리프 본문(IBM Plex Sans KR)
+// 기술 노트 — 단일 폰트(IBM Plex Sans KR) 통일
 // 액센트: 만년필 잉크블루 (AI 기본값 brass/terracotta 회피 — taste Pre-Flight)
-// 시그니처: 원고지 여백 괘선 + 잉크블루 상호참조 + 모노스페이스 주석
+// 시그니처: 원고지 여백 괘선 + 잉크블루 상호참조 + 모노스페이스 주석(코드/메타)
+// 위계는 폰트 패밀리가 아니라 굵기·크기로 표현
 // ─────────────────────────────────────────────────────────────
 
-// 제목: 문예적 세리프, 섹션 구분 헤어라인
+// 제목: 본문과 같은 패밀리, 굵기·크기로 위계 + 섹션 구분 헤어라인
 h1, h2, h3, h4, h5, h6, .page-title, .article-title, article h1 {
-  font-family: "Gowun Batang", serif !important;
+  font-family: "IBM Plex Sans KR", -apple-system, sans-serif !important;
   letter-spacing: -0.01em;
   font-weight: 700;
 }

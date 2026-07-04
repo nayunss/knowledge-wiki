@@ -16,7 +16,7 @@ configuration:
     fontOrigin: googleFonts
     cdnCaching: true
     typography:
-      header: Gowun Batang
+      header: IBM Plex Sans KR
       body: IBM Plex Sans KR
       code: IBM Plex Mono
     colors:
