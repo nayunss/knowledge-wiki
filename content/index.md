@@ -43,26 +43,6 @@ title: 지식 위키
   </a>
 </div>
 
-<p class="section-label">핵심</p>
-
-<div class="post-grid">
-  <a class="post-card" href="llm-wiki-구조">
-    <span class="post-type">개념</span>
-    <span class="post-title">LLM 위키 구조</span>
-    <span class="post-dek">이 저장소를 위키·RAG·블로그 세 렌즈로 쓰는 단일 원본 구조.</span>
-  </a>
-  <a class="post-card" href="위키-설계-결정">
-    <span class="post-type">설계결정</span>
-    <span class="post-title">위키 설계 결정</span>
-    <span class="post-dek">노션 대신 md 단일 원본을 택한 이유와 핵심 판단들.</span>
-  </a>
-  <a class="post-card" href="claude-project-github-연결">
-    <span class="post-type">개념</span>
-    <span class="post-title">Claude Project × GitHub</span>
-    <span class="post-dek">레포를 붙이면 답변이 어떻게 만들어지나 — RAG 렌즈의 원리.</span>
-  </a>
-</div>
-
 <p class="section-label">실전 · 도구</p>
 
 <div class="post-grid">
@@ -80,5 +60,25 @@ title: 지식 위키
     <span class="post-type">개념</span>
     <span class="post-title">agents-cli 라이프사이클과 SDLC</span>
     <span class="post-dek">8단계 라이프사이클을 AI 시대 새 SDLC의 참조 구현으로 읽기.</span>
+  </a>
+</div>
+
+<p class="section-label">이 위키에 대하여</p>
+
+<div class="post-grid">
+  <a class="post-card" href="llm-wiki-구조">
+    <span class="post-type">개념</span>
+    <span class="post-title">LLM 위키 구조</span>
+    <span class="post-dek">이 저장소를 위키·RAG·블로그 세 렌즈로 쓰는 단일 원본 구조.</span>
+  </a>
+  <a class="post-card" href="위키-설계-결정">
+    <span class="post-type">설계결정</span>
+    <span class="post-title">위키 설계 결정</span>
+    <span class="post-dek">노션 대신 md 단일 원본을 택한 이유와 핵심 판단들.</span>
+  </a>
+  <a class="post-card" href="claude-project-github-연결">
+    <span class="post-type">개념</span>
+    <span class="post-title">Claude Project × GitHub</span>
+    <span class="post-dek">레포를 붙이면 답변이 어떻게 만들어지나 — RAG 렌즈의 원리.</span>
   </a>
 </div>
