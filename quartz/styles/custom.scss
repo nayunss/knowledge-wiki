@@ -4,41 +4,58 @@
   --headerFont: "IBM Plex Sans KR", -apple-system, sans-serif !important;
   --bodyFont: "IBM Plex Sans KR", -apple-system, sans-serif !important;
   --codeFont: "IBM Plex Mono", ui-monospace, monospace !important;
+  --radius: 14px;   // 하나의 부드러운 라운드 스케일 (SHAPE 일관성)
 }
 
-// ═══ 에디토리얼 매거진 — 단일 폰트(IBM Plex Sans KR), 크기·굵기로 위계, 잉크블루 액센트 ═══
+// ═══ 부드러운 에디토리얼 — 단일 폰트, 라운드·여백·연한 그림자로 온기 ═══
 
+// 타이포: 크기·굵기로 위계
 h1, h2, h3, h4, h5, h6, .page-title, .article-title, article h1 {
-  font-family: var(--headerFont) !important; letter-spacing: -0.02em; font-weight: 700; line-height: 1.15;
+  font-family: var(--headerFont) !important; letter-spacing: -0.02em; font-weight: 700; line-height: 1.2;
 }
-.article-title, article h1 { font-size: 2.6rem; margin-bottom: 0.25rem; }
-article h2 { font-size: 1.5rem; margin-top: 2.4rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--lightgray); }
-article h3 { font-size: 1.15rem; margin-top: 1.8rem; }
-article p { line-height: 1.75; }
-article > p:first-of-type { font-size: 1.12rem; color: var(--dark); }
+.article-title, article h1 { font-size: 2.4rem; margin-bottom: 0.3rem; }
+article h2 { font-size: 1.4rem; margin-top: 2.4rem; }   // 딱딱한 밑줄 룰 제거, 여백으로 구분
+article h3 { font-size: 1.12rem; margin-top: 1.8rem; }
+article p  { line-height: 1.78; }
+article > p:first-of-type { font-size: 1.1rem; color: var(--dark); }   // 리드 문단
 
-.content-meta { font-family: var(--codeFont); font-size: 0.76rem; color: var(--gray); letter-spacing: 0.06em; text-transform: uppercase; }
+.content-meta { color: var(--gray); font-size: 0.85rem; }   // 조용한 메타
 
-.masthead { padding: 1rem 0 2rem; border-bottom: 3px solid var(--dark); margin-bottom: 2.5rem; }
-.masthead-eyebrow { font-family: var(--codeFont); font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--tertiary); margin: 0 0 0.7rem; }
-.masthead-title { font-size: clamp(2.8rem, 7vw, 4.6rem) !important; line-height: 1.02 !important; margin: 0 !important; letter-spacing: -0.03em; }
-.masthead-dek { font-size: 1.15rem; color: var(--gray); margin: 0.9rem 0 0; max-width: 42ch; }
+// 마스트헤드: 큰 제목 + 데크 (굵은 3px 룰 삭제)
+.masthead { padding: 1.5rem 0 1.5rem; margin-bottom: 1.5rem; }
+.masthead-eyebrow { color: var(--tertiary); font-size: 0.9rem; font-weight: 600; margin: 0 0 0.5rem; letter-spacing: 0; text-transform: none; font-family: var(--headerFont); }
+.masthead-title { font-size: clamp(2.6rem, 6.5vw, 4.2rem) !important; line-height: 1.05 !important; margin: 0 !important; letter-spacing: -0.03em; }
+.masthead-dek { font-size: 1.12rem; color: var(--gray); margin: 0.85rem 0 0; max-width: 46ch; line-height: 1.5; }
 
-.section-label { font-family: var(--codeFont); font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--dark); font-weight: 600; margin: 2.5rem 0 0.9rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--dark); }
+// 섹션 제목: 부드러운 헤딩 (모노캡·밑줄 제거)
+.section-label { font-size: 1.05rem; font-weight: 700; color: var(--dark); letter-spacing: -0.01em; text-transform: none; margin: 2.6rem 0 1rem; padding: 0; border: none; font-family: var(--headerFont); }
 
-.post-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--lightgray); border: 1px solid var(--lightgray); margin: 0; }
-.post-card { display: flex; flex-direction: column; gap: 0.5rem; background: var(--light); padding: 1.4rem 1.35rem; text-decoration: none !important; border: none !important; transition: background 0.15s; }
-.post-card:hover { background: var(--highlight); }
-.post-card.feature { grid-column: 1 / -1; padding: 2rem 1.8rem; }
-.post-type { font-family: var(--codeFont); font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--tertiary); }
-.post-title { font-weight: 700; font-size: 1.3rem; color: var(--dark) !important; line-height: 1.22; letter-spacing: -0.01em; }
-.post-card.feature .post-title { font-size: 2rem; }
-.post-dek { color: var(--gray); font-size: 0.9rem; line-height: 1.55; }
-.post-card.feature .post-dek { font-size: 1.05rem; max-width: 52ch; }
+// 카드: 라운드 + 간격 + 연한(따뜻한) 그림자 + 호버 살짝 뜨기
+.post-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; background: none; border: none; margin: 0; }
+.post-card {
+  display: flex; flex-direction: column; gap: 0.55rem;
+  background: var(--light); border: 1px solid var(--lightgray); border-radius: var(--radius);
+  padding: 1.5rem; text-decoration: none !important;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.post-card:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(60,50,40,.10); border-color: var(--tertiary); }
+.post-card.feature { grid-column: 1 / -1; padding: 2rem; }
+.post-type { align-self: flex-start; font-size: 0.72rem; font-weight: 600; color: var(--tertiary); background: var(--highlight); border-radius: 999px; padding: 0.15rem 0.7rem; }
+.post-title { font-weight: 700; font-size: 1.25rem; color: var(--dark) !important; line-height: 1.3; letter-spacing: -0.01em; }
+.post-card.feature .post-title { font-size: 1.9rem; }
+.post-dek { color: var(--gray); font-size: 0.92rem; line-height: 1.6; }
+.post-card.feature .post-dek { font-size: 1.05rem; max-width: 54ch; }
 @media #{$mobile} { .post-grid { grid-template-columns: 1fr; } }
 
-a.internal { background: transparent; color: var(--tertiary); text-decoration: none; border-bottom: 1px dotted var(--tertiary); font-weight: 500; &:hover { border-bottom-style: solid; } }
-.tags a, li a.internal.tag-link { font-family: var(--codeFont); font-size: 0.72rem; color: var(--gray); background: transparent; border: 1px solid var(--lightgray); border-radius: 0; padding: 0.12rem 0.45rem; &:hover { color: var(--tertiary); border-color: var(--tertiary); } }
-blockquote { border-left: 3px solid var(--tertiary); font-style: italic; color: var(--darkgray); }
+// 위키링크: 부드러운 밑줄 (점선 제거)
+a.internal { color: var(--tertiary); text-decoration: none; border-bottom: 1px solid var(--lightgray); font-weight: 500; &:hover { border-bottom-color: var(--tertiary); } }
+
+// 태그: 부드러운 필 (각진 모노 → 라운드 산세리프)
+.tags a, li a.internal.tag-link { font-size: 0.75rem; color: var(--gray); background: var(--light); border: 1px solid var(--lightgray); border-radius: 999px; padding: 0.15rem 0.65rem; &:hover { color: var(--tertiary); border-color: var(--tertiary); } }
+
+// 인용: 딱딱한 룰 대신 부드러운 틴트 박스
+blockquote { border-left: 3px solid var(--tertiary); border-radius: 0 var(--radius) var(--radius) 0; background: var(--highlight); color: var(--darkgray); padding: 0.7rem 1.1rem; }
+
 .backlinks, .graph { margin-top: 2rem; }
 .sidebar { overflow-y: auto; overflow-x: hidden; }
