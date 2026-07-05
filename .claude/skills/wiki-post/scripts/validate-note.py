@@ -32,8 +32,8 @@ def main():
         fails.append(f"깨진 강조(닫는 ** 앞 괄호+뒤 한글): …{s[max(0,mm.start()-15):mm.end()+5]}…")
     for mm in re.finditer(r"[\"\u201d\u2019']\*\*[가-힣]", s):
         warns.append(f"강조 인접 따옴표 — 렌더 확인 필요: …{s[max(0,mm.start()-15):mm.end()+5]}…")
-    for mm in re.finditer(r"(?<![0-9~])~(?=[0-9])", s):
-        warns.append(f"근사 표기 ~N 발견(약 N 권장): …{s[max(0,mm.start()-10):mm.end()+8]}…")
+    for mm in re.finditer(r"~(?=[0-9])", s):
+        warns.append(f"물결 표기 발견(근사→약 N, 범위→N–M 권장, GFM 취소선 위험): …{s[max(0,mm.start()-10):mm.end()+8]}…")
 
     # 3) 구조 필수 요소
     if "## 출처" not in s and "resource:" not in (m.group(1) if m else ""):

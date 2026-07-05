@@ -25,7 +25,7 @@
 레포 **Settings → Pages → Build and deployment → Source** 를 **"GitHub Actions"** 로 선택.
 
 ### 4. 끝
-1~2분 뒤 `https://내아이디.github.io/knowledge-wiki/` 에 위키가 뜹니다.
+1–2분 뒤 `https://내아이디.github.io/knowledge-wiki/` 에 위키가 뜹니다.
 레포 **Actions** 탭에서 배포 진행 상황을 볼 수 있어요. (첫 실행이 "try again later"로 실패하면 그 실행을 **Re-run** 하면 됩니다 — Pages 전파 지연.)
 
 ---
