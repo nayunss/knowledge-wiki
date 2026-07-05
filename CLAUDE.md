@@ -10,3 +10,4 @@
 | 날짜 | 변경 내용 | 대상 | 사유 |
 |------|----------|------|------|
 | 2026-07-05 | 초기 구성 (tech-writer·fact-checker·copy-editor + tech-writing·wiki-verify·wiki-post) | 전체 | - |
+| 2026-07-05 | copy-editor에 '대기 금지' 지침 추가 | .claude/agents/copy-editor.md | 첫 실행에서 humanize-korean 대기 중 정지 |
