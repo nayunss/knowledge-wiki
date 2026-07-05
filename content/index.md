@@ -5,7 +5,6 @@ title: 지식 위키
 <div class="masthead">
   <p class="masthead-eyebrow">KNOWLEDGE · AI ENGINEERING</p>
   <h1 class="masthead-title">지식 위키</h1>
-  <p class="masthead-dek">AI가 작성한 노트를 md 단일 원본으로 모아 위키·RAG·편집 세 렌즈로 다루는 곳.</p>
 </div>
 
 <p class="section-label">AI 엔지니어링</p>
