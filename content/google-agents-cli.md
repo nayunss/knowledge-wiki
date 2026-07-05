@@ -16,7 +16,7 @@ tags:
 
 - 저장소: `github.com/google/agents-cli`
 - 문서: `google.github.io/agents-cli`
-- 최신: v0.6.1 (2026-06-28 기준, 공개 71일간 13번 업데이트)
+- 최신: v1.0.0 (2026-07-01 GA 전환 · 2026-07-05 기준)
 
 ## 무엇을 해결하나
 

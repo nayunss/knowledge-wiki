@@ -5,7 +5,7 @@ title: 지식 위키
 <div class="masthead">
   <p class="masthead-eyebrow">KNOWLEDGE · AI ENGINEERING</p>
   <h1 class="masthead-title">지식 위키</h1>
-  <p class="masthead-dek">AI가 작성한 노트를 md 단일 원본으로 모아 위키·RAG·블로그 세 렌즈로 읽는 곳.</p>
+  <p class="masthead-dek">AI가 작성한 노트를 md 단일 원본으로 모아 위키·RAG·편집 세 렌즈로 다루는 곳.</p>
 </div>
 
 <p class="section-label">AI 엔지니어링</p>
@@ -71,10 +71,15 @@ title: 지식 위키
 <p class="section-label">이 위키에 대하여</p>
 
 <div class="post-grid">
+  <a class="post-card" href="위키-하네스">
+    <span class="post-type">설계결정</span>
+    <span class="post-title">위키 하네스</span>
+    <span class="post-dek">글이 작성→검증→발행되는 에이전트 파이프라인의 구조와 사용법.</span>
+  </a>
   <a class="post-card" href="llm-wiki-구조">
     <span class="post-type">개념</span>
     <span class="post-title">LLM 위키 구조</span>
-    <span class="post-dek">이 저장소를 위키·RAG·블로그 세 렌즈로 쓰는 단일 원본 구조.</span>
+    <span class="post-dek">이 저장소를 위키·RAG·편집 세 렌즈로 쓰는 단일 원본 구조.</span>
   </a>
   <a class="post-card" href="위키-설계-결정">
     <span class="post-type">설계결정</span>
