@@ -1,0 +1,12 @@
+# knowledge-wiki
+
+## 하네스: 기술 글 파이프라인
+
+**목표:** IT 전분야 기술 글을 작성(에반젤리스트+CTO 시각)→검증(최신성·팩트·오탈자·윤문)→발행(OKF 위키)까지 자동 처리.
+
+**트리거:** 기술 글 작성+발행 요청 시 `wiki-post` 스킬 사용 (예: "~에 대해 글 써서 위키에 올려줘"). 완성 노트 업로드만은 `wiki-note`. 로컬 설치: `.claude/agents/`·`.claude/skills/`를 `~/.claude/`에 복사 (윤문은 humanize-korean 플러그인 별도 설치 권장).
+
+**변경 이력:**
+| 날짜 | 변경 내용 | 대상 | 사유 |
+|------|----------|------|------|
+| 2026-07-05 | 초기 구성 (tech-writer·fact-checker·copy-editor + tech-writing·wiki-verify·wiki-post) | 전체 | - |
