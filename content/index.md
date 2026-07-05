@@ -16,6 +16,11 @@ title: 지식 위키
     <span class="post-title">에이전틱 엔지니어링</span>
     <span class="post-dek">AI 에이전트를 설계·구축·운영하는 공학. 모델+하네스, 컨텍스트 관리, 평가·신뢰성을 묶은 우산 개념.</span>
   </a>
+  <a class="post-card" href="ai-엔지니어링/에이전트-평가-evals">
+    <span class="post-type">개념</span>
+    <span class="post-title">에이전트 평가(evals)</span>
+    <span class="post-dek">pass@1이 프로덕션 신뢰성을 과대평가하는 이유와 다차원 평가 방법론.</span>
+  </a>
   <a class="post-card" href="ai-엔지니어링/ai-엔지니어링-4계층">
     <span class="post-type">개념</span>
     <span class="post-title">AI 엔지니어링 4계층</span>
