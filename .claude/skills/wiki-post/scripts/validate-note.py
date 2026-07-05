@@ -27,6 +27,14 @@ def main():
     if "(검증 필요)" in s:
         fails.append(f"'(검증 필요)' 마커 {s.count('(검증 필요)')}건 잔존 — 검증 후 제거/완화 필요")
 
+    # 2.5) 마크다운 렌더 검증 (발행물에서 리터럴 ** 노출 사고 재발 방지)
+    for mm in re.finditer(r"[)\]]\*\*[가-힣]", s):
+        fails.append(f"깨진 강조(닫는 ** 앞 괄호+뒤 한글): …{s[max(0,mm.start()-15):mm.end()+5]}…")
+    for mm in re.finditer(r"[\"\u201d\u2019']\*\*[가-힣]", s):
+        warns.append(f"강조 인접 따옴표 — 렌더 확인 필요: …{s[max(0,mm.start()-15):mm.end()+5]}…")
+    for mm in re.finditer(r"(?<![0-9~])~(?=[0-9])", s):
+        warns.append(f"근사 표기 ~N 발견(약 N 권장): …{s[max(0,mm.start()-10):mm.end()+8]}…")
+
     # 3) 구조 필수 요소
     if "## 출처" not in s and "resource:" not in (m.group(1) if m else ""):
         warns.append("`## 출처` 섹션 없음 (외부 주장 없는 메타 노트면 무시 가능)")
