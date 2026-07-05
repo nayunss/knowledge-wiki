@@ -11,3 +11,4 @@
 |------|----------|------|------|
 | 2026-07-05 | 초기 구성 (tech-writer·fact-checker·copy-editor + tech-writing·wiki-verify·wiki-post) | 전체 | - |
 | 2026-07-05 | copy-editor에 '대기 금지' 지침 추가 | .claude/agents/copy-editor.md | 첫 실행에서 humanize-korean 대기 중 정지 |
+| 2026-07-05 | 병합 게이트(validate-note.py)·수치 전수/UNVERIFIED 발행 규칙·경계선 재확인 추가 | .claude/skills/wiki-post, wiki-verify | 에이전트-평가-evals 노트의 원칙을 하네스 자신에 적용 |
