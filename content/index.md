@@ -60,6 +60,11 @@ title: 지식 위키
     <span class="post-title">Google agents-cli</span>
     <span class="post-dek">코딩 어시스턴트를 Google Cloud 에이전트 전문가로 바꾸는 오픈소스 CLI.</span>
   </a>
+  <a class="post-card" href="x-북마크-ai-자동화">
+    <span class="post-type">플레이북</span>
+    <span class="post-title">X 북마크, 앱 대신 AI 자동화</span>
+    <span class="post-dek">앱을 만들 줄 알았는데 기존 플랫폼+Claude 일일 루틴으로 끝났다 — 0원 구조의 SDLC·기법·시행착오 경험기.</span>
+  </a>
   <a class="post-card" href="agents-cli-lifecycle-sdlc">
     <span class="post-type">개념</span>
     <span class="post-title">agents-cli 라이프사이클과 SDLC</span>
