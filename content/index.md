@@ -60,6 +60,11 @@ title: 지식 위키
     <span class="post-title">Google agents-cli</span>
     <span class="post-dek">코딩 어시스턴트를 Google Cloud 에이전트 전문가로 바꾸는 오픈소스 CLI.</span>
   </a>
+  <a class="post-card" href="디자인-스킬-비교-실험">
+    <span class="post-type">플레이북</span>
+    <span class="post-title">디자인 스킬 비교 실험</span>
+    <span class="post-dek">같은 투두 앱을 8번 만들었다 — 스킬 7종+baseline 병렬 비교. 기능은 상수, 값은 디자인 품질, 품질은 비용에 비례.</span>
+  </a>
   <a class="post-card" href="x-북마크-ai-자동화">
     <span class="post-type">플레이북</span>
     <span class="post-title">X 북마크, 앱 대신 AI 자동화</span>
