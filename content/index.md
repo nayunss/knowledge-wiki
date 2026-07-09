@@ -65,6 +65,11 @@ title: 지식 위키
     <span class="post-title">Google agents-cli</span>
     <span class="post-dek">코딩 어시스턴트를 Google Cloud 에이전트 전문가로 바꾸는 오픈소스 CLI.</span>
   </a>
+  <a class="post-card" href="ai-엔지니어링/claude-code-advisor-도구">
+    <span class="post-type">도구</span>
+    <span class="post-title">Claude Code advisor 도구</span>
+    <span class="post-dek">결정의 순간에만 더 강한 모델을 부른다 — 페어링 규칙·비용 구조·캐시 영향 분석.</span>
+  </a>
   <a class="post-card" href="디자인-스킬-비교-실험">
     <span class="post-type">플레이북</span>
     <span class="post-title">디자인 스킬 비교 실험</span>
