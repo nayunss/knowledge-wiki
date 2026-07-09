@@ -45,6 +45,11 @@ title: 지식 위키
     <span class="post-title">루프 엔지니어링</span>
     <span class="post-dek">완료 조건까지 반복 실행시키는 제어 흐름. 최상층.</span>
   </a>
+  <a class="post-card" href="ai-엔지니어링/하네스-자기개선">
+    <span class="post-type">개념</span>
+    <span class="post-title">하네스를 통한 자기개선</span>
+    <span class="post-dek">근미래 RSI는 가중치가 아니라 하네스를 개선하며 진행된다 — Lilian Weng 글 정리.</span>
+  </a>
 </div>
 
 <p class="section-label">실전 · 도구</p>
