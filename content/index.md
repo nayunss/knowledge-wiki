@@ -70,6 +70,11 @@ title: 지식 위키
     <span class="post-title">Claude Code advisor 도구</span>
     <span class="post-dek">결정의 순간에만 더 강한 모델을 부른다 — 페어링 규칙·비용 구조·캐시 영향 분석.</span>
   </a>
+  <a class="post-card" href="ai-엔지니어링/hermes-agent">
+    <span class="post-type">도구</span>
+    <span class="post-title">Hermes Agent</span>
+    <span class="post-dek">스스로 스킬을 만들고 세션 간 기억을 유지하는 자가개선형 에이전트 — Claude Code를 번들 스킬로 위임하는 연결 계층.</span>
+  </a>
   <a class="post-card" href="ai-엔지니어링/codex-교차모델-위임">
     <span class="post-type">플레이북</span>
     <span class="post-title">Codex를 Claude Code 서브에이전트로</span>
