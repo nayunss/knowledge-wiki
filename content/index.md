@@ -70,6 +70,11 @@ title: 지식 위키
     <span class="post-title">Claude Code advisor 도구</span>
     <span class="post-dek">결정의 순간에만 더 강한 모델을 부른다 — 페어링 규칙·비용 구조·캐시 영향 분석.</span>
   </a>
+  <a class="post-card" href="ai-엔지니어링/codex-교차모델-위임">
+    <span class="post-type">플레이북</span>
+    <span class="post-title">Codex를 Claude Code 서브에이전트로</span>
+    <span class="post-dek">교차 모델 위임 설정 절차와 멀티에이전트 오케스트레이션 4종 지형 — 언제 이 복잡도가 값을 하는가.</span>
+  </a>
   <a class="post-card" href="디자인-스킬-비교-실험">
     <span class="post-type">플레이북</span>
     <span class="post-title">디자인 스킬 비교 실험</span>
