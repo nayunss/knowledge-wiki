@@ -80,6 +80,11 @@ title: 지식 위키
     <span class="post-title">OpenKnowledge</span>
     <span class="post-dek">에이전트가 읽고 쓰는 마크다운 위키 — 설치·사용법과 0.x·macOS·GPL이라는 값. 우리 위키의 대체재가 아니라 작성 레이어의 보완재.</span>
   </a>
+  <a class="post-card" href="ai-엔지니어링/github-spec-kit">
+    <span class="post-type">도구</span>
+    <span class="post-title">GitHub spec-kit</span>
+    <span class="post-dek">명세 주도 개발 툴킷을 실제로 설치해 뜯어봤다 — 강제 메커니즘의 실체, 효과에 선 반증, superpowers·ideas-come-true와의 분업.</span>
+  </a>
   <a class="post-card" href="ai-엔지니어링/codex-교차모델-위임">
     <span class="post-type">플레이북</span>
     <span class="post-title">Codex를 Claude Code 서브에이전트로</span>

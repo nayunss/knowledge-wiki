@@ -13,3 +13,4 @@ LLM으로 무언가를 만드는 기술의 네 계층. 아래층을 흡수하며
 * [[claude-code-advisor-도구]] - 결정 지점에만 더 강한 모델을 부르는 실험적 서버 도구 (페어링·비용·캐시 분석)
 * [[codex-교차모델-위임]] - Codex를 Claude Code 서브에이전트로 쓰는 교차 모델 위임 설정과 오케스트레이션 지형 (플레이북)
 * [[hermes-agent]] - 자가개선형 오픈소스 에이전트와 Claude Code 위임 구조 (Nous Research, 도구)
+* [[github-spec-kit]] - 명세 주도 개발(SDD) 툴킷 v0.12.11 해부 — 강제 메커니즘·트레이드오프와 superpowers·ideas-come-true 비교 (도구)
