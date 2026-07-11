@@ -10,11 +10,6 @@ title: 지식 위키
 <p class="section-label">AI 엔지니어링</p>
 
 <div class="post-grid">
-  <a class="post-card" href="ai-엔지니어링/spec-kit-실전-회고-악보복원">
-    <span class="post-type">회고</span>
-    <span class="post-title">노래방 화면에서 악보를 복원할 수 있는가</span>
-    <span class="post-dek">Spec Kit으로 끝까지 간 실험의 실측 회고. 무엇이 됐고, 왜 안 됐고, 왜 정확도를 측정조차 못했나.</span>
-  </a>
   <a class="post-card" href="ai-엔지니어링/에이전트-스킬은-워크플로다">
     <span class="post-type">설계결정</span>
     <span class="post-title">에이전트 스킬은 지식이 아니라 워크플로다</span>
@@ -99,6 +94,11 @@ title: 지식 위키
     <span class="post-type">도구</span>
     <span class="post-title">GitHub spec-kit</span>
     <span class="post-dek">명세 주도 개발 툴킷을 실제로 설치해 뜯어봤다 — 강제 메커니즘의 실체, 효과에 선 반증, superpowers·ideas-come-true와의 분업.</span>
+  </a>
+  <a class="post-card" href="ai-엔지니어링/spec-kit-실전-회고-악보복원">
+    <span class="post-type">회고</span>
+    <span class="post-title">노래방 화면에서 악보를 복원할 수 있는가</span>
+    <span class="post-dek">Spec Kit으로 끝까지 간 실험의 실측 회고. 무엇이 됐고, 왜 안 됐고, 왜 정확도를 측정조차 못했나.</span>
   </a>
   <a class="post-card" href="ai-엔지니어링/codex-교차모델-위임">
     <span class="post-type">플레이북</span>
