@@ -15,3 +15,4 @@ LLM으로 무언가를 만드는 기술의 네 계층. 아래층을 흡수하며
 * [[codex-교차모델-위임]] - Codex를 Claude Code 서브에이전트로 쓰는 교차 모델 위임 — 직접 실행 검증한 설정 절차, 실제 구조, 대가 (플레이북)
 * [[hermes-agent]] - 자가개선형 오픈소스 에이전트와 Claude Code 위임 구조 (Nous Research, 도구)
 * [[github-spec-kit]] - 명세 주도 개발(SDD) 툴킷 v0.12.11 해부 — 강제 메커니즘·트레이드오프와 superpowers·ideas-come-true 비교 (도구)
+* [[spec-kit-실전-회고-악보복원]] - Spec Kit을 실제 프로젝트에 끝까지 적용한 회고 — 무엇이 됐고, 무엇이 측정조차 안 됐나 (회고)

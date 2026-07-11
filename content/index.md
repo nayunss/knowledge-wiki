@@ -10,6 +10,11 @@ title: 지식 위키
 <p class="section-label">AI 엔지니어링</p>
 
 <div class="post-grid">
+  <a class="post-card" href="ai-엔지니어링/spec-kit-실전-회고-악보복원">
+    <span class="post-type">회고</span>
+    <span class="post-title">노래방 화면에서 악보를 복원할 수 있는가</span>
+    <span class="post-dek">Spec Kit으로 끝까지 간 실험의 실측 회고. 무엇이 됐고, 왜 안 됐고, 왜 정확도를 측정조차 못했나.</span>
+  </a>
   <a class="post-card" href="ai-엔지니어링/에이전트-스킬은-워크플로다">
     <span class="post-type">설계결정</span>
     <span class="post-title">에이전트 스킬은 지식이 아니라 워크플로다</span>
