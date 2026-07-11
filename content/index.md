@@ -93,7 +93,7 @@ title: 지식 위키
   <a class="post-card" href="ai-엔지니어링/codex-교차모델-위임">
     <span class="post-type">플레이북</span>
     <span class="post-title">Codex를 Claude Code 서브에이전트로</span>
-    <span class="post-dek">교차 모델 위임 설정 절차와 멀티에이전트 오케스트레이션 4종 지형 — 언제 이 복잡도가 값을 하는가.</span>
+    <span class="post-dek">설정을 직접 실행해 검증했다 — 세션이 Codex로 바뀌는 게 아니라 Claude가 필요할 때 부르는 도구다. 컨텍스트 미공유·모델 불투명·비용 이전이라는 대가까지.</span>
   </a>
   <a class="post-card" href="디자인-스킬-비교-실험">
     <span class="post-type">플레이북</span>
