@@ -10,6 +10,11 @@ title: 지식 위키
 <p class="section-label">AI 엔지니어링</p>
 
 <div class="post-grid">
+  <a class="post-card" href="ai-엔지니어링/에이전트-스킬은-워크플로다">
+    <span class="post-type">설계결정</span>
+    <span class="post-title">에이전트 스킬은 지식이 아니라 워크플로다</span>
+    <span class="post-dek">Addy Osmani의 Agent Skills를 검토해 스킬의 효과, 숫자 보정, 강제력의 한계와 실무 도입법을 정리한다.</span>
+  </a>
   <a class="post-card feature" href="ai-엔지니어링/에이전틱-엔지니어링">
     <span class="post-type">개념</span>
     <span class="post-title">에이전틱 엔지니어링</span>
