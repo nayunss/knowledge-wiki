@@ -85,6 +85,11 @@ title: 지식 위키
     <span class="post-title">OpenKnowledge</span>
     <span class="post-dek">에이전트가 읽고 쓰는 마크다운 위키 — 설치·사용법과 0.x·macOS·GPL이라는 값. 우리 위키의 대체재가 아니라 작성 레이어의 보완재.</span>
   </a>
+  <a class="post-card" href="openknowledge-에이전트-활용법">
+    <span class="post-type">플레이북</span>
+    <span class="post-title">OpenKnowledge 에이전트 활용법</span>
+    <span class="post-dek">ok init부터 코드베이스 위키 생성·그래프 위생 복구까지 — 로컬 전용을 지키며 MCP 19툴을 쓰는 실전 플레이북.</span>
+  </a>
   <a class="post-card" href="ai-엔지니어링/github-spec-kit">
     <span class="post-type">도구</span>
     <span class="post-title">GitHub spec-kit</span>
