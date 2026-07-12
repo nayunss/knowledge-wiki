@@ -55,6 +55,16 @@ title: 지식 위키
     <span class="post-title">하네스를 통한 자기개선</span>
     <span class="post-dek">근미래 RSI는 가중치가 아니라 하네스를 개선하며 진행된다 — Lilian Weng 글 정리.</span>
   </a>
+  <a class="post-card feature" href="ai-엔지니어링/하네스의-미래">
+    <span class="post-type">개념</span>
+    <span class="post-title">하네스 엔지니어링의 미래</span>
+    <span class="post-dek">하네스는 흡수되고 있다 — 다만 모델 가중치가 아니라 벤더의 API·플랫폼으로. 사라질 것과 남을 것.</span>
+  </a>
+  <a class="post-card" href="ai-엔지니어링/skillopt-비판적-리뷰">
+    <span class="post-type">개념</span>
+    <span class="post-title">SkillOpt 비판적 리뷰</span>
+    <span class="post-dek">스킬 문서를 가중치처럼 최적화하는 논문. 헤드라인 +23.5점의 실체는 최선 베이스라인 대비 +5.4점이다.</span>
+  </a>
 </div>
 
 <p class="section-label">실전 · 도구</p>
