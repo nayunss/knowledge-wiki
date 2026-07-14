@@ -65,6 +65,11 @@ title: 지식 위키
     <span class="post-title">SkillOpt 비판적 리뷰</span>
     <span class="post-dek">스킬 문서를 가중치처럼 최적화하는 논문. 헤드라인 +23.5점의 실체는 최선 베이스라인 대비 +5.4점이다.</span>
   </a>
+  <a class="post-card" href="ai-엔지니어링/루프-4종-자율성-비판">
+    <span class="post-type">개념</span>
+    <span class="post-title">루프 4종과 "자율성 %"</span>
+    <span class="post-dek">25·70·60·95%는 어떤 1차 출처에도 없다. 트윗은 벤더의 분류를 가져와 축을 갈아끼웠다.</span>
+  </a>
 </div>
 
 <p class="section-label">실전 · 도구</p>
