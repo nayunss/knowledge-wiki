@@ -80,7 +80,12 @@ title: 지식 위키
 <p class="section-label">실전 · 도구</p>
 
 <div class="post-grid">
-  <a class="post-card feature" href="kinetics-뜯어보기">
+  <a class="post-card feature" href="ai-엔지니어링/system-prompts-leaks">
+    <span class="post-type">플레이북</span>
+    <span class="post-title">system_prompts_leaks 읽는 법</span>
+    <span class="post-dek">프론티어 AI의 숨은 시스템 프롬프트를 모은 5.8만 별 아카이브 — 최고의 프롬프트·하네스 교보재지만 "정본"으로 인용하면 안 되는 이유와 4개 활용 렌즈.</span>
+  </a>
+  <a class="post-card" href="kinetics-뜯어보기">
     <span class="post-type">도구</span>
     <span class="post-title">Kinetics 뜯어보기</span>
     <span class="post-dek">스프링 물리 라이브러리라는 간판을 소스 수준에서 뜯었다 — 슬라이더는 공 하나만 움직이고 99개는 고정 이징이다. 그런데 진짜 새로운 건 세 번째 탭, 프롬프트다.</span>
