@@ -50,6 +50,11 @@ title: 지식 위키
     <span class="post-title">루프 엔지니어링</span>
     <span class="post-dek">완료 조건까지 반복 실행시키는 제어 흐름. 최상층.</span>
   </a>
+  <a class="post-card" href="ai-엔지니어링/이중-루프-아키텍처">
+    <span class="post-type">개념</span>
+    <span class="post-title">이중 루프(dual-loop) 아키텍처</span>
+    <span class="post-dek">"이중 루프"에 뭉쳐 있는 실행구조·학습·리플렉션대상 세 축을 분리하고 이론 계보를 바로잡는다.</span>
+  </a>
   <a class="post-card" href="ai-엔지니어링/하네스-자기개선">
     <span class="post-type">개념</span>
     <span class="post-title">하네스를 통한 자기개선</span>
