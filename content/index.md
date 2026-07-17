@@ -75,6 +75,11 @@ title: 지식 위키
 <p class="section-label">실전 · 도구</p>
 
 <div class="post-grid">
+  <a class="post-card feature" href="kinetics-뜯어보기">
+    <span class="post-type">도구</span>
+    <span class="post-title">Kinetics 뜯어보기</span>
+    <span class="post-dek">스프링 물리 라이브러리라는 간판을 소스 수준에서 뜯었다 — 슬라이더는 공 하나만 움직이고 99개는 고정 이징이다. 그런데 진짜 새로운 건 세 번째 탭, 프롬프트다.</span>
+  </a>
   <a class="post-card" href="프로덕션-ai-에이전트-기본-개념">
     <span class="post-type">개념</span>
     <span class="post-title">프로덕션 AI 에이전트의 기본 개념</span>
