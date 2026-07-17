@@ -1,14 +1,14 @@
 ---
 title: OpenKnowledge 에이전트 활용법 — 실전 플레이북
 type: 플레이북
-description: OpenKnowledge v0.29.1의 MCP 19개 툴·워크플로·스킬 심링크를 로컬 전용으로 쓰는 법. ok init부터 코드베이스 위키 생성·그래프 위생 복구·인제스트까지, 기존 위키 파이프라인과 충돌 없이 붙이는 경계 설계.
+description: OpenKnowledge의 MCP 20개 툴·워크플로·스킬 심링크를 로컬 전용으로 쓰는 법 (v0.29.1 실측, 2026-07-17 기준 최신 v0.32.0). ok init부터 코드베이스 위키 생성·그래프 위생 복구·인제스트까지, 기존 위키 파이프라인과 충돌 없이 붙이는 경계 설계.
 tags: [openknowledge, mcp, 에이전트, 지식관리]
 resource: https://openknowledge.ai/docs
 ---
 
 앱을 깔았고, 첫 실행 다이얼로그를 수락했고, Claude Code·Claude Desktop·Codex 세 군데에 MCP 서버가 등록됐다. 그런데 Claude Code에서 "내 노트 검색해줘"라고 하면 아무 일도 일어나지 않는다. 고장이 아니다. **OpenKnowledge의 MCP 서버는 프로젝트 스코프로 동작하고, 아직 프로젝트가 하나도 없기 때문이다.**
 
-이 글은 [[openknowledge]] 전편이 답한 "무엇이고 쓸 만한가" 다음 질문 — **"에이전트 연동을 실제로 어떻게 쓰는가"** — 에 답한다. 설치·장단점은 전편으로 넘긴다. 기준 버전은 **v0.29.1** (2026-07-11 확인, macOS 데스크톱 앱). v0.30 베타가 이미 돌고 있으니, 아래 설정 기본값은 `ok config validate`로 한 번 재확인하고 쓰기 바란다.
+이 글은 [[openknowledge]] 전편이 답한 "무엇이고 쓸 만한가" 다음 질문 — **"에이전트 연동을 실제로 어떻게 쓰는가"** — 에 답한다. 설치·장단점은 전편으로 넘긴다. 기준 버전은 **v0.29.1** (2026-07-11 실측, macOS 데스크톱 앱)이다. 2026-07-17 기준 최신 스테이블은 **v0.32.0**이고 v0.33 베타가 하루에도 여러 번 나가므로, 아래 설정 기본값은 `ok config validate`로 한 번 재확인하고 쓰기 바란다. 재확인 결과 이 글의 설정 기본값·자동 승인 deny 목록·Obsidian 비호환 항목은 v0.32.0에서도 그대로다(2026-07-17).
 
 ## 핵심 주장
 
@@ -93,7 +93,7 @@ terminal:
 
 ---
 
-## 2. MCP 툴 19개를 "작업 단위"로 묶기
+## 2. MCP 툴 20개를 "작업 단위"로 묶기
 
 툴 목록을 외울 필요는 없다. **네 가지 상황**에 각각 어떤 조합이 붙는지만 알면 된다. 툴 나열은 공식 레퍼런스에 있다.
 
@@ -125,7 +125,7 @@ links(kind=dead)                                              방금 쓴 글의 
 
 `checkpoint`는 프로젝트 전체 스냅샷을 뜨고 버전 SHA를 돌려준다. 에이전트에게 대량 편집을 맡기기 전에는 반드시 먼저 부른다. 사고가 나면 `history`(kind=checkpoint/wip/upstream으로 필터)로 시점을 찾고 `restore_version`으로 되돌린다. **git 없이도 동작하는 별도 이력 레이어**이므로, 자동 커밋을 껐다고 해서 되돌리기를 포기하는 게 아니다.
 
-나머지(`config`·`palette`·`preview_url`·`share_link`·`delete`·`skills`·`install`·`workflow`·`conflicts`·`resolve_conflict`)는 필요할 때 찾아 쓰면 그만이다.
+나머지(`lint`·`config`·`palette`·`preview_url`·`share_link`·`delete`·`skills`·`install`·`workflow`·`conflicts`·`resolve_conflict`)는 필요할 때 찾아 쓰면 그만이다. `lint`는 v0.32.0에서 추가됐다 — markdownlint 기반으로 문제를 에이전트에게 돌려준다.
 
 ---
 
@@ -339,7 +339,7 @@ ok init --local-only --scope project --content-dir .
 
 ## 출처
 
-- OpenKnowledge Docs — MCP Reference: https://openknowledge.ai/docs/reference/mcp (19개 툴, 파라미터, `links kind` 값, `install` targets)
+- OpenKnowledge Docs — MCP Reference: https://openknowledge.ai/docs/reference/mcp (툴 20개, 파라미터, `links kind` 값, `install` targets). 주의 — 이 문서는 산문에 "The surface is 19 tools"라 적어두고 헤딩은 20개를 나열한다. `lint`가 v0.32.0에서 추가됐는데 산문이 안 따라온 것 (2026-07-17 확인)
 - OpenKnowledge Docs — Agentic Search: https://openknowledge.ai/docs/reference/agentic-search (BM25+recency 기본, 시맨틱 기본 off·"never replaces lexical search", 브리핑 루프)
 - OpenKnowledge Docs — Configuration: https://openknowledge.ai/docs/reference/configuration (config 층 병합, `search.semantic.enabled`, `autoSync.enabled`/`autoSync.default`, `agents.autoApproveOkTools`, `terminal.enabled`, `telemetry.localSink`)
 - OpenKnowledge Docs — Skills: https://openknowledge.ai/docs/features/skills (스킬=콘텐츠, 심링크 설치, `ok skills manage --on`, 서드파티 스킬 경고)
@@ -347,4 +347,4 @@ ok init --local-only --scope project --content-dir .
 - OpenKnowledge Docs — Karpathy LLM Wiki workflow: https://openknowledge.ai/docs/workflows/karpathy-llm-wiki (3계층 `external-sources/`·`research/`·`articles/`, ingest→research→consolidate→discover 프롬프트)
 - OpenKnowledge Docs — Meeting Ingestion workflow: https://openknowledge.ai/docs/workflows/meeting-ingestion (`meetings/<source>-<source_meeting_id>` 중복 제거 키, 트랜스크립트 원문 보존)
 - OpenKnowledge Docs — Claude Code integration: https://openknowledge.ai/docs/integrations/claude-code
-- 로컬 설치본 v0.29.1 (2026-07-11 확인) — `ok --help` / `ok init --help` / `ok seed --list-packs` / `ok seed --pack codebase-wiki --dry-run` / `ok migrate --help` / `ok skills --help` / `ok config --help` 출력, `cli/dist/config-schema.json`·`config.user.schema.json`(키별 `scope`·기본값), `cli/dist`의 MCP 툴 등록부·자동 승인 deny 목록(`delete`·`move`·`share_link`·`install`)·에디터별 승인 인자 배선, `~/.agents/skills/open-knowledge-discovery/SKILL.md`
+- 로컬 설치본 v0.29.1 (2026-07-11 실측. 2026-07-17 기준 최신은 v0.32.0 — 아래 출력물은 v0.29.1 기준이다) — `ok --help` / `ok init --help` / `ok seed --list-packs` / `ok seed --pack codebase-wiki --dry-run` / `ok migrate --help` / `ok skills --help` / `ok config --help` 출력, `cli/dist/config-schema.json`·`config.user.schema.json`(키별 `scope`·기본값), `cli/dist`의 MCP 툴 등록부·자동 승인 deny 목록(`delete`·`move`·`share_link`·`install`)·에디터별 승인 인자 배선, `~/.agents/skills/open-knowledge-discovery/SKILL.md`
