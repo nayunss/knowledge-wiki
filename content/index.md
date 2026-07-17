@@ -65,6 +65,11 @@ title: 지식 위키
     <span class="post-title">하네스 엔지니어링의 미래</span>
     <span class="post-dek">하네스는 흡수되고 있다 — 다만 모델 가중치가 아니라 벤더의 API·플랫폼으로. 사라질 것과 남을 것.</span>
   </a>
+  <a class="post-card feature" href="ai-엔지니어링/aide2-재귀적-자기개선">
+    <span class="post-type">개념</span>
+    <span class="post-title">AIDE² 비판적 리뷰 — "최초의 재귀적 자기개선"</span>
+    <span class="post-dek">에이전트가 8일 무인으로 돌며 2년간 손으로 다듬은 에이전트를 이겼다. 무너지는 건 본문이 아니라 제목이고, 진짜 기여는 델타 크기가 아니라 평가의 엄격함이다.</span>
+  </a>
   <a class="post-card" href="ai-엔지니어링/skillopt-비판적-리뷰">
     <span class="post-type">개념</span>
     <span class="post-title">SkillOpt 비판적 리뷰</span>
