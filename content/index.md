@@ -140,6 +140,11 @@ title: 지식 위키
     <span class="post-title">Orca — 에이전트를 위해 만들어진 CLI</span>
     <span class="post-dek">git worktree로 코딩 에이전트를 병렬 격리하는 ADE. CLI를 직접 뜯어보니 1급 사용자가 사람이 아니라 에이전트였다 — 그 대가는 워크트리마다 다시 짓는 환경이다.</span>
   </a>
+  <a class="post-card" href="ai-엔지니어링/marketing-skills-라이브러리">
+    <span class="post-type">도구</span>
+    <span class="post-title">marketingskills — 스킬 라이브러리 설계의 참조 구현</span>
+    <span class="post-dek">마케팅 스킬 47개·CLI 64개를 "대규모 스킬 라이브러리를 어떻게 엔지니어링하는가"로 뜯었다. 공유 컨텍스트 루트·점진 공개·스킬별 eval·귀속 규율 4패턴, 그리고 리드젠 퍼널·미검증 품질이라는 그림자.</span>
+  </a>
   <a class="post-card" href="디자인-스킬-비교-실험">
     <span class="post-type">플레이북</span>
     <span class="post-title">디자인 스킬 비교 실험</span>
