@@ -125,6 +125,11 @@ title: 지식 위키
     <span class="post-title">Codex를 Claude Code 서브에이전트로</span>
     <span class="post-dek">설정을 직접 실행해 검증했다 — 세션이 Codex로 바뀌는 게 아니라 Claude가 필요할 때 부르는 도구다. 컨텍스트 미공유·모델 불투명·비용 이전이라는 대가까지.</span>
   </a>
+  <a class="post-card" href="ai-엔지니어링/orca-ade">
+    <span class="post-type">도구</span>
+    <span class="post-title">Orca — 에이전트를 위해 만들어진 CLI</span>
+    <span class="post-dek">git worktree로 코딩 에이전트를 병렬 격리하는 ADE. CLI를 직접 뜯어보니 1급 사용자가 사람이 아니라 에이전트였다 — 그 대가는 워크트리마다 다시 짓는 환경이다.</span>
+  </a>
   <a class="post-card" href="디자인-스킬-비교-실험">
     <span class="post-type">플레이북</span>
     <span class="post-title">디자인 스킬 비교 실험</span>
