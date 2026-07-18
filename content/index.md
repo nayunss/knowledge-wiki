@@ -70,6 +70,11 @@ title: 지식 위키
     <span class="post-title">하네스 엔지니어링의 미래</span>
     <span class="post-dek">하네스는 흡수되고 있다 — 다만 모델 가중치가 아니라 벤더의 API·플랫폼으로. 사라질 것과 남을 것.</span>
   </a>
+  <a class="post-card" href="ai-엔지니어링/하네스-핸드북">
+    <span class="post-type">논문리뷰</span>
+    <span class="post-title">Harness Handbook — 병목은 '편집'이 아니라 '어디를 편집할지'</span>
+    <span class="post-dek">하네스 진화의 진짜 병목은 behavior localization이다. 코드와 동기화된 L1–L3 행위 트리로 푸는 접근을 실측과 함께 뜯었다 (arXiv 2607.13285).</span>
+  </a>
   <a class="post-card feature" href="ai-엔지니어링/aide2-재귀적-자기개선">
     <span class="post-type">개념</span>
     <span class="post-title">AIDE² 비판적 리뷰 — "최초의 재귀적 자기개선"</span>
