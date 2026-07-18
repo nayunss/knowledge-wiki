@@ -10,6 +10,11 @@ title: 지식 위키
 <p class="section-label">AI 엔지니어링</p>
 
 <div class="post-grid">
+  <a class="post-card" href="ai-엔지니어링/에이전트-자기개선-서베이">
+    <span class="post-type">분석</span>
+    <span class="post-title">에이전트 자기개선 서베이 — 무엇을 바꾸나 × 무슨 신호로 바꾸나</span>
+    <span class="post-dek">Schmidhuber 그룹의 self-improvement 서베이를 2축(업데이트 대상×변화 신호)으로 읽고, 실무자가 손댈 수 있는 자리를 짚는다.</span>
+  </a>
   <a class="post-card" href="ai-엔지니어링/에이전트-스킬은-워크플로다">
     <span class="post-type">설계결정</span>
     <span class="post-title">에이전트 스킬은 지식이 아니라 워크플로다</span>
