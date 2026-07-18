@@ -95,6 +95,11 @@ title: 지식 위키
 <p class="section-label">실전 · 도구</p>
 
 <div class="post-grid">
+  <a class="post-card feature" href="ai-엔지니어링/ai-화면제작-sdlc-토론">
+    <span class="post-type">플레이북</span>
+    <span class="post-title">AI가 화면을 그리는 시대의 SDLC</span>
+    <span class="post-dek">당근 Kraft와 오늘의집 AI 활용기를 나란히 읽고, 프론트엔드·바이브코딩·기획/디자이너 세 직군으로 토론해 뽑은 화면 제작 SDLC 한 장 — "그리게 하지 말고 결정·검증을 맡겨라".</span>
+  </a>
   <a class="post-card feature" href="ai-엔지니어링/system-prompts-leaks">
     <span class="post-type">플레이북</span>
     <span class="post-title">system_prompts_leaks 읽는 법</span>
