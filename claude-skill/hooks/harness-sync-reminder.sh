@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Stop 훅 — 위키 하네스 파일이 마지막 동기화 이후 바뀌었으면 sync 안내만 출력한다.
+# Stop 훅 — 위키 하네스 파일이 마지막 백업 이후 바뀌었으면 sync 안내만 출력한다.
 # 자동 sync/커밋은 하지 않는다(사람이 통제). 조용할 땐 아무것도 출력하지 않는다.
 set -uo pipefail
 
@@ -20,7 +20,6 @@ FILES=(
   "$CL/agents/readability-reviewer.md"
 )
 
-# 존재하는 파일만 해시(내용 기준, 경로 정렬로 안정적)
 now="$(for f in "${FILES[@]}"; do [ -f "$f" ] && shasum -a 256 "$f"; done | sort | shasum -a 256 | cut -d' ' -f1)"
 prev="$(cat "$MARK" 2>/dev/null || echo '')"
 
@@ -28,8 +27,8 @@ prev="$(cat "$MARK" 2>/dev/null || echo '')"
 if [ -z "$prev" ]; then echo "$now" > "$MARK"; exit 0; fi
 
 if [ "$now" != "$prev" ]; then
-  echo "🔧 위키 하네스 파일이 마지막 백업 이후 바뀌었다. claude-skill 로 백업하라:"
-  echo "   knowledge-wiki 클론 안에서 → cd claude-skill && ./sync-from-local.sh"
-  echo "   (동기화·시크릿 게이트·커밋·푸시를 한 번에 하고, 끝나면 이 안내는 자동으로 멈춘다.)"
+  # Stop 훅은 systemMessage JSON을 내보내야 사용자에게 보인다.
+  # 메시지에 JSON 특수문자(따옴표·역슬래시·개행)를 쓰지 않아 직접 출력해도 안전하다.
+  printf '{"systemMessage": "위키 하네스 파일이 마지막 백업 이후 바뀌었다. knowledge-wiki 클론에서 cd claude-skill 후 ./sync-from-local.sh 로 백업하라 (동기화·시크릿게이트·커밋·푸시 일괄). 끝나면 이 안내는 자동으로 멈춘다."}\n'
 fi
 exit 0
