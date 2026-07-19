@@ -10,6 +10,11 @@ title: 지식 위키
 <p class="section-label">AI 엔지니어링</p>
 
 <div class="post-grid">
+  <a class="post-card" href="ai-엔지니어링/tinker-cookbook">
+    <span class="post-type">도구</span>
+    <span class="post-title">Tinker & tinker-cookbook — 파인튜닝의 '중간 층'을 여는 매니지드 학습 SDK</span>
+    <span class="post-dek">저수준 학습 루프는 사용자가 쥐고 분산 인프라만 위임하는 파인튜닝 SDK Tinker와, 그 위의 레시피 라이브러리를 갈라 해부하고 자기개선 지도의 θ축에 자리매김한다.</span>
+  </a>
   <a class="post-card" href="ai-엔지니어링/cerebras-지식베이스">
     <span class="post-type">분석</span>
     <span class="post-title">Cerebras 사내 지식 베이스 — 이 설계에서 얻는 인사이트</span>
