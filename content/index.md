@@ -10,6 +10,11 @@ title: 지식 위키
 <p class="section-label">AI 엔지니어링</p>
 
 <div class="post-grid">
+  <a class="post-card" href="ai-엔지니어링/cerebras-지식베이스">
+    <span class="post-type">분석</span>
+    <span class="post-title">Cerebras 사내 지식 베이스 — 이 설계에서 얻는 인사이트</span>
+    <span class="post-dek">하루 15,000개 질문을 받는 지식 베이스의 설계에서 6개 원리와 각각에 딸린 조건·비용을 뽑는다. 원문을 세 관점으로 토론해 재구성.</span>
+  </a>
   <a class="post-card feature" href="ai-엔지니어링/ai-에이전트-통제-시스템">
     <span class="post-type">설계결정</span>
     <span class="post-title">AI 에이전트의 경쟁력은 모델이 아니라 통제 시스템에서 나온다</span>
