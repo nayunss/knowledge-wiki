@@ -10,6 +10,11 @@ title: 지식 위키
 <p class="section-label">AI 엔지니어링</p>
 
 <div class="post-grid">
+  <a class="post-card feature" href="ai-엔지니어링/ai-native-ai-dlc-토론">
+    <span class="post-type">토론</span>
+    <span class="post-title">AI Native는 도착지가 아니라 방향이다 — 세 실무기를 읽고 세 직군과 토론했다</span>
+    <span class="post-dek">subicura AX 여정·AWS AI-DLC·Boris Cherny 도입 단계를 전환 리더·현장 개발자·회의적 아키텍트 세 시각으로 토론해, 단계 모델은 엔진이 아니라 진단 좌표이고 진짜 병목은 요구사항 정의라는 좌표를 뽑았다.</span>
+  </a>
   <a class="post-card" href="ai-엔지니어링/tinker-cookbook">
     <span class="post-type">도구</span>
     <span class="post-title">Tinker & tinker-cookbook — 파인튜닝의 '중간 층'을 여는 매니지드 학습 SDK</span>
