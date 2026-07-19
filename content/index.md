@@ -55,6 +55,11 @@ title: 지식 위키
     <span class="post-title">루프 엔지니어링</span>
     <span class="post-dek">완료 조건까지 반복 실행시키는 제어 흐름. 최상층.</span>
   </a>
+  <a class="post-card" href="ai-엔지니어링/그래프-엔지니어링">
+    <span class="post-type">개념</span>
+    <span class="post-title">그래프 엔지니어링</span>
+    <span class="post-dek">에이전트 실행을 명시적 그래프로 형식화하는 2026 부상 개념. 프리미티브는 실질, '새 층인가'·'순환 vs DAG'는 열린 쟁점.</span>
+  </a>
   <a class="post-card" href="ai-엔지니어링/이중-루프-아키텍처">
     <span class="post-type">개념</span>
     <span class="post-title">이중 루프(dual-loop) 아키텍처</span>
