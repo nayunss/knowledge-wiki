@@ -10,6 +10,11 @@ title: 지식 위키
 <p class="section-label">AI 엔지니어링</p>
 
 <div class="post-grid">
+  <a class="post-card feature" href="ai-엔지니어링/ai-에이전트-통제-시스템">
+    <span class="post-type">설계결정</span>
+    <span class="post-title">AI 에이전트의 경쟁력은 모델이 아니라 통제 시스템에서 나온다</span>
+    <span class="post-dek">종료 조건·증거 기반 검증·라우팅·멀티 에이전트의 경계로 Avid의 에이전트 스택을 비판적으로 재구성한다.</span>
+  </a>
   <a class="post-card" href="ai-엔지니어링/에이전트-자기개선-서베이">
     <span class="post-type">분석</span>
     <span class="post-title">에이전트 자기개선 서베이 — 무엇을 바꾸나 × 무슨 신호로 바꾸나</span>
