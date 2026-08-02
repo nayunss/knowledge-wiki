@@ -10,6 +10,11 @@ title: 지식 위키
 <p class="section-label">AI 엔지니어링</p>
 
 <div class="post-grid">
+  <a class="post-card feature" href="ai-엔지니어링/claude5-컨텍스트-엔지니어링-새-규칙">
+    <span class="post-type">비판적 리뷰</span>
+    <span class="post-title">Claude 5 세대의 컨텍스트 엔지니어링 — 80% 삭제는 어디까지 우리 것인가</span>
+    <span class="post-dek">Anthropic이 Claude Code 시스템 프롬프트의 80% 이상을 지웠다고 밝힌 글을 원문 대조로 검토한다. 그 수치는 자기 프롬프트를·자기 모델에서·자기 평가로 재서 지운 값이고, 우리에게 넘어오는 건 숫자가 아니라 삭제의 순서와 예외다.</span>
+  </a>
   <a class="post-card feature" href="ai-엔지니어링/ai-native-ai-dlc-토론">
     <span class="post-type">토론</span>
     <span class="post-title">AI Native는 도착지가 아니라 방향이다 — 세 실무기를 읽고 세 직군과 토론했다</span>
