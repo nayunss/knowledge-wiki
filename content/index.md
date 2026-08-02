@@ -15,6 +15,11 @@ title: 지식 위키
     <span class="post-title">AI Native는 도착지가 아니라 방향이다 — 세 실무기를 읽고 세 직군과 토론했다</span>
     <span class="post-dek">subicura AX 여정·AWS AI-DLC·Boris Cherny 도입 단계를 전환 리더·현장 개발자·회의적 아키텍트 세 시각으로 토론해, 단계 모델은 엔진이 아니라 진단 좌표이고 진짜 병목은 요구사항 정의라는 좌표를 뽑았다.</span>
   </a>
+  <a class="post-card" href="ai-엔지니어링/boris-cherny-ai-도입-5단계">
+    <span class="post-type">레퍼런스</span>
+    <span class="post-title">Boris Cherny의 AI 도입 5단계 — 로드맵을 읽는 법</span>
+    <span class="post-dek">Cherny의 조직 AI 도입 5단계(Stage 0–4)를 단계별로 렌더링하고 읽는 법을 짚는다. 규모 숫자는 개발자당 에이전트 비율이지 시간표가 아니고, 진짜 척추는 병목의 이동이며, Cherny의 1차 골격과 Palmer의 해설층을 갈라 읽어야 한다.</span>
+  </a>
   <a class="post-card" href="ai-엔지니어링/tinker-cookbook">
     <span class="post-type">도구</span>
     <span class="post-title">Tinker & tinker-cookbook — 파인튜닝의 '중간 층'을 여는 매니지드 학습 SDK</span>
