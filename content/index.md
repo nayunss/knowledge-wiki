@@ -10,6 +10,11 @@ title: 지식 위키
 <p class="section-label">AI 엔지니어링</p>
 
 <div class="post-grid">
+  <a class="post-card feature" data-date="2026-08-03" href="ai-엔지니어링/에이전트-팀-만들기-비판적-리뷰">
+    <span class="post-type">비판적 리뷰</span>
+    <span class="post-title">에이전트 5인 팀 만들기 — 구조는 서고, 근거는 무너진다</span>
+    <span class="post-dek">조회 459K의 X 아티클을 1차 출처에 대조했다. 65%도 90.2%도 틀린 숫자가 아닌데 그 수치가 붙은 문장은 어긋나고, 저자의 운영 구조론은 그와 무관하게 살아남는다.</span>
+  </a>
   <a class="post-card feature" data-date="2026-08-02" href="ai-엔지니어링/ai-prd-리뷰어-토론">
     <span class="post-type">토론</span>
     <span class="post-title">결정 앞에 AI를 두다 — Uber의 PRD 평가기를 여섯 직무와 토론했다</span>
