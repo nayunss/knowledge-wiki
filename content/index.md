@@ -228,7 +228,7 @@ title: 지식 위키
   <a class="post-card" data-date="2026-07-04" href="agents-cli-lifecycle-sdlc">
     <span class="post-type">개념</span>
     <span class="post-title">agents-cli 라이프사이클과 SDLC</span>
-    <span class="post-dek">8단계 라이프사이클을 AI 시대 새 SDLC의 참조 구현으로 읽기.</span>
+    <span class="post-dek">7단계 라이프사이클을 AI 시대 SDLC의 참조 사례로 읽기.</span>
   </a>
 </div>
 

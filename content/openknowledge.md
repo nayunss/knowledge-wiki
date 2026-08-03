@@ -1,7 +1,7 @@
 ---
 title: OpenKnowledge — 에이전트가 읽고 쓰는 마크다운 위키 도구
 type: 도구
-description: inkeep/open-knowledge 설치·사용법과 냉정한 장단점 (v0.29.1 실측, 2026-07-17 기준 최신 v0.32.0). MCP·에이전틱 서치·git 동기화를 갖춘 로컬 우선 마크다운 에디터를, 이미 Quartz+git 위키를 굴리는 사람 관점에서 평가한다.
+description: inkeep/open-knowledge 설치·사용법과 장단점(v0.29.1 실측). MCP·에이전틱 서치·git 동기화를 갖춘 로컬 우선 마크다운 에디터를 Quartz+git 위키 운영자 관점에서 평가하고, 현재 릴리스와 실측 기준을 구분한다.
 tags: [도구, 위키, mcp, 마크다운]
 resource: https://github.com/inkeep/open-knowledge
 ---
@@ -14,7 +14,7 @@ OpenKnowledge는 그 사이를 메우겠다는 도구다. **마크다운 파일�
 
 **이미 마크다운 위키를 Git으로 운영하고 있다면 OpenKnowledge는 대체재가 아니라 작성·정리 레이어의 보완재다.** 발행(퍼블리싱)은 여전히 [[llm-wiki-구조]]의 Quartz가 하고, OpenKnowledge는 "쓰고 잇는" 구간을 담당한다. 반대로 위키가 아직 없다면, 스타터팩 하나로 Karpathy식 LLM 위키를 5분 만에 세울 수 있는 가장 빠른 경로다.
 
-값은 치러야 한다. v0.32.0이 된 지금도 여전히 **0.x**다. 데스크톱 앱은 **Apple Silicon macOS 전용**이고, CLI 웹앱은 **Node.js 24 이상**을 요구한다. 라이선스는 **GPL-3.0-or-later** — 사내 제품에 코드를 끌어다 쓸 생각이라면 지금 멈춰야 한다.
+값은 치러야 한다. 2026-08-03 현재 최신 릴리스는 **v0.45.5**이며 여전히 0.x다. 이 글의 명령·동작 실측은 v0.29.1 기준이므로 최신 버전에서는 공식 문서와 `--help`를 다시 확인해야 한다. 라이선스는 **GPL-3.0-or-later**다. 사내 제품에 코드를 결합하거나 배포하려면 사용 형태가 라이선스 의무를 발생시키는지 법률 검토가 필요하다.
 
 ---
 
@@ -258,7 +258,7 @@ MCP 등록은 "surgical"하다고 문서화돼 있다 — 자기 항목만 추�
 
 ## 출처
 
-- inkeep/open-knowledge — GitHub 저장소 (실측 v0.29.1, 2026-07-17 기준 최신 v0.32.0, GPL-3.0-or-later): https://github.com/inkeep/open-knowledge
+- inkeep/open-knowledge — GitHub 저장소 (실측 v0.29.1, 2026-08-03 최신 릴리스 v0.45.5, GPL-3.0-or-later): https://github.com/inkeep/open-knowledge
 - OpenKnowledge 공식 문서 (로컬 클론 `docs/content/` 기준, v0.29.1):
   - Quickstart — 설치 요구사항(macOS Apple Silicon / Node.js 24+ / git): `docs/content/get-started/quickstart.mdx`
   - What OpenKnowledge writes to your system — 파일 시스템 쓰기·옵트아웃·데이터 유출 목록: `docs/content/reference/what-open-knowledge-writes.mdx`

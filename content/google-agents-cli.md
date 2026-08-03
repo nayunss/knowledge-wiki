@@ -16,7 +16,7 @@ tags:
 
 - 저장소: `github.com/google/agents-cli`
 - 문서: `google.github.io/agents-cli`
-- 최신: **v1.1.0** (2026-07-10 릴리스, 2026-07-17 확인) · v1.0.0 GA 전환은 2026-07-01
+- 현재 릴리스: **v1.2.1** (2026-07-23 릴리스, GitHub Releases API로 2026-08-03 확인) · v1.0.0 GA 전환은 2026-07-01
 
 ## 무엇을 해결하나
 
@@ -49,7 +49,7 @@ npx skills add google/agents-cli
 ## 핵심 커맨드
 
 ```bash
-agents-cli scaffold <name>          # 새 프로젝트 생성
+agents-cli create <name>            # 새 프로젝트 생성
 agents-cli run "prompt"             # 로컬에서 에이전트 실행
 agents-cli eval generate / grade    # 평가 생성/채점
 agents-cli deploy                   # Google Cloud 배포
@@ -74,4 +74,4 @@ agents-cli publish gemini-enterprise # 에이전트 레지스트리 등록
 - [google/agents-cli (GitHub)](https://github.com/google/agents-cli)
 - [agents-cli 공식 문서](https://google.github.io/agents-cli/)
 - [Google Cloud 문서 — ADK + Agents CLI 퀵스타트](https://docs.cloud.google.com/gemini-enterprise-agent-platform/agents/quickstart-adk)
-- [TechTimes — Google agents-cli adds skills to Claude Code and Codex](https://www.techtimes.com/articles/319412/20260701/google-agents-cli-one-command-adds-ai-agent-lifecycle-skills-claude-code-codex.htm)
+- [agents-cli 릴리스](https://github.com/google/agents-cli/releases)
