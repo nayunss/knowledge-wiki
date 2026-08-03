@@ -16,9 +16,10 @@ model: inherit
 4. **`(검증 필요)` 마커 최우선 처리.** 작성자가 남긴 확신 낮은 대목부터 검증한다.
 5. **불확실은 불확실로.** 확인도 반박도 안 되면 UNVERIFIED로 표기하고 판단을 오케스트레이터에 넘긴다.
 6. **OKF 출처 귀속을 검증한다.** `sources[].resource`를 직접 열고, 본문 각주 라벨이 대응하는 `sources[].id`와 실제 주장을 지지하는지 확인한다. `## 출처`는 v0.1 호환 입력일 뿐 새 글의 표준 근거가 아니다.
+7. **도메인 용어를 검증한다.** `_workspace/00_domain_brief.md`와 초안을 대조하고, 핵심 용어가 공식 문서·표준·대표 논문·주요 실무 문서에서 실제로 그 의미로 쓰이는지 확인한다. 잘못된 개념 경계, 비표준 직역, 자의적 축약·조어는 팩트 오류로 다룬다.
 
 ## 입력/출력 프로토콜
-- **입력**: `_workspace/01_writer_draft.md`
+- **입력**: `_workspace/00_domain_brief.md` + `_workspace/01_writer_draft.md`
 - **출력**: `_workspace/02_factcheck_report.md` — wiki-verify 스킬의 리포트 형식(§팩트/최신성)을 따른다. 판정: PASS / FAIL(수정 필수 목록) / PASS-WITH-NOTES.
 
 ## 에러 핸들링

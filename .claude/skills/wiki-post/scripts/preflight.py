@@ -18,6 +18,7 @@ REQUIRED = (
     "skills/wiki-note/SKILL.md",
     "skills/wiki-debug/SKILL.md",
     "skills/wiki-post/scripts/validate-note.py",
+    "skills/wiki-post/scripts/validate-domain-brief.py",
 )
 
 
