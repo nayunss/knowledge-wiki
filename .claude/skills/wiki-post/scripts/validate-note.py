@@ -21,6 +21,10 @@ from pathlib import Path
 PROFILE_REQUIRED = ("type", "title", "description", "tags")
 RESERVED_NAMES = {"index.md", "log.md"}
 STATUS_VALUES = {"draft", "stable", "deprecated"}
+POST_EDIT_GRAMMAR_PATTERNS = (
+    (re.compile(r"관점(?:와|를|가|다)(?![가-힣])"), "잘못된 조사 결합"),
+    (re.compile(r"(?:방식|역할|기준|맥락)다(?![가-힣])"), "명사 뒤 서술격 조사 누락"),
+)
 
 
 def split_document(text: str) -> tuple[str | None, str]:
@@ -101,6 +105,12 @@ def valid_iso_datetime(value: str) -> bool:
         return "T" in candidate
     except ValueError:
         return False
+
+
+def prose_only(text: str) -> str:
+    """코드 예시 안의 의도적인 오류 표기는 문법 검사에서 제외한다."""
+    without_fences = re.sub(r"```.*?```", "", text, flags=re.S)
+    return re.sub(r"`[^`\n]+`", "", without_fences)
 
 
 def validate(path: Path, inventory: Path | None = None) -> tuple[list[str], list[str]]:
@@ -197,6 +207,11 @@ def validate(path: Path, inventory: Path | None = None) -> tuple[list[str], list
         warns.append(f"강조 인접 따옴표 — 렌더 확인: …{text[max(0, match.start()-15):match.end()+5]}…")
     for match in re.finditer(r"~(?=[0-9])", text):
         warns.append(f"물결 표기 — 근사 '약 N', 범위 'N–M' 권장: …{text[max(0, match.start()-10):match.end()+8]}…")
+    prose = prose_only(body)
+    for pattern, label in POST_EDIT_GRAMMAR_PATTERNS:
+        for match in pattern.finditer(prose):
+            excerpt = prose[max(0, match.start() - 15) : match.end() + 15].replace("\n", " ")
+            fails.append(f"치환 후 문법 회귀({label}): …{excerpt}…")
 
     if inventory and inventory.exists():
         known = {os.path.basename(item) for item in re.findall(r"`([^`]+)`", inventory.read_text(encoding="utf-8"))}

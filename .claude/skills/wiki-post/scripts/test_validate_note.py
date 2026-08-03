@@ -119,6 +119,40 @@ tags: [test]
 """, "index.md")
         self.assertTrue(any("예약" in failure for failure in fails))
 
+    def test_post_edit_particle_regressions_fail(self):
+        broken_phrases = ("백엔드 관점와 보안 관점", "평가 관점를 적용한다", "QA 관점가", "QA 관점다")
+        for broken in broken_phrases:
+            with self.subTest(broken=broken):
+                text = "---\ntype: 개념\ntitle: 조사 회귀\ndescription: 설명\ntags: [test]\n---\n" + broken
+                fails, _ = self.run_gate(text)
+                self.assertTrue(any("치환 후 문법 회귀" in failure for failure in fails))
+
+    def test_valid_viewpoint_particles_pass(self):
+        text = """---
+type: 개념
+title: 정상 조사
+description: 설명
+tags: [test]
+---
+보안 관점과 QA 관점을 함께 검토한다. 이 관점이 기준이다.
+"""
+        fails, _ = self.run_gate(text)
+        self.assertFalse(any("치환 후 문법 회귀" in failure for failure in fails))
+
+    def test_post_edit_regression_examples_in_code_are_ignored(self):
+        text = """---
+type: 개념
+title: 코드 예시
+description: 설명
+tags: [test]
+---
+```text
+관점와 관점다
+```
+"""
+        fails, _ = self.run_gate(text)
+        self.assertFalse(any("치환 후 문법 회귀" in failure for failure in fails))
+
 
 if __name__ == "__main__":
     unittest.main()
