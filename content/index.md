@@ -18,7 +18,7 @@ title: 지식 위키
   <a class="post-card feature" data-date="2026-08-02" href="ai-엔지니어링/ai-prd-리뷰어-토론">
     <span class="post-type">토론</span>
     <span class="post-title">결정 앞에 AI를 두다 — Uber의 PRD 평가기를 여섯 직무와 토론했다</span>
-    <span class="post-dek">Uber가 만든 first-pass AI PRD 리뷰어를 원문 그대로 렌더링한 뒤 백엔드·평가·보안·디자인·리더십·QA 여섯 렌즈로 토론했다. 개입 지점은 영리하지만 효과의 크기를 잴 수치가 없고, 이전 가능한 건 인덱스가 아니라 스코어카드 서식이다.</span>
+    <span class="post-dek">Uber가 만든 first-pass AI PRD 리뷰어를 원문 그대로 렌더링한 뒤 백엔드·평가·보안·디자인·리더십·QA 여섯 관점으로 토론했다. 개입 지점은 영리하지만 효과의 크기를 잴 수치가 없고, 이전 가능한 건 인덱스가 아니라 스코어카드 서식이다.</span>
   </a>
   <a class="post-card feature" data-date="2026-08-02" href="ai-엔지니어링/claude5-컨텍스트-엔지니어링-새-규칙">
     <span class="post-type">비판적 리뷰</span>
@@ -148,7 +148,7 @@ title: 지식 위키
   <a class="post-card feature" data-date="2026-07-17" href="ai-엔지니어링/system-prompts-leaks">
     <span class="post-type">플레이북</span>
     <span class="post-title">system_prompts_leaks 읽는 법</span>
-    <span class="post-dek">프론티어 AI의 숨은 시스템 프롬프트를 모은 5.8만 별 아카이브 — 최고의 프롬프트·하네스 교보재지만 "정본"으로 인용하면 안 되는 이유와 4개 활용 렌즈.</span>
+    <span class="post-dek">프론티어 AI의 숨은 시스템 프롬프트를 모은 5.8만 별 아카이브 — 최고의 프롬프트·하네스 교보재지만 "정본"으로 인용하면 안 되는 이유와 4개 분석 관점.</span>
   </a>
   <a class="post-card" data-date="2026-07-17" href="kinetics-뜯어보기">
     <span class="post-type">도구</span>
@@ -213,7 +213,7 @@ title: 지식 위키
   <a class="post-card" data-date="2026-07-14" href="ai-엔지니어링/marketing-skills-라이브러리">
     <span class="post-type">도구</span>
     <span class="post-title">marketingskills — 스킬 라이브러리 설계의 참조 구현</span>
-    <span class="post-dek">마케팅 스킬 47개·CLI 64개를 "대규모 스킬 라이브러리를 어떻게 엔지니어링하는가"로 뜯었다. 공유 컨텍스트 루트·점진 공개·스킬별 eval·귀속 규율 4패턴, 그리고 리드젠 퍼널·미검증 품질이라는 그림자.</span>
+    <span class="post-dek">마케팅 스킬 47개·CLI 64개를 "대규모 스킬 라이브러리를 어떻게 엔지니어링하는가"로 뜯었다. 공유 컨텍스트 루트·점진 공개·스킬별 eval·귀속 규율 4패턴, 그리고 잠재 고객 확보 경로·미검증 품질이라는 그림자.</span>
   </a>
   <a class="post-card" data-date="2026-07-09" href="디자인-스킬-비교-실험">
     <span class="post-type">플레이북</span>
@@ -243,7 +243,7 @@ title: 지식 위키
   <a class="post-card" data-date="2026-07-03" href="llm-wiki-구조">
     <span class="post-type">개념</span>
     <span class="post-title">LLM 위키 구조</span>
-    <span class="post-dek">이 저장소를 위키·RAG·편집 세 렌즈로 쓰는 단일 원본 구조.</span>
+    <span class="post-dek">이 저장소를 위키·RAG·편집 세 가지 방식으로 쓰는 단일 원본 구조.</span>
   </a>
   <a class="post-card" data-date="2026-07-03" href="위키-설계-결정">
     <span class="post-type">설계결정</span>
@@ -253,6 +253,6 @@ title: 지식 위키
   <a class="post-card" data-date="2026-07-04" href="claude-project-github-연결">
     <span class="post-type">개념</span>
     <span class="post-title">Claude Project × GitHub</span>
-    <span class="post-dek">저장소를 붙이면 답변이 어떻게 만들어지나 — RAG 렌즈의 원리.</span>
+    <span class="post-dek">저장소를 붙이면 답변이 어떻게 만들어지나 — RAG 활용 방식의 원리.</span>
   </a>
 </div>
