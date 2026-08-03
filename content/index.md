@@ -10,6 +10,11 @@ title: 지식 위키
 <p class="section-label">AI 엔지니어링</p>
 
 <div class="post-grid">
+  <a class="post-card feature" data-date="2026-08-02" href="ai-엔지니어링/ai-prd-리뷰어-토론">
+    <span class="post-type">토론</span>
+    <span class="post-title">결정 앞에 AI를 두다 — Uber의 PRD 평가기를 여섯 직무와 토론했다</span>
+    <span class="post-dek">Uber가 만든 first-pass AI PRD 리뷰어를 원문 그대로 렌더링한 뒤 백엔드·평가·보안·디자인·리더십·QA 여섯 렌즈로 토론했다. 개입 지점은 영리하지만 효과의 크기를 잴 수치가 없고, 이전 가능한 건 인덱스가 아니라 스코어카드 서식이다.</span>
+  </a>
   <a class="post-card feature" data-date="2026-08-02" href="ai-엔지니어링/claude5-컨텍스트-엔지니어링-새-규칙">
     <span class="post-type">비판적 리뷰</span>
     <span class="post-title">Claude 5 세대의 컨텍스트 엔지니어링 — 80% 삭제는 어디까지 우리 것인가</span>
