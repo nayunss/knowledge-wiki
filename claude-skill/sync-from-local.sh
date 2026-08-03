@@ -12,6 +12,7 @@ write_marker() {
     "$SRC/skills/wiki-note/SKILL.md" "$SRC/skills/wiki-post/SKILL.md"
     "$SRC/skills/wiki-post/scripts/validate-note.py" "$SRC/skills/wiki-verify/SKILL.md"
     "$SRC/skills/tech-writing/SKILL.md" "$SRC/skills/readability-review/SKILL.md"
+    "$SRC/skills/wiki-debug/SKILL.md"
     "$SRC/agents/tech-writer.md" "$SRC/agents/fact-checker.md"
     "$SRC/agents/copy-editor.md" "$SRC/agents/readability-reviewer.md"
   )
@@ -20,12 +21,18 @@ write_marker() {
 }
 
 # 1. 하네스 파일 끌어오기
-for name in wiki-note wiki-post wiki-verify tech-writing readability-review; do
+for name in wiki-note wiki-post wiki-verify tech-writing readability-review wiki-debug; do
   [ -d "$SRC/skills/$name" ] || continue
   mkdir -p "skills/$name"
   rsync -a --delete "$SRC/skills/$name/" "skills/$name/"
   echo "  ← skill  $name"
 done
+
+# 프로젝트 로컬 미러도 같은 내용으로 유지한다. 저장소 안에서 실행되는
+# 에이전트가 배포 묶음과 다른 하네스를 읽는 드리프트를 막는다.
+mkdir -p ../.claude/skills ../.claude/agents
+rsync -a --delete skills/ ../.claude/skills/
+rsync -a --delete agents/ ../.claude/agents/
 for a in tech-writer fact-checker copy-editor readability-reviewer; do
   [ -f "$SRC/agents/$a.md" ] && cp "$SRC/agents/$a.md" "agents/" && echo "  ← agent  $a"
 done

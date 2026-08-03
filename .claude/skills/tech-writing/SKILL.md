@@ -1,6 +1,6 @@
 ---
 name: tech-writing
-description: knowledge-wiki용 IT 기술 글 작성 가이드 — 테크에반젤리스트+CTO 시각의 글 구조, 독자 설정, 설득 구조, OKF 형식(frontmatter/위키링크/출처)을 정의한다. 기술 글 초안 작성, 위키 글쓰기, tech-writer 에이전트 작업 시 반드시 이 스킬을 따를 것.
+description: knowledge-wiki용 IT 기술 글 작성 가이드 — 글 구조, 독자 설정, 설득 구조, OKF v0.2 형식과 출처 귀속을 정의한다. 기술 글 초안 작성과 tech-writer 작업 시 반드시 사용한다.
 ---
 
 # tech-writing — 기술 글 작성 가이드
@@ -14,7 +14,7 @@ knowledge-wiki에 올라가는 모든 기술 글의 작성 표준. "누가"는 t
 3. **본문** — 주장을 지탱하는 섹션들. 각 섹션도 두괄식. 비교는 표, 절차는 번호 목록, 구조는 코드블록/다이어그램.
 4. **트레이드오프 섹션 (필수)** — 한계, 안 맞는 경우, 대안. 이 섹션이 없으면 미완성 글이다.
 5. **실무 적용 (권장)** — "그래서 내일 뭘 하면 되나". CTO 시각: 도입 판단 기준, 비용, 팀 역량 요구.
-6. **관련/출처** — 맨 아래 `관련:` 위키링크 줄 + `## 출처` 섹션.
+6. **관련/출처** — 관련 개념은 Markdown 링크로 연결하고, 외부 근거는 frontmatter `sources`와 본문 각주로 주장 단위 귀속한다.
 
 ## 2. 문장 규칙
 
@@ -29,21 +29,37 @@ knowledge-wiki에 올라가는 모든 기술 글의 작성 표준. "누가"는 t
 - **주장 → 근거 → 예시** 3박자. 근거 없는 주장은 쓰지 않거나 "추정"으로 명시.
 - 확신이 낮은 대목엔 `(검증 필요)` 마커를 남긴다 — fact-checker가 우선 검증한다.
 - 반론을 선제 처리한다: "~라고 생각할 수 있다. 하지만 ...".
+- **연결의 근거.** 각각 참인 두 사실을 인과·비교·일반화로 이은 문장은 별개의 주장이다. 같은 출처가 그 연결을 지지하는지 확인하고, 없으면 저자의 해석임을 밝히거나 연결을 약화한다. 요약·리드·결론·표처럼 압축되는 위치에서도 이 귀속을 다시 확인한다.
+- 직접 센 수치는 집계 범위와 재현 방법을 함께 기록한다. 출처가 발표한 수치는 해당 출처가 방법의 기준이다.
 
-## 4. OKF 형식 (필수)
+## 4. OKF v0.2 + knowledge-wiki 발행 프로필
+
+OKF v0.2에서 항상 필수인 키는 `type` 하나다. 다만 이 위키는 검색·리뷰 품질을 위해 `title`, `description`, `tags`까지 필수로 요구한다. 이것은 OKF 자체의 필수 조건이 아니라 **knowledge-wiki 발행 프로필**이다.
 
 ```yaml
 ---
 title: 표시 제목
-type: 개념 | 도구 | 설계결정 | 레퍼런스 | 플레이북
+type: 개념 | 도구 | 설계결정 | 레퍼런스 | 플레이북 # 자유값
 description: 한 줄 요약 (index·검색·RAG에 쓰임)
 tags: [소문자, 2~4개]
 resource: https://…   # 특정 도구/레포/API를 다룰 때만
+status: draft | stable | deprecated # 선택, 생략하면 stable
+generated: { by: human:<id> | <producer>/<version>, at: <ISO 8601> } # 선택
+verified: { by: human:<id> | process:<id> | <producer>/<version>, at: <ISO 8601> } # 실제 확인했을 때만
+stale_after: YYYY-MM-DD # 시간 민감 노트만
+sources:
+  - id: source-key
+    resource: https://…
+    title: 원문 제목
 ---
 ```
 
-- 관련 노트는 본문 문맥 속 `[[위키링크]]`로. 없는 노트 링크 허용(stub).
-- 외부 근거는 맨 아래 `## 출처`에 목록으로 — 1차 출처(공식 문서·논문) 우선.
+- OKF 표준 내부 연결은 `[표시명](/경로/노트.md)` 또는 상대 Markdown 링크다. 새 글은 이 형식을 우선한다. 기존 `[[위키링크]]`는 Quartz 확장으로 허용하며 깨진 링크도 stub로 허용한다.
+- 외부 근거는 `sources`에 두고, 주장 뒤에 `[^source-key]`를 붙인 뒤 같은 라벨의 각주를 정의한다. 각주 라벨은 `sources[].id`와 일치해야 한다. 기존 `## 출처` 목록은 v0.1 호환 입력으로만 허용한다.
+- `generated`는 현재 내용의 생성 주체와 마지막 의미 있는 변경 시점이다. `verified`는 출처나 `resource`에 실제 대조한 이벤트만 기록한다. 둘을 같은 뜻으로 쓰지 않는다.
+- `status` 생략은 `stable`이다. `stale_after` 당일부터 오래된 것으로 판단한다.
+- `index.md`와 `log.md`는 예약 파일이며 일반 개념 노트명으로 사용하지 않는다. 번들 루트 `index.md`에는 `okf_version: "0.2"`를 선언할 수 있다.
+- `type: Attested Computation`이면 `runtime`이 필수다. `parameters`, `computation`, `executor`, `attester` 계약은 OKF v0.2 명세를 따른다.
 - 파일명: kebab-case + `.md`. 한 파일 = 한 주제.
 - AI 엔지니어링 주제는 `content/ai-엔지니어링/` 폴더에, 그 외는 `content/` 루트에.
 
@@ -53,5 +69,7 @@ resource: https://…   # 특정 도구/레포/API를 다룰 때만
 - [ ] 결론이 서두에 있는가
 - [ ] 모든 주장에 근거 또는 `(검증 필요)` 마커가 있는가
 - [ ] 트레이드오프 섹션이 있는가
-- [ ] OKF frontmatter 5필드 점검, `## 출처` 존재
-- [ ] 관련 위키 노트 1개 이상 [[링크]]했는가
+- [ ] `type`과 위키 프로필의 `title`·`description`·`tags`가 있는가
+- [ ] 외부 주장에 `sources` + 일치하는 각주가 있는가
+- [ ] `generated`와 `verified`를 실제 의미대로 썼는가
+- [ ] 관련 노트 1개 이상을 Markdown 링크 또는 Quartz 위키링크로 연결했는가

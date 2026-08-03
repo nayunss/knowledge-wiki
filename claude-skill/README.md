@@ -11,7 +11,8 @@ claude-skill/
 │   ├── wiki-post/         작성→검증→발행 오케스트레이터 (+ scripts/validate-note.py 병합 게이트)
 │   ├── wiki-verify/       검증 프로토콜 (최신성·팩트·오탈자·윤문)
 │   ├── tech-writing/      글 작성 가이드
-│   └── readability-review/ 발행 직전 최종 가독성 게이트
+│   ├── readability-review/ 발행 직전 최종 가독성 게이트
+│   └── wiki-debug/        발행 사후 진단·원장 행 초안
 ├── agents/
 │   ├── tech-writer.md          초안 작성
 │   ├── fact-checker.md         최신성·팩트 검증
@@ -20,6 +21,7 @@ claude-skill/
 ├── CLAUDE.project.md     프로젝트 CLAUDE.md 사본(참조용) — 하네스 트리거·변경 이력
 ├── install.sh            이 레포 → ~/.claude 설치
 ├── sync-from-local.sh    ~/.claude → 이 레포 (발행 전 백업)
+├── check-sync.sh         .claude 실행본과 배포본의 동일성 검사
 └── secrets.sh            커밋 전 시크릿·개인정보 게이트
 ```
 
@@ -29,6 +31,7 @@ claude-skill/
 git clone git@github.com:<OWNER>/knowledge-wiki.git
 cd knowledge-wiki/claude-skill
 ./install.sh                       # 스킬·에이전트를 ~/.claude 로 복사
+./check-sync.sh                    # 저장소 안 두 미러가 같은지 확인
 echo "git@github.com:<OWNER>/knowledge-wiki.git" > ~/.claude/wiki-note-repo.txt
 ```
 
@@ -46,4 +49,6 @@ git add claude-skill && git commit && git push
 
 ## 드리프트 주의
 
-`~/.claude`가 원본이고 이 레포는 백업·배포본이다. 한쪽만 고치면 갈라진다 — 로컬에서 스킬을 고쳤으면 `sync-from-local.sh`로 밀고, 이 레포를 다른 머신에서 클론했으면 `install.sh`로 당긴다. 하네스를 바꿀 땐 위키 노트 `위키-하네스`와 레포 README, 그리고 여기까지 같은 커밋에서 맞춘다(종속 문서 동기화 규칙).
+`~/.claude`가 개인 설치본이고, 저장소의 `.claude/`와 `claude-skill/`은 각각 프로젝트 실행본과 배포본이다. 저장소의 두 미러는 `check-sync.sh`가 완전 일치를 요구한다. 로컬 설치본을 바꿨으면 `sync-from-local.sh`로 두 미러에 반영하고, 다른 머신에서는 `install.sh`로 설치한다. 하네스를 바꿀 땐 위키 노트 `위키-하네스`와 레포 README도 같은 커밋에서 맞춘다.
+
+필수 에이전트·스킬은 모두 이 묶음에 포함된다. `humanize-korean`만 선택 의존성이며, 없을 때 copy-editor가 자체 최소 윤문으로 폴백한다. 에이전트는 `model: inherit`으로 특정 모델 제품명에 고정되지 않는다.

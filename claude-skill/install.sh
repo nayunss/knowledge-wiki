@@ -47,3 +47,4 @@ cat <<'JSON'
 JSON
 echo
 echo "완료. CLAUDE.project.md 는 참조용이다 — 프로젝트 루트의 CLAUDE.md 와 맞춰 둘 것."
+echo "저장소 미러 검사: ./check-sync.sh"

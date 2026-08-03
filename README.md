@@ -38,7 +38,7 @@ AI가 작성한 마크다운을 **한 곳에 모아** 위키로 보고, RAG로�
 
 ## 노트 형식 — OKF 규약
 
-노트는 [OKF(Open Knowledge Format)](https://github.com/GoogleCloudPlatform/knowledge-catalog/tree/main/okf)의 가벼운 규약을 따른다. OKF는 "md + YAML frontmatter를 벤더 중립 지식 포맷으로" 삼는 스펙으로, 이 위키의 설계 철학과 같다. 그중 가치 있는 규약만 차용했다.
+노트는 [OKF(Open Knowledge Format) v0.2](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md)를 따른다. OKF 자체에서 항상 필수인 frontmatter 키는 `type` 하나다. 이 위키는 검색·리뷰 품질을 위해 `title`·`description`·`tags`도 요구하는 별도 **발행 프로필**을 적용한다.
 
 **frontmatter**
 ```yaml
@@ -46,18 +46,28 @@ AI가 작성한 마크다운을 **한 곳에 모아** 위키로 보고, RAG로�
 title: 표시 제목
 type: 개념            # 개념 / 도구 / 설계결정 / 레퍼런스 / 플레이북 … (자유값, 서술적으로)
 description: 한 줄 요약   # index·검색 스니펫·미리보기·RAG 근거에 쓰임
-tags: [선택]
+tags: [소문자, 2~4개] # knowledge-wiki 발행 프로필 필수
 resource: https://…   # (선택) 특정 도구·레포·API를 다루는 노트면 정식 URL
+status: stable         # 선택: draft | stable | deprecated, 생략하면 stable
+generated: { by: human:<id>, at: 2026-08-03T00:00:00Z } # 선택
+verified: { by: human:<id>, at: 2026-08-03T01:00:00Z }  # 실제 대조했을 때만
+stale_after: 2026-12-31 # 선택: 이 날짜부터 오래된 것으로 판단
+sources:
+  - id: okf-spec
+    resource: https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md
+    title: Open Knowledge Format v0.2
 ---
 ```
 
 **본문·구조**
 - **구조적 마크다운 우선** — 제목·목록·표·코드블록이 프로즈보다 검색·에이전트 이해에 유리.
-- 관련 노트는 `[[위키링크]]`로 연결(없는 노트 링크 = 아직 안 쓴 지식 stub, 허용).
-- 외부 출처는 맨 아래 `## 출처` 섹션에 목록으로.
+- 새 내부 연결은 OKF 표준 Markdown 링크를 우선한다. 기존 `[[위키링크]]`는 Quartz 확장으로 계속 허용한다. 깨진 내부 링크도 stub로 허용된다.
+- 외부 출처는 frontmatter `sources`에 기록하고, 주장 뒤의 `[^okf-spec]` 각주 라벨을 같은 `sources[].id`에 연결한다. 기존 `## 출처`는 v0.1 호환 입력이다.
 - **점진적 탐색**: 주제가 뭉치면 `content/<주제>/` 폴더로 묶고, 폴더에 `index.md`(설명 포함 목록)를 둬 랜딩으로 삼는다. 예: `content/ai-엔지니어링/`.
+- v0.2의 `generated`(누가/언제 현재 내용을 만들었나)와 `verified`(누가/언제 출처에 대조했나)는 별개다. `verified` 유무로 소비자가 신뢰 단계를 유도하며, `stale_after`와 `status`로 최신성·수명주기를 판단한다.
+- `type: Attested Computation`은 `runtime`과 실행·검증 계약을 담아, 값이 승인된 계산 방식으로 생성됐는지 기계적으로 확인할 때 사용한다.
 
-**의도적으로 안 쓴 OKF 요소** (우리가 이미 더 낫게 해결): `timestamp`·`log.md`(→ git 이력), 절대링크(→ `[[위키링크]]`가 파일명으로 해석돼 이동에 안전), 번들 `viz.html`(→ Quartz 그래프뷰).
+**위키 프로필의 선택:** `log.md`는 git 이력으로 대체하고, 번들 `viz.html`은 Quartz 그래프뷰로 대체한다. v0.1의 `timestamp`와 본문 `# Citations`는 각각 v0.2의 `generated.at`과 `sources`로 대체됐다.
 
 > 이 규약은 `claude-skill/`의 wiki-note 스킬에 반영돼 있어, "위키에 올려줘"로 올리는 노트는 자동으로 이 형식을 갖춘다.
 
@@ -116,7 +126,7 @@ clone → 작성 → index 링크 → push. **순수 증분 약 3–5k 토큰, �
 | **wiki-debug** | 발행 사후 진단 — 게이트 판정·FAIL 분류·⑥ 회귀 계측 원장 행 초안 + 현재 원격 원장 재대조 | Phase 5 |
 | **wiki-note** | 검증 없는 단순 업로드 절차(경로 1). wiki-post의 발행 단계도 이 절차를 재사용 | "이거 올려줘" |
 
-에이전트 4개(작성 1 + 병렬 검증 2 + 최종 가독성 1, 전부 최상위 모델)가 돌아 품질을 사는 대신 비용이 크다(위 표의 wiki-debug는 서브에이전트 없이 오케스트레이터가 돌아 아래 비용표에 더해지지 않는다). **실측 기준** (1,200–1,600단어 글):
+에이전트 4개(작성 1 + 병렬 검증 2 + 최종 가독성 1)가 호출 런타임의 모델을 상속해 돌아간다. 서브에이전트를 지원하지 않는 런타임은 같은 역할을 순차 실행한다. 아래 비용은 당시 최상위 모델로 측정한 역사적 실측치다(위 표의 wiki-debug는 별도 서브에이전트 비용이 없다). **실측 기준** (1,200–1,600단어 글):
 
 | 단계 | 토큰(실측) | 시간(실측) |
 |---|---|---|
