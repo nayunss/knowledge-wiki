@@ -1,14 +1,14 @@
 ---
 title: 프로덕션 AI 에이전트의 기본 개념
 type: 개념
-description: "O'Reilly 'AI Agents: The Definitive Guide' 코드 레포를 읽고, LLM에서 에이전트로·프로토타입에서 프로덕션까지 필요한 기본 개념을 재구성·검증한 정리"
+description: "O'Reilly 'AI Agents: The Definitive Guide' 코드 저장소를 읽고, LLM에서 에이전트로·프로토타입에서 프로덕션까지 필요한 기본 개념을 재구성·검증한 정리"
 tags: [ai-agents, langgraph, mcp, 평가, 거버넌스, 프로덕션]
 resource: https://github.com/Nicolepcx/ai-agents-the-definitive-guide
 ---
 
 # 프로덕션 AI 에이전트의 기본 개념
 
-O'Reilly 책 *AI Agents: The Definitive Guide*의 공개 코드 레포(챕터별 Jupyter 노트북 35개)를 읽고, 거기서 다루는 개념 지도를 **직접 재서술**한 노트다. 책 본문이 아니라 코드 노트북의 개념·사용 도구만 뽑아 정리했고, 등장하는 프레임워크·주장·수치는 문서 끝의 독립 출처로 따로 검증했다. 표현이 아니라 뼈대만 가져왔다.
+O'Reilly 책 *AI Agents: The Definitive Guide*의 공개 코드 저장소(챕터별 Jupyter 노트북 35개)를 읽고, 거기서 다루는 개념 지도를 **직접 재서술**한 노트다. 책 본문이 아니라 코드 노트북의 개념·사용 도구만 뽑아 정리했고, 등장하는 프레임워크·주장·수치는 문서 끝의 독립 출처로 따로 검증했다. 표현이 아니라 뼈대만 가져왔다.
 
 한 문장으로 요약하면, 이 책의 12장은 **"LLM 한 번 호출"에서 시작해 "무너지지 않는 프로덕션 에이전트 시스템"까지 가는 길**을 순서대로 깐다. 그 길에서 반복해 나오는 교훈이 하나 있다.
 
@@ -64,7 +64,7 @@ O'Reilly 책 *AI Agents: The Definitive Guide*의 공개 코드 레포(챕터별
 
 여기서 무게중심이 "잘 되는 데모"에서 "안 무너지는 시스템"으로 넘어간다.
 
-- **Pydantic 계약** — 시스템 경계마다 타입을 계약으로 박아, 프로바이더별 JSON 차이나 타입 불일치를 하류에서 조용히 터지기 전에 경계에서 잡는다. 실패 시 자가 치유(그래프 refine 노드 또는 Instructor 자동 재시도)로 복구한다.
+- **Pydantic 계약** — 시스템 경계마다 타입 계약을 명시해, 제공자(provider)별 JSON 차이나 타입 불일치를 하류로 전파되기 전에 경계에서 차단한다. 실패 시 자가 치유(그래프 refine 노드 또는 Instructor 자동 재시도)로 복구한다.
 - **Lusser의 법칙 (곱셈 신뢰성 법칙)** — 직렬 시스템의 성공률은 각 단계 성공률의 **곱**이다. 그래서 에이전트를 길게 이으면 정확도가 빠르게 무너진다. 해법은 경계마다 검증을 넣는 것. 이건 로버트 루서가 1950년대 로켓 신뢰성에서 정립한 실제 공학 원리다.
 - **MCP (Model Context Protocol)** — 도구를 에이전트 코드에서 분리하는 범용 어댑터. 서버가 도구를 노출하고 클라이언트가 소비하며, 거버넌스는 모델이 아니라 서버 경계에서 강제한다. (Anthropic, 2024)
 - **deep agents** — 계획·서브에이전트·가상 파일시스템을 갖춘 장기 실행 에이전트 하네스(LangChain, Claude Code에서 영감).
@@ -120,7 +120,7 @@ O'Reilly 책 *AI Agents: The Definitive Guide*의 공개 코드 레포(챕터별
 12장을 꿰뚫는 규칙들 — 도메인이 무엇이든 차용할 수 있다.
 
 1. **신뢰성은 오케스트레이션과 제약에서 온다.** 더 좋은 모델이 아니라 더 좋은 경계·게이트·검증이 시스템을 세운다.
-2. **계약을 경계마다.** Pydantic 스키마를 시스템 이음매마다 박아 실패를 하류가 아니라 그 자리에서 잡는다.
+2. **계약을 경계마다 둔다.** Pydantic 스키마를 시스템 접점마다 명시해 실패를 하류가 아니라 해당 경계에서 잡는다.
 3. **거버넌스는 모델이 아니라 서버·게이트에서.** 허용목록·예산·승인·감사는 프롬프트가 아니라 코드로 강제한다.
 4. **직렬로 이으면 곱으로 무너진다 (Lusser).** 그래서 단계마다 검증을 끼운다.
 5. **비용은 토폴로지의 함수.** 아키텍처가 정해지면 비용의 형태도 정해진다.
@@ -129,7 +129,7 @@ O'Reilly 책 *AI Agents: The Definitive Guide*의 공개 코드 레포(챕터별
 
 ## 도구 지도
 
-레포 전체를 관통하는 백본은 넷이다.
+저장소 전체를 관통하는 백본은 넷이다.
 
 - **LangGraph** — 상태 그래프·라우팅·체크포인팅·인터럽트. 거의 모든 장의 뼈대.
 - **Pydantic** — 경계 계약·구조화 출력·정규화.
@@ -160,7 +160,7 @@ O'Reilly 책 *AI Agents: The Definitive Guide*의 공개 코드 레포(챕터별
 
 ## 출처
 
-- 코드 레포: *AI Agents: The Definitive Guide* (Nicole Königstein 외), <https://github.com/Nicolepcx/ai-agents-the-definitive-guide> — 개념·도구 지도의 출발점(본문 아닌 코드 노트북에서 추출).
+- 코드 저장소: *AI Agents: The Definitive Guide* (Nicole Königstein 외), <https://github.com/Nicolepcx/ai-agents-the-definitive-guide> — 개념·도구 지도의 출발점(본문 아닌 코드 노트북에서 추출).
 - MCP — Anthropic, Model Context Protocol (2024).
 - A2A — Google, Agent2Agent Protocol (2025, Linux Foundation 기증).
 - ART / RULER — OpenPipe, Agent Reinforcement Trainer.

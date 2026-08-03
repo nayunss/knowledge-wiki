@@ -27,7 +27,7 @@ date: 2026-07-19
 
 "Google이 TurboVec를 출시했다"는 문장은 사실 오류다. Google이 발표한 것은 알고리즘(TurboQuant)이고, TurboVec는 그 알고리즘을 가져다 쓴 독립 구현이다. 논문은 Google Research가 주도했고 저자는 Amir Zandieh, Majid Daliri, Majid Hadian, Vahab Mirrokni 네 명이다(소속은 Google Research·Google DeepMind·NYU로 섞여 있다). 라이브러리 저자와는 별개다.
 
-이 구분이 사소한 트집처럼 보인다면, 헤드라인이 어떻게 만들어졌는지를 보라. 논문의 "Google"이라는 권위와 라이브러리 README의 "31GB→4GB, FAISS 대비 속도"라는 구체 수치가 2차 블로그에서 한 문장으로 합쳐졌다. 각각은 사실이지만, 붙여 놓으니 "Google이 FAISS를 이기는 라이브러리를 냈다"는, 어느 1차 소스에도 없는 주장이 태어났다. 기술 뉴스를 읽을 때 반복되는 패턴이라 짚어둘 값어치가 있다.
+이 구분이 사소한 차이처럼 보인다면 헤드라인의 구성 방식을 확인할 필요가 있다. 논문의 "Google"이라는 권위와 라이브러리 README의 "31GB→4GB, FAISS 대비 속도"라는 구체 수치가 2차 블로그에서 한 문장으로 합쳐졌다. 각각은 사실이지만, 결합하는 순간 "Google이 FAISS를 이기는 라이브러리를 냈다"는 어느 1차 소스에도 없는 주장이 만들어진다. 기술 뉴스를 평가할 때 반복되는 패턴이므로 명확히 구분해야 한다.
 
 ## TurboQuant: 학습 없이 벡터를 압축하는 법
 

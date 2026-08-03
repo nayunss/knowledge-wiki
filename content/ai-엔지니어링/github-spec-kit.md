@@ -32,7 +32,7 @@ specify init my-project --integration claude
 
 요구 사항은 Python 3.11+, git, uv(또는 pipx)다. `specify integration list`로 지원 에이전트를 확인한다 — 실측 목록에 Claude Code(`installed (default)`), Copilot, Gemini CLI, Codex CLI, Cursor, Cline, Devin, Amp, Auggie, Antigravity, Generic 등이 늘어서 있고, 공식 README는 이를 "30+ agents"로 표현한다.
 
-이 구조가 중요하다. **`specify` CLI는 전역에 한 번 설치되지만, 실제 규칙(스킬·템플릿·스크립트)은 프로젝트 디렉터리 안에 복사돼 들어간다.** 플러그인처럼 "설치하면 모든 프로젝트에서 쓰이는" 물건이 아니다. spec-kit을 쓰는 레포는 자기 안에 자기 규칙을 통째로 들고 다닌다. 팀원이 clone하면 규칙도 따라오고, 규칙 수정은 커밋으로 남는다. 뒤에서 다룰 비교의 핵심 축이 여기서 갈린다.
+이 구조가 중요하다. **`specify` CLI는 전역에 한 번 설치되지만, 실제 규칙(스킬·템플릿·스크립트)은 프로젝트 디렉터리 안에 복사돼 들어간다.** 플러그인처럼 "설치하면 모든 프로젝트에서 쓰이는" 물건이 아니다. spec-kit을 쓰는 저장소는 자기 안에 자기 규칙을 통째로 들고 다닌다. 팀원이 clone하면 규칙도 따라오고, 규칙 수정은 커밋으로 남는다. 뒤에서 다룰 비교의 핵심 축이 여기서 갈린다.
 
 CLI 자체도 단순한 스캐폴더를 넘어섰다. v0.12.11의 서브커맨드는 `init, check, version, self, extension, integration, preset, bundle, workflow`다 — 확장·프리셋·번들·워크플로가 각각 1급 개념으로 분리돼 있고, `self`로 CLI가 자기를 업그레이드한다. 다만 **기본 init 직후엔 확장도 프리셋도 하나도 안 깔린다**(`specify extension list` → "No extensions installed", `specify preset list` → "No presets installed"). 기본형은 얇고, 무거운 것들은 옵트인이다.
 
@@ -57,7 +57,7 @@ CLI 자체도 단순한 스캐폴더를 넘어섰다. v0.12.11의 서브커맨�
 
 여기서 확인해둘 세 가지.
 
-첫째, **git 저장소를 자동으로 초기화하고 커밋까지 만든다.** 그리고 v0.12.11에는 이를 끄는 `--no-git` 옵션이 없다(실행하면 `No such option: --no-git`). 레포가 아닌 곳에 spec-kit을 깔 방법은 사실상 없다.
+첫째, **git 저장소를 자동으로 초기화하고 커밋까지 만든다.** 그리고 v0.12.11에는 이를 끄는 `--no-git` 옵션이 없다(실행하면 `No such option: --no-git`). 저장소가 아닌 곳에 spec-kit을 깔 방법은 사실상 없다.
 
 둘째, `.specify/memory/constitution.md`는 init 직후 `[PRINCIPLE_1_NAME]` 같은 **플레이스홀더로 가득한 빈 템플릿**이다. 설치했다고 바로 시작되는 게 아니다. `/speckit-constitution`을 돌려 헌법을 채우는 것이 실제 0단계다.
 
@@ -111,7 +111,7 @@ constitution → specify → (clarify) → plan → (checklist) → tasks → (a
 
 ### 얻는 것
 
-**컨텍스트가 파일로 응고된다.** 에이전트 세션은 휘발되지만 `spec.md`·`plan.md`·`tasks.md`는 레포에 남는다. 다음 세션, 다음 사람, 다음 모델이 같은 문서를 읽고 시작한다. [[컨텍스트-엔지니어링]]의 저장 계층 문제를 파일 시스템으로 푼 것이고, [[하네스-엔지니어링]] 관점에선 모델 밖의 하네스가 상태를 들고 있는 전형적 패턴이다.
+**컨텍스트가 파일로 응고된다.** 에이전트 세션은 휘발되지만 `spec.md`·`plan.md`·`tasks.md`는 저장소에 남는다. 다음 세션, 다음 사람, 다음 모델이 같은 문서를 읽고 시작한다. [[컨텍스트-엔지니어링]]의 저장 계층 문제를 파일 시스템으로 푼 것이고, [[하네스-엔지니어링]] 관점에선 모델 밖의 하네스가 상태를 들고 있는 전형적 패턴이다.
 
 **"에이전트가 멋대로 시작하는" 실패 모드를 막는다.** 요구가 모호할 때 LLM은 멈추지 않고 그럴듯하게 채운다. spec-kit은 그 지점에 체크리스트와 게이트를 박아 최소한 *어디를 추정했는지*(Assumptions), *무엇이 불명확한지*(NEEDS CLARIFICATION)를 문서에 남기게 한다.
 
@@ -137,7 +137,7 @@ constitution → specify → (clarify) → plan → (checklist) → tasks → (a
 
 "명세를 먼저 쓰면 결과물이 좋아진다"는 직관은 강력하다. 그런데 이 명제를 정면으로 검증한 대규모 실증 연구는 **벤더 주장에서 도출한 5개 가설 중 하나도 지지하지 못했다.**
 
-Brenn Hill의 연구(SSRN, 2026-04-28)는 오픈소스 119개 레포의 PR 100,247건을 SZZ 알고리즘으로 결함 추적하고 저자 내 고정효과로 분석했다. 같은 사람이 쓴 PR끼리 비교했더니, 명세가 붙은 PR은 결함률이 오히려 1.4pp 높았고(p=0.056) 재작업은 5.0pp 높았다(p<0.001). 명세의 품질이 재작업에 미치는 효과는 사실상 0이었다(p=0.997). 저자의 해석은 이렇다 — 명세는 품질의 **원인**이 아니라 **어려운 과제의 표식**이다. 어려우니까 명세를 쓰고, 어려우니까 결함과 재작업이 는다는 것이다. 이 연구는 GitHub Spec Kit을 명시적으로 지목한다.
+Brenn Hill의 연구(SSRN, 2026-04-28)는 오픈소스 119개 저장소의 PR 100,247건을 SZZ 알고리즘으로 결함 추적하고 저자 내 고정효과로 분석했다. 같은 사람이 쓴 PR끼리 비교했더니, 명세가 붙은 PR은 결함률이 오히려 1.4pp 높았고(p=0.056) 재작업은 5.0pp 높았다(p<0.001). 명세의 품질이 재작업에 미치는 효과는 사실상 0이었다(p=0.997). 저자의 해석은 이렇다 — 명세는 품질의 **원인**이 아니라 **어려운 과제의 표식**이다. 어려우니까 명세를 쓰고, 어려우니까 결함과 재작업이 는다는 것이다. 이 연구는 GitHub Spec Kit을 명시적으로 지목한다.
 
 과장하지는 말자. 이건 무작위 대조 실험(RCT)이 아니라 관측 연구다. 인과를 확정하지 못하고, 관측 연구 한 편이 도구를 사형시키지도 않는다. 하지만 온도는 정확히 맞춰야 한다. **spec-kit을 도입하면 규율의 값을 문서 산출물로 지불하는데, 그 문서가 결함을 줄인다는 증거는 지금 없고 반대 방향의 관측이 하나 서 있다.** GitHub 별 약 11만 9천 개는 관심의 지표지 효과의 지표가 아니다. 그럴듯한 프로세스가 실제 성공률을 담보하지 않는다는 [[에이전트-평가-evals]]의 함정이 여기에도 적용된다.
 
@@ -185,10 +185,10 @@ Brenn Hill의 연구(SSRN, 2026-04-28)는 오픈소스 119개 레포의 PR 100,2
 |---|---|---|---|
 | SDLC 구간 | 아이디어 → 명세 → 제품 형태·로드맵 | 명세 → 계획 → 태스크 → 구현 → 교차검증·수렴 | 계획 → 구현 → 검증 → 머지 |
 | 한 문장 | 무엇을 만들지 정해준다 | 어떻게 만들지 문서로 못박는다 | 만드는 동안 규율을 지키게 한다 |
-| 배포 형태 | 전역 플러그인 (마켓플레이스) | **프로젝트 스캐폴드** (레포에 파일 복사) | 전역 플러그인 (Anthropic 공식 마켓플레이스) |
+| 배포 형태 | 전역 플러그인 (마켓플레이스) | **프로젝트 스캐폴드** (저장소에 파일 복사) | 전역 플러그인 (Anthropic 공식 마켓플레이스) |
 | 강제력의 출처 | 대화 흐름 (스킬 권고) | **아티팩트 의존성 + 템플릿 게이트 + 사람 승인 게이트** | 세션 시작 규칙 주입 + 스킬 권고 |
 | 에이전트 종속성 | Claude Code 전용 | **30+ 에이전트** (통합 매니페스트) | Claude Code 전용 |
-| 산출물이 레포에 남나 | 명세 .md (또는 Notion) | **spec/plan/tasks/checklist 전부 커밋** | 계획 문서·워크트리·커밋 |
+| 산출물이 저장소에 남나 | 명세 .md (또는 Notion) | **spec/plan/tasks/checklist 전부 커밋** | 계획 문서·워크트리·커밋 |
 | 핵심 철학 | 소크라테스 문답으로 아이디어 다듬기 | 명세가 소스 오브 트루스 | TDD 필수, 증거 > 주장 |
 | 팀 확산 방식 | 각자 플러그인 설치 | **clone하면 규칙이 따라옴** | 각자 플러그인 설치 |
 | git 관여 | 없음 | init 시 repo 초기화. 브랜치·커밋은 확장 옵트인 | 워크트리·브랜치 종료 흐름 관리 |
@@ -197,7 +197,7 @@ Brenn Hill의 연구(SSRN, 2026-04-28)는 오픈소스 119개 레포의 PR 100,2
 
 **ideas-come-true**(brown-claude-marketplace)는 SDLC의 **앞단**이다. sharpen이 소크라테스식 문답으로 흐릿한 아이디어를 명세서로 깎고, productify가 그 명세를 "스킬로 만들까, CLI로 만들까, 로컬 HTML로 만들까"라는 **제품 형태 결정**과 페이즈 로드맵으로 바꾼다. spec-kit이 `/speckit-specify`에서 요구하는 입력 — 명확한 기능 서술 — 을 만들어주는 도구다. 겹치지 않는다. **선행한다.**
 
-**spec-kit**은 **중간**이다. 명세를 받아 계획·태스크로 분해하고 구현까지 몰고 간다. 셋 중 유일하게 **레포에 파일로 내려앉고**, 유일하게 **에이전트 중립**이며, 강제력이 대화가 아니라 **아티팩트 의존성**에서 나온다. plan은 spec.md를 읽어야 굴러가고, tasks는 plan.md를 읽어야 굴러간다. 건너뛰면 입력이 없어서 멈춘다 — 이게 "그렇게 하시죠"와 "그러지 않으면 진행이 안 됩니다"의 차이다.
+**spec-kit**은 **중간**이다. 명세를 받아 계획·태스크로 분해하고 구현까지 몰고 간다. 셋 중 유일하게 **저장소에 파일로 내려앉고**, 유일하게 **에이전트 중립**이며, 강제력이 대화가 아니라 **아티팩트 의존성**에서 나온다. plan은 spec.md를 읽어야 굴러가고, tasks는 plan.md를 읽어야 굴러간다. 건너뛰면 입력이 없어서 멈춘다 — 이게 "그렇게 하시죠"와 "그러지 않으면 진행이 안 됩니다"의 차이다.
 
 **superpowers**는 **구현 규율**이다. TDD(RED-GREEN-REFACTOR)를 필수로 걸고, 서브에이전트 병렬 실행·워크트리 격리·코드 리뷰 요청/수령·완료 전 검증을 스킬로 제공한다. spec-kit의 tasks.md를 받아 **각 태스크를 어떻게 제대로 구현할지**를 다룬다. spec-kit의 implement 스킬도 "테스트 먼저"를 지시하지만 한 줄 지침 수준이고, superpowers는 그것 하나에 스킬 전체를 쓴다. 강제 방식은 프롬프트 규칙 주입 — using-superpowers 스킬이 "해당하는 스킬이 있으면 반드시 호출하라"를 세션 시작에 심는다. 파일이 아니라 프롬프트로 거는 강제이므로, 모델이 무시하면 무시된다.
 
@@ -228,7 +228,7 @@ Brenn Hill의 연구(SSRN, 2026-04-28)는 오픈소스 119개 레포의 PR 100,2
 **질문은 "어떤 도구가 좋은가"가 아니라 "내 병목이 어디인가"다.**
 
 - **뭘 만들지가 안 정해졌다** → **ideas-come-true**. 명세도 계획도, 만들 게 틀렸으면 전부 낭비다.
-- **여러 명이 붙고, 결정이 공유되지 않고, 세션마다 결과가 다르게 나온다** → **spec-kit**. 레포에 규칙이 박히고 clone으로 전파되는 도구는 셋 중 이것뿐이다. 조율 도구다.
+- **여러 명이 붙고, 결정이 공유되지 않고, 세션마다 결과가 다르게 나온다** → **spec-kit**. 저장소에 규칙이 박히고 clone으로 전파되는 도구는 셋 중 이것뿐이다. 조율 도구다.
 - **뭘 만들지도 알고 혼자 빠르게 짜는데, 코드 품질이 들쭉날쭉하다** → **superpowers**. 실증 근거의 방향도 이쪽이 낫다. 명세를 늘리는 것이 결함을 줄인다는 증거는 없지만, 테스트를 먼저 쓰는 것의 값은 훨씬 오래 검증돼 왔다. 개인 도구다.
 
 셋 중 가장 값비싼 것이 spec-kit이다. 그리고 **혼자 쓰면 셋 중 가장 손해다.** 명세의 가치는 그것을 읽는 사람 수에 비례하는데, 비용은 읽는 사람 수와 무관하게 발생하기 때문이다. 결함률을 낮추려고 spec-kit을 도입한다면 지금 서 있는 증거는 그 기대를 지지하지 않는다. **여러 사람의 머릿속을 한 파일로 맞추려고 도입한다면, 그건 아직 반박되지 않았다.**
@@ -249,10 +249,10 @@ spec-kit은 [[agents-cli-lifecycle-sdlc]]가 그리는 "AI 시대의 SDLC"를 Gi
 
 ## 출처
 
-- GitHub, [github/spec-kit](https://github.com/github/spec-kit) — 레포 README("30+ AI coding agents", "Experimental Goals" 절), 최신 릴리스 v0.12.11 (2026-07-10), 저장소 생성 2025-08-21, 별 약 119,410개 (GitHub API 조회, 2026-07-11)
+- GitHub, [github/spec-kit](https://github.com/github/spec-kit) — 저장소 README("30+ AI coding agents", "Experimental Goals" 절), 최신 릴리스 v0.12.11 (2026-07-10), 저장소 생성 2025-08-21, 별 약 119,410개 (GitHub API 조회, 2026-07-11)
 - GitHub, [Spec Kit 공식 문서](https://github.github.io/spec-kit/) — SDD 정의, 워크플로 명령
 - GitHub, [spec-kit 릴리스 노트](https://github.com/github/spec-kit/releases) — v0.10.0(git 확장 옵트인 전환, `--no-git` 제거), v0.11.0(Superpowers Implementation Bridge 확장), v0.11.2(`/speckit.converge` 추가), v0.12.0(agent-context 확장 옵트인 전환)
-- Brenn Hill, ["Does Spec-Driven Development Reduce Defects? An Empirical Test of Industry Claims Across 119 Open-Source Repositories"](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6515898) (SSRN, 2026-04-28) — OSS 119개 레포·PR 100,247건, SZZ + 저자 내 고정효과. 벤더 주장 5개 가설 모두 미지지. 관측 연구
+- Brenn Hill, ["Does Spec-Driven Development Reduce Defects? An Empirical Test of Industry Claims Across 119 Open-Source Repositories"](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6515898) (SSRN, 2026-04-28) — OSS 119개 저장소·PR 100,247건, SZZ + 저자 내 고정효과. 벤더 주장 5개 가설 모두 미지지. 관측 연구
 - Jamie Telin, ["Is Your Safe Choice Burning Your Budget?"](https://medium.com/it-chronicles/is-your-safe-choice-burning-your-budget-1cfddf8782e4) (2026-03-18) — 동일 과제에서 Spec-Kit 120,947 / 181,040 토큰 대 OpenSpec 57,740 / 91,729 토큰
 - 로컬 실측 (2026-07-11): `specify 0.12.11` 설치 후 `specify init --here --integration claude --force` 산출물 — `.claude/skills/*/SKILL.md` 10종, `.specify/templates/*.md` 5종, `.specify/scripts/bash/create-new-feature.sh`, `.specify/workflows/speckit/workflow.yml`, `.specify/init-options.json`, `specify {integration,extension,preset} list` 출력
 - 로컬 실측 (2026-07-11): `specify 0.9.5` 동일 폴더 init 산출물 — 버전 diff 표의 좌측 열 근거

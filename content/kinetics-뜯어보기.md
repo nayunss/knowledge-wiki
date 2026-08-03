@@ -110,7 +110,7 @@ style={{ transition: 'height 0.5s cubic-bezier(0.34,1.56,0.64,1)' }}
 | 세대 | 배포 단위 | 사용자가 하는 일 | 대가 |
 |---|---|---|---|
 | 1세대 | npm 패키지 | `install` 후 API 학습 | 의존성·번들·버전 |
-| 2세대 | 복붙 코드 (shadcn류) | 소스를 내 레포로 가져옴 | 유지보수는 내 몫 |
+| 2세대 | 복붙 코드 (shadcn류) | 소스를 내 저장소로 가져옴 | 유지보수는 내 몫 |
 | 3세대 | **프롬프트** | 의도를 붙여넣고 코드를 생성 | 재현성·비결정성 |
 
 프롬프트는 코드보다 앞선 층위의 산출물이다. 내 스택·내 컨벤션·내 디자인 토큰에 맞춰 재생성되며, 라이선스 표면적도 코드보다 작다(적어도 겉보기에는). [[프롬프트-엔지니어링]]에서 다루는 "명세로서의 프롬프트"가 UI 라이브러리 유통에 그대로 적용된 사례다. 지식과 워크플로를 실행 가능한 텍스트로 포장해 배포한다는 점에서 [[에이전트-스킬은-워크플로다]]의 논지와도 겹친다.
@@ -153,14 +153,14 @@ style={{ transition: 'height 0.5s cubic-bezier(0.34,1.56,0.64,1)' }}
 
 ## 7. CTO 체크: 라이선스가 없다
 
-가장 실무적인 경고를 마지막에 둔다. **이 레포에는 라이선스가 없다.**
+가장 실무적인 경고를 마지막에 둔다. **이 저장소에는 라이선스가 없다.**
 
 - GitHub API의 `license` 필드가 `null`이다: `curl -s https://api.github.com/repos/ckissi/kinetics | grep license`
-- 레포 루트에 LICENSE 파일이 없다: `curl -s https://api.github.com/repos/ckissi/kinetics/contents/` → `[.claude, .gitattributes, .gitignore, README.md, astro.config.mjs, package-lock.json, package.json, public, src]`
+- 저장소 루트에 LICENSE 파일이 없다: `curl -s https://api.github.com/repos/ckissi/kinetics/contents/` → `[.claude, .gitattributes, .gitignore, README.md, astro.config.mjs, package-lock.json, package.json, public, src]`
 
-퍼블릭 레포라는 사실은 사용 허가가 아니다. GitHub 문서는 라이선스 없는 레포에 대해 "누구도 복제·배포·2차적저작물 작성을 할 수 없다(no one may reproduce, distribute, or create derivative works)"고 명시한다. 저작권이 저작자에게 그대로 남기 때문이다. 예외는 GitHub 이용약관이 허용하는 열람과 포크뿐이다. 복붙을 전제로 설계된 라이브러리에서 이건 사소한 흠이 아니라 구조적 결함이다. 사용자에게 "복사해 가라"고 말하면서 복사해도 된다는 근거는 주지 않는다.
+퍼블릭 저장소라는 사실은 사용 허가가 아니다. GitHub 문서는 라이선스 없는 저장소에 대해 "누구도 복제·배포·2차적저작물 작성을 할 수 없다(no one may reproduce, distribute, or create derivative works)"고 명시한다. 저작권이 저작자에게 그대로 남기 때문이다. 예외는 GitHub 이용약관이 허용하는 열람과 포크뿐이다. 복붙을 전제로 설계된 라이브러리에서 이건 사소한 흠이 아니라 구조적 결함이다. 사용자에게 "복사해 가라"고 말하면서 복사해도 된다는 근거는 주지 않는다.
 
-여기에 프로젝트 나이가 겹친다. 레포는 2026-06-24에 만들어졌고, 이 글을 쓰는 시점에 갓 3주를 넘긴 프로젝트다(2026-07-17 재확인 기준 stars 213 / forks 24 / open issues 1, 최종 푸시 2026-07-14 — 별점은 변동값이니 스냅샷으로 읽어라).
+여기에 프로젝트 나이가 겹친다. 저장소는 2026-06-24에 만들어졌고, 이 글을 쓰는 시점에 갓 3주를 넘긴 프로젝트다(2026-07-17 재확인 기준 stars 213 / forks 24 / open issues 1, 최종 푸시 2026-07-14 — 별점은 변동값이니 스냅샷으로 읽어라).
 
 실무 결론:
 
@@ -185,5 +185,5 @@ Kinetics는 스프링 물리 라이브러리라는 간판을 달았지만, 스�
 - CSS `linear()` 이징 함수 — MDN: https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function/linear
 - CSS `linear()` 지원·Baseline (Widely available 2026-06-11; Chrome/Edge 113, Firefox 112, Safari 17.2) — web-features explorer: https://web-platform-dx.github.io/web-features-explorer/features/linear-easing/ / Chrome for Developers: https://developer.chrome.com/docs/css-ui/css-linear-easing-function
 - 임계감쇠(ζ=1, 오버슈트 없음)·저감쇠(ζ<1) 정의 — Wikipedia, "Damping": https://en.wikipedia.org/wiki/Damping
-- 라이선스 없는 퍼블릭 레포의 지위 — GitHub Docs, "Licensing a repository": https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository
+- 라이선스 없는 퍼블릭 저장소의 지위 — GitHub Docs, "Licensing a repository": https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository
 - 프롬프트와 저작권 — U.S. Copyright Office, *Copyright and Artificial Intelligence, Part 2: Copyrightability* (2025): https://www.copyright.gov/ai/Copyright-and-Artificial-Intelligence-Part-2-Copyrightability-Report.pdf

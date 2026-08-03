@@ -33,7 +33,7 @@ resource: https://openknowledge.ai/docs
 | 프로젝트-로컬 스킬 | `.claude/skills/open-knowledge/` — **에이전트에게 툴 사용법을 가르치는 런타임 계약** | — |
 | 유저-글로벌 스킬 번들 | `discovery`, `write-skill` (이미 설치돼 있음) | `--no-skills` |
 
-세 번째가 핵심이다. 지금 머신에 깔린 `~/.agents/skills/open-knowledge-discovery`는 **설치 안내용**이지 런타임용이 아니다. 스킬 본문이 스스로 그렇게 못 박는다.
+세 번째가 핵심이다. 현재 머신에 설치된 `~/.agents/skills/open-knowledge-discovery`는 **설치 안내용**이지 런타임용이 아니다. 스킬 본문도 이 경계를 명시한다.
 
 > *"Do NOT load to perform OpenKnowledge reads/writes — the runtime guidance for editing markdown inside an initialized OK project ships as a separate project-local skill at `.claude/skills/open-knowledge/` whenever `ok init` runs."*
 
@@ -50,8 +50,8 @@ ok init --local-only --scope project --content-dir .
 ```
 
 - `--scope project|user|both` — MCP 설정을 어느 레벨에 쓸지. **`project`를 권한다.** 프로젝트 밖 세션까지 툴이 따라다니지 않는다.
-- `--local-only` — `.ok/`를 `.git/info/exclude`로 빼서 커밋되지 않게 한다. 남의 레포에 실험할 때, 그리고 위키 레포처럼 **커밋 이력이 검증 게이트인 곳**에서 필수.
-- `--content-dir <dir>` — 코드 레포 안에서 `docs/`만 대상으로 삼고 싶을 때. 리포지토리 전체를 인덱싱하지 않는다.
+- `--local-only` — `.ok/`를 `.git/info/exclude`로 빼서 커밋되지 않게 한다. 남의 저장소에 실험할 때, 그리고 위키 저장소처럼 **커밋 이력이 검증 게이트인 곳**에서 필수.
+- `--content-dir <dir>` — 코드 저장소 안에서 `docs/`만 대상으로 삼고 싶을 때. 저장소 전체를 인덱싱하지 않는다.
 
 ### egress를 막는 스위치는 따로다
 
@@ -85,7 +85,7 @@ terminal:
   enabled: false
 ```
 
-번거롭지만 이게 사실이다. 프로젝트를 새로 열 때마다 세 줄을 다시 박아야 한다. 다만 뒤집어 보면 안전한 설계이기도 하다 — project-local 값은 **협업자와 공유되지 않으므로**, 팀이 커밋한 config가 내 로컬 결정을 덮어쓰는 일도 없다.
+프로젝트를 새로 열 때마다 이 세 설정을 다시 명시해야 한다. 다만 이는 안전한 설계이기도 하다 — project-local 값은 **협업자와 공유되지 않으므로**, 팀이 커밋한 config가 내 로컬 결정을 덮어쓰는 일도 없다.
 
 `terminal.enabled`는 앱 소스상 `agentSettable:false`다. 에이전트가 스스로 켤 수 없고, 커밋되는 프로젝트 파일에도 놓을 수 없다. 적용 후 `ok config validate`로 병합 결과를 확인한다. (참고로 `telemetry.localSink.enabled`는 기본 `true`지만 egress가 아니다 — `.ok/local/`에 진단 로그를 쓸 뿐이고, `ok diagnose bundle`을 직접 돌리기 전까지 머신을 떠나지 않는다. 민감한 워크스페이스라면 꺼도 된다.)
 
@@ -201,13 +201,13 @@ ok init --local-only --scope project --content-dir docs/wiki
 ok seed --pack codebase-wiki --root docs   # → docs/wiki/… 에 깔린다
 ```
 
-레포 전체를 대상으로 삼아도 되면 `--content-dir .`로 두고 `ok seed --pack codebase-wiki`를 기본 경로 그대로 돌리면 된다. 어느 쪽이든 원칙은 하나 — **팩이 까는 `wiki/`가 `content.dir` 안쪽에 들어와야 한다.** 그다음 Claude Code에서:
+저장소 전체를 대상으로 삼아도 되면 `--content-dir .`로 두고 `ok seed --pack codebase-wiki`를 기본 경로 그대로 돌리면 된다. 어느 쪽이든 원칙은 하나 — **팩이 까는 `wiki/`가 `content.dir` 안쪽에 들어와야 한다.** 그다음 Claude Code에서:
 
 ```
 Generate the codebase wiki.
 ```
 
-에이전트는 `OVERVIEW.md`의 `source_commit`이 비어 있는 걸 보고 **생성 모드**로 들어가, 레포를 훑고 → 두 노브(`audience`: internal|public, `depth`: tour|standard|exhaustive)를 묻고 → 페이지 목록을 확인받고 → 생성한다. 각 페이지는 실제 소스 파일을 링크하고 필요하면 mermaid 다이어그램을 넣는다.
+에이전트는 `OVERVIEW.md`의 `source_commit`이 비어 있는 걸 보고 **생성 모드**로 들어가, 저장소를 훑고 → 두 노브(`audience`: internal|public, `depth`: tour|standard|exhaustive)를 묻고 → 페이지 목록을 확인받고 → 생성한다. 각 페이지는 실제 소스 파일을 링크하고 필요하면 mermaid 다이어그램을 넣는다.
 
 코드가 바뀐 뒤에는:
 
@@ -272,9 +272,9 @@ ok init --local-only --scope project --content-dir .
 
 ## 7. 이 위키 파이프라인과 공존시키기 — 경계 설계
 
-**결론부터: OpenKnowledge를 위키 레포에 붙이지 않는다.** 이유는 취향이 아니라 구조다. 우리 파이프라인([[위키-하네스]])은 **발행 전에 fact-checker·copy-editor·병합 게이트를 통과해야 커밋이 나가는** 설계다. OpenKnowledge의 `autoSync`는 **에이전트 편집을 곧바로 커밋·푸시한다.** 두 모델은 양립할 수 없다 — 자동 커밋이 켜지는 순간, 검증 게이트는 우회 가능한 장식이 된다. [[위키-설계-결정]]에 기록해 둘 만한 트레이드오프다.
+**결론부터: OpenKnowledge를 위키 저장소에 붙이지 않는다.** 이유는 취향이 아니라 구조다. 우리 파이프라인([[위키-하네스]])은 **발행 전에 fact-checker·copy-editor·병합 게이트를 통과해야 커밋이 나가는** 설계다. OpenKnowledge의 `autoSync`는 **에이전트 편집을 곧바로 커밋·푸시한다.** 두 모델은 양립할 수 없다 — 자동 커밋이 켜지는 순간, 검증 게이트는 우회 가능한 장식이 된다. [[위키-설계-결정]]에 기록해 둘 만한 트레이드오프다.
 
-대신 **두 레포를 분리하고 산출물만 넘긴다.**
+대신 **두 저장소를 분리하고 산출물만 넘긴다.**
 
 ```
 ~/work/ok-lab/            ← OpenKnowledge 프로젝트 (ok init --local-only)
@@ -290,7 +290,7 @@ ok init --local-only --scope project --content-dir .
 
 경계를 지키는 규칙 셋.
 
-1. **위키 레포에서는 절대 `ok init`을 돌리지 않는다.** 실수로 돌렸다면 `ok deinit`이 `.ok/`·MCP 엔트리·git-exclude 줄·섀도 레포를 걷어내고 마크다운은 남긴다.
+1. **위키 저장소에서는 절대 `ok init`을 돌리지 않는다.** 실수로 돌렸다면 `ok deinit`이 `.ok/`·MCP 엔트리·git-exclude 줄·섀도 저장소를 걷어내고 마크다운은 남긴다.
 2. **넘기는 단위는 `articles/`의 canonical 문서뿐이다.** `research/`는 넘기지 않는다 — 검증되지 않은 잠정본이다.
 3. **복사는 사람이 한다.** 자동화하는 순간 게이트가 다시 뚫린다.
 
@@ -310,7 +310,7 @@ ok init --local-only --scope project --content-dir .
 
 **내장 터미널은 미설정이면 켜져 있고, 앱 안에서 전체 권한 셸이다.** `terminal.enabled: false`로만 끌 수 있다. 이 값은 `agentSettable:false`이고 scope가 project-local이라 — **유저 config로는 못 끄고, 커밋되는 프로젝트 config로 팀에 강제할 수도 없다.** 프로젝트마다 각자 `.ok/local/config.yml`에서 꺼야 한다. 노트만 쓸 거면 켜둘 이유가 없다.
 
-**`autoSync`는 첫 프로젝트 오픈 때 선택을 묻는다.** 혼자 쓰는 노트 폴더라면 편의지만, 검증 게이트가 있는 레포에서는 사고다. 여기서 위험은 "팀 설정이 내 값을 덮는 것"이 아니다 — 머신별 `autoSync.enabled` 선택이 **팀 기본값보다 우선한다.** 위험은 그 반대다. **내가 아직 아무것도 고르지 않았다면**(값이 `null`) 그때가 위험하다. 팀이 커밋해 둔 `autoSync.default: true`가 첫 오픈에 그대로 먹는다. 남의 프로젝트를 클론했으면 열기 전에 내 값부터 박아라.
+**`autoSync`는 첫 프로젝트 오픈 때 선택을 묻는다.** 혼자 쓰는 노트 폴더라면 편의지만, 검증 게이트가 있는 저장소에서는 사고다. 여기서 위험은 "팀 설정이 내 값을 덮는 것"이 아니다 — 머신별 `autoSync.enabled` 선택이 **팀 기본값보다 우선한다.** 위험은 그 반대다. **내가 아직 아무것도 고르지 않았다면**(값이 `null`) 그때가 위험하다. 팀이 커밋해 둔 `autoSync.default: true`가 첫 오픈에 그대로 먹는다. 남의 프로젝트를 클론했으면 열기 전에 내 값부터 박아라.
 
 **시맨틱 검색은 켜지 마라 — 적어도 먼저는.** 켜면 쿼리와 매칭 텍스트가 임베딩 제공자로 나간다. 얻는 건 랭킹 정제이지 새로운 능력이 아니다(문서 표현대로 *"it never replaces lexical search"*). 렉시컬로 못 찾는 상황이 **실제로 반복될 때** 켜도 늦지 않다. 순서를 거꾸로 하면 필요하지도 않은 egress부터 떠안는다.
 
@@ -328,12 +328,12 @@ ok init --local-only --scope project --content-dir .
 
 ---
 
-## 내일 뭘 하면 되나
+## 도입 절차
 
-1. 위키 레포가 **아닌** 작업 폴더를 하나 만들고 `ok init --local-only --scope project`.
+1. 위키 저장소가 **아닌** 작업 폴더를 하나 만들고 `ok init --local-only --scope project`.
 2. 안전 설정을 두 군데에 나눠 박는다(위 §1) — 유저 config에 `agents.autoApproveOkTools: false` 한 번, 그리고 이 프로젝트의 `.ok/local/config.yml`에 `search.semantic.enabled`·`autoSync.enabled`·`terminal.enabled`를 `false`로. 끝나면 `ok config validate`로 병합 결과 확인.
 3. Claude Code에서 *"List the first 5 documents you come across in this project"* — 연결 확인.
-4. 코드 레포 하나에 `ok seed --pack codebase-wiki` → *"Generate the codebase wiki."* 30분이면 이 도구가 내 워크플로에 남을지 판가름 난다.
+4. 코드 저장소 하나에 `ok seed --pack codebase-wiki` → *"Generate the codebase wiki."* 30분이면 이 도구가 내 워크플로에 남을지 판가름 난다.
 
 관련: [[openknowledge]] · [[하네스-엔지니어링]] · [[컨텍스트-엔지니어링]] · [[에이전틱-엔지니어링]] · [[llm-wiki-구조]] · [[위키-하네스]] · [[위키-설계-결정]] · [[codex-교차모델-위임]]
 

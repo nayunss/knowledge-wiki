@@ -253,6 +253,6 @@ title: 지식 위키
   <a class="post-card" data-date="2026-07-04" href="claude-project-github-연결">
     <span class="post-type">개념</span>
     <span class="post-title">Claude Project × GitHub</span>
-    <span class="post-dek">레포를 붙이면 답변이 어떻게 만들어지나 — RAG 렌즈의 원리.</span>
+    <span class="post-dek">저장소를 붙이면 답변이 어떻게 만들어지나 — RAG 렌즈의 원리.</span>
   </a>
 </div>
