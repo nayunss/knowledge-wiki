@@ -10,7 +10,7 @@ title: 지식 위키
 <p class="section-label">AI 엔지니어링</p>
 
 <div class="post-grid">
-  <a class="post-card feature" href="ai-엔지니어링/claude5-컨텍스트-엔지니어링-새-규칙">
+  <a class="post-card feature" data-date="2026-08-02" href="ai-엔지니어링/claude5-컨텍스트-엔지니어링-새-규칙">
     <span class="post-type">비판적 리뷰</span>
     <span class="post-title">Claude 5 세대의 컨텍스트 엔지니어링 — 80% 삭제는 어디까지 우리 것인가</span>
     <span class="post-dek">Anthropic이 Claude Code 시스템 프롬프트의 80% 이상을 지웠다고 밝힌 글을 원문 대조로 검토한다. 그 수치는 자기 프롬프트를·자기 모델에서·자기 평가로 재서 지운 값이고, 우리에게 넘어오는 건 숫자가 아니라 삭제의 순서와 예외다.</span>
@@ -20,7 +20,7 @@ title: 지식 위키
     <span class="post-title">AI Native는 도착지가 아니라 방향이다 — 세 실무기를 읽고 세 직군과 토론했다</span>
     <span class="post-dek">subicura AX 여정·AWS AI-DLC·Boris Cherny 도입 단계를 전환 리더·현장 개발자·회의적 아키텍트 세 시각으로 토론해, 단계 모델은 엔진이 아니라 진단 좌표이고 진짜 병목은 요구사항 정의라는 좌표를 뽑았다.</span>
   </a>
-  <a class="post-card" href="ai-엔지니어링/boris-cherny-ai-도입-5단계">
+  <a class="post-card" data-date="2026-07-24" href="ai-엔지니어링/boris-cherny-ai-도입-5단계">
     <span class="post-type">레퍼런스</span>
     <span class="post-title">Boris Cherny의 AI 도입 5단계 — 로드맵을 읽는 법</span>
     <span class="post-dek">Cherny의 조직 AI 도입 5단계(Stage 0–4)를 단계별로 렌더링하고 읽는 법을 짚는다. 규모 숫자는 개발자당 에이전트 비율이지 시간표가 아니고, 진짜 척추는 병목의 이동이며, Cherny의 1차 골격과 Palmer의 해설층을 갈라 읽어야 한다.</span>

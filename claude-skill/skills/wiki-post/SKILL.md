@@ -62,7 +62,7 @@ tech-writer가 쓰고, fact-checker·copy-editor가 병렬 검증하고, 병합�
 ## Phase 4: 발행
 
 **wiki-note 스킬의 절차를 그대로 따른다** (재구현 금지):
-temp clone → `content/`(AI 엔지니어링 주제는 `content/ai-엔지니어링/`)에 `03_final.md` 배치 → 홈 `index.md` 카드/시작점 갱신 → commit → **rebase-retry push**(최대 5회) → temp 삭제 → 배포 확인(실패 시 `gh workflow run deploy.yml -R <owner>/<repo>` 재시도 — `<owner>/<repo>`는 `~/.claude/wiki-note-repo.txt`의 주소에서 딴다).
+temp clone → `content/`(AI 엔지니어링 주제는 `content/ai-엔지니어링/`)에 `03_final.md` 배치 → 홈 `index.md` 카드/시작점 갱신(**새 카드에 `data-date="YYYY-MM-DD"` 필수** — 이게 없으면 NEW 뱃지가 안 붙는다) → commit → **rebase-retry push**(최대 5회) → temp 삭제 → 배포 확인(실패 시 `gh workflow run deploy.yml -R <owner>/<repo>` 재시도 — `<owner>/<repo>`는 `~/.claude/wiki-note-repo.txt`의 주소에서 딴다).
 
 ## Phase 5: 완료 보고
 

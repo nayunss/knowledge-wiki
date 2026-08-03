@@ -56,6 +56,10 @@ article p  { font-size: var(--fs-base); line-height: 1.8; }
 .post-dek { font-size: var(--fs-sm); color: var(--gray); line-height: 1.6; }
 .post-card.feature .post-dek { font-size: var(--fs-md); max-width: 54ch; }
 
+// NEW 뱃지 — .is-new는 componentResources의 afterDOMLoaded 스크립트가 data-date를 보고 붙인다.
+// 타입 칩 뒤 흐름 안에 붙인다(절대 배치는 feature 카드의 오른쪽 dek을 덮는다)
+.post-card.is-new .post-type::after { content: "NEW"; margin-left: 0.55rem; padding: 0.05rem 0.45rem; border-radius: 999px; background: var(--secondary); color: var(--light); font-weight: 700; letter-spacing: 0.04em; }
+
 a.internal { color: var(--tertiary); text-decoration: none; border-bottom: 1px solid var(--lightgray); font-weight: 500; &:hover { border-bottom-color: var(--tertiary); } }
 .tags a, li a.internal.tag-link { font-size: var(--fs-xs); color: var(--gray); background: var(--light); border: 1px solid var(--lightgray); border-radius: 999px; padding: 0.15rem 0.65rem; &:hover { color: var(--tertiary); border-color: var(--tertiary); } }
 blockquote { border-left: 3px solid var(--tertiary); border-radius: 0 var(--radius) var(--radius) 0; background: var(--highlight); color: var(--darkgray); padding: 0.7rem 1.1rem; }

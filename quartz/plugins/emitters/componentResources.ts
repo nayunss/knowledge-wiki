@@ -258,6 +258,16 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
     `)
   }
 
+  // 홈 카드 NEW 뱃지 — data-date가 3일 이내인 .post-card에 .is-new를 붙인다.
+  // 빌드 시점이 아니라 브라우저 시점으로 재야 재배포 없이도 3일 뒤 알아서 사라진다.
+  componentResources.afterDOMLoaded.push(`
+    const markNewPosts = () => document.querySelectorAll(".post-card[data-date]").forEach((c) => {
+      c.classList.toggle("is-new", (Date.now() - Date.parse(c.dataset.date)) / 864e5 < 3)
+    })
+    document.addEventListener("nav", markNewPosts)
+    markNewPosts()
+  `)
+
   if (cfg.enableSPA) {
     componentResources.afterDOMLoaded.push(spaRouterScript)
   } else {
