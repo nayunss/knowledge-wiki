@@ -10,6 +10,11 @@ title: 지식 위키
 <p class="section-label">AI 엔지니어링</p>
 
 <div class="post-grid">
+  <a class="post-card feature" data-date="2026-08-03" href="ai-엔지니어링/markdown-verify-skill-회고">
+    <span class="post-type">회고</span>
+    <span class="post-title">Markdown Verify Skill — 문법 검수에서 두 마켓플레이스까지</span>
+    <span class="post-dek">깨진 Markdown을 막는 검수 스킬을 만들고, 하나의 본문을 Codex와 Claude Code의 독립 마켓플레이스로 포장하며 배운 검증층·단일 원본·배포 경계의 교훈.</span>
+  </a>
   <a class="post-card feature" data-date="2026-08-03" href="ai-엔지니어링/에이전트-팀-만들기-비판적-리뷰">
     <span class="post-type">비판적 리뷰</span>
     <span class="post-title">에이전트 5인 팀 만들기 — 구조는 서고, 근거는 무너진다</span>
