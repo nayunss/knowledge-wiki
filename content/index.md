@@ -145,6 +145,11 @@ title: 지식 위키
 <p class="section-label">실전 · 도구</p>
 
 <div class="post-grid">
+  <a class="post-card feature" data-date="2026-08-15" href="심리테스트-프롬프트-세-개-회고">
+    <span class="post-type">회고</span>
+    <span class="post-title">프롬프트를 세 개 만들어 심리테스트를 하루에 띄웠다</span>
+    <span class="post-dek">MBTI 위로 유형 테스트를 하루에 만들었다. 프롬프트는 다듬어서 좋아지지 않는다 — 판정 방법이 다른 지점에서 끊어 세 개로 나누고, "둘 다 할 법한 행동으로 써라" 같은 형용사를 척도·임계값·출력 필드로 바꿀 때 좋아진다.</span>
+  </a>
   <a class="post-card feature" data-date="2026-07-18" href="ai-엔지니어링/ai-화면제작-sdlc-토론">
     <span class="post-type">플레이북</span>
     <span class="post-title">AI가 화면을 그리는 시대의 SDLC</span>
