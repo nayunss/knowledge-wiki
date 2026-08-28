@@ -10,6 +10,11 @@ title: 지식 위키
 <p class="section-label">AI 엔지니어링</p>
 
 <div class="post-grid">
+  <a class="post-card feature" data-date="2026-08-28" href="ai-엔지니어링/codex-fast-사주-웹앱-회고">
+    <span class="post-type">회고</span>
+    <span class="post-title">프롬프트를 다듬지 않고 Codex fast로 사주 웹앱을 만든 회고</span>
+    <span class="post-dek">빈 저장소에서 사용자 API 키 방식의 사주 웹앱을 만들었다. 빠른 구현을 가능하게 한 범위 제한과 검증, 그리고 만세력·서버 프록시·종단 간 테스트라는 남은 기술 부채를 함께 정리한다.</span>
+  </a>
   <a class="post-card feature" data-date="2026-08-03" href="ai-엔지니어링/markdown-verify-skill-회고">
     <span class="post-type">회고</span>
     <span class="post-title">Markdown Verify Skill — 문법 검수에서 두 마켓플레이스까지</span>
