@@ -24,7 +24,7 @@ sources:
 
 ## 한 오케스트레이터가 남의 모델을 부린다
 
-Claude Code의 서브에이전트는 보통 같은 벤더의 모델을 호출한다. 그런데 Claude Code 안에 Codex 구독을 그대로 붙여, Fable 5가 오케스트레이터로 앉고 GPT 계열 모델이 구현 담당 서브에이전트를 맡는 설정이 공유됐다. 벤더 경계를 넘는 위임(cross-model delegation)이다.
+Claude Code의 서브에이전트는 보통 같은 벤더의 모델을 호출한다. 그런데 Claude Code 안에 Codex 구독을 그대로 붙여, Fable 5가 오케스트레이터로 앉고 GPT 계열 모델이 구현 담당 서브에이전트를 맡는 설정이 공유됐다.[^x-com-2074875092090470469] 벤더 경계를 넘는 위임(cross-model delegation)이다.
 
 이 글은 그 설정을 **2026-07-11에 실제 머신에서 실행해본 기록**을 담는다. 결론은 셋이다. 첫째, **설치는 정말 커맨드 몇 줄이다** — 이번 실행에서 npm 설치가 3초, 전체 설정이 스모크 테스트 1회까지 포함해 끝났다. 둘째, 그러나 **이 플러그인이 무엇인지 오해하기 쉽다.** 세션이 Codex로 바뀌는 게 아니다. Claude Code는 계속 오케스트레이터로 남고, Codex는 필요할 때만 켜지는 도구다. 셋째, **그 위임이 놓인 멀티에이전트 오케스트레이션 지형은 여전히 비싸고 실험적**이며, 한 소스의 결론대로 "일반적인 AI 보조 개발 작업의 95%에는 멀티에이전트가 불필요"하다.
 
@@ -123,7 +123,7 @@ Codex 작업은 좁고 구체적으로. 끝나면 결과를 직접 검토하고 
 
 > 프롬프트의 `xtra high`는 원문 표기 그대로다. GPT-5.5 API의 실제 reasoning effort 값은 `xhigh`다.
 
-> **모델 표기 주의 — 이 프롬프트를 그대로 복붙하지 말 것.** "GPT-5.5"는 원 소스(X 포스트) 시점의 모델이다. 2026-07-09에 GPT-5.6(Sol/Terra/Luna)이 Codex에 GA되어, 이 글 작성일 기준으로 **GPT-5.5는 이미 현행 세대가 아니다.** 쓸 때 `/model` 목록에서 현재 모델을 확인하라. 덧붙여 어느 모델이 실제로 응답했는지는 이번 실행에서 확인되지 않았다 — 아래 스모크 테스트 참고.
+> **모델 표기 주의 — 이 프롬프트를 그대로 복붙하지 말 것.** "GPT-5.5"는 원 소스(X 포스트) 시점의 모델이다. 2026-07-09에 GPT-5.6(Sol/Terra/Luna)이 Codex에 GA되어, 이 글 작성일 기준으로 **GPT-5.5는 이미 현행 세대가 아니다.**[^developers-openai-com-models] 쓸 때 `/model` 목록에서 현재 모델을 확인하라. 덧붙여 어느 모델이 실제로 응답했는지는 이번 실행에서 확인되지 않았다 — 아래 스모크 테스트 참고.
 
 작성자가 덧붙인 운용 팁:
 
@@ -144,7 +144,7 @@ Codex 작업은 좁고 구체적으로. 끝나면 결과를 직접 검토하고 
 
 ## 이 위임이 놓인 지형: 오케스트레이션 4종
 
-교차 모델 위임은 더 넓은 흐름의 한 사례다. 2026년 들어 "단일 세션으로 처리 못 하는 복잡 작업"을 위한 멀티에이전트 오케스트레이터가 공식·비공식으로 여럿 등장했다. 소스가 다룬 네 가지를 성격별로 정리한다.
+교차 모델 위임은 더 넓은 흐름의 한 사례다. 2026년 들어 "단일 세션으로 처리 못 하는 복잡 작업"을 위한 멀티에이전트 오케스트레이터가 공식·비공식으로 여럿 등장했다. 소스가 다룬 네 가지를 성격별로 정리한다.[^shipyard-build-claude-code-multi-agent]
 
 | 도구 | 주체 / 성격 | 조정 방식 | 강점 | 약점·비용 |
 |------|------------|-----------|------|-----------|
@@ -166,7 +166,7 @@ brew install gastown
 go install github.com/dlorenc/multiclaude/cmd/multiclaude@latest
 ```
 
-공통점이 있다. 넷 다 **한 오케스트레이터가 계획을 세우고, 하위 에이전트에 병렬로 분배하고, 결과를 검증·수렴**하는 구조다. Codex 위임 설정도 정확히 같은 골격 — Claude가 계획·검토, Codex가 실행 — 이며, 앞에서 확인한 `"mode": "direct"` 역시 이 골격의 변주다. 하위 실행자를 상주시키지 않고 필요할 때만 띄운다는 점이 다를 뿐이다. 나머지 차이는 하위 에이전트가 같은 벤더냐 다른 벤더냐, 그리고 오케스트레이션을 공식 기능으로 쓰느냐 외부 도구로 얹느냐다. Dynamic Workflows에 대한 개발자 반응(Reddit)이 "많은 개발자가 수동으로 구성하던 워크플로의 정식화"라는 평가였다는 점은, 이 골격이 이미 현장에서 손으로 조립되던 패턴임을 보여준다. 오케스트레이터-워커 구조 일반론은 [[에이전틱-엔지니어링]]에 정리돼 있다.
+공통점이 있다. 넷 다 **한 오케스트레이터가 계획을 세우고, 하위 에이전트에 병렬로 분배하고, 결과를 검증·수렴**하는 구조다. Codex 위임 설정도 정확히 같은 골격 — Claude가 계획·검토, Codex가 실행 — 이며, 앞에서 확인한 `"mode": "direct"` 역시 이 골격의 변주다. 하위 실행자를 상주시키지 않고 필요할 때만 띄운다는 점이 다를 뿐이다. 나머지 차이는 하위 에이전트가 같은 벤더냐 다른 벤더냐, 그리고 오케스트레이션을 공식 기능으로 쓰느냐 외부 도구로 얹느냐다. Dynamic Workflows에 대한 개발자 반응(Reddit)이 "많은 개발자가 수동으로 구성하던 워크플로의 정식화"라는 평가였다는 점은, 이 골격이 이미 현장에서 손으로 조립되던 패턴임을 보여준다.[^infoq-com-dynamic-workflows-claude-code] 오케스트레이터-워커 구조 일반론은 [[에이전틱-엔지니어링]]에 정리돼 있다.
 
 ## 트레이드오프: 언제 쓰지 말아야 하나
 
@@ -179,7 +179,7 @@ go install github.com/dlorenc/multiclaude/cmd/multiclaude@latest
 
 여기에 소스들이 일관되게 지적하는 오케스트레이션 일반의 한계가 겹친다.
 
-- **토큰 비용이 크게 는다.** Dynamic Workflows는 "일반 Claude Code 세션보다 상당히 많은 토큰을 소모할 수 있다"고 명시하고 소규모부터 시작하길 권한다. Agent Teams는 팀원마다 별도 인스턴스라 비용이 특히 높다. 사용량 제한에도 빨리 도달한다.
+- **토큰 비용이 크게 는다.** Dynamic Workflows는 "일반 Claude Code 세션보다 상당히 많은 토큰을 소모할 수 있다"고 명시하고 소규모부터 시작하길 권한다.[^claude-com-introducing-dynamic-workflows] Agent Teams는 팀원마다 별도 인스턴스라 비용이 특히 높다. 사용량 제한에도 빨리 도달한다.
 - **초기 프롬프트가 결과를 좌우한다.** 초기 지시가 부정확하면 수 시간의 컴퓨팅이 낭비되고, 실행 도중 방향을 되돌릴 기회는 제한적이다.
 - **결과를 맹신하면 안 된다.** 원 소스조차 "끝나면 결과를 직접 검토하고 맹신하지 마"라고 못 박는다. Multiclaude의 CI 통과 시 자동 병합은 코드 품질 위험을 안는다. E2E 테스트 검증과 피드백 루프 구현이 사실상 전제 조건이다 — [[루프-엔지니어링]]과 [[에이전트-평가-evals]]가 다루는 검증 루프가 여기서 안전장치 역할을 한다.
 - **비공식 도구는 버그·보안 결함 가능성을 안는다.** Gas Town·Multiclaude는 개인이 만든 도구다. Codex 플러그인은 OpenAI 1st-party라 이 범주와 다르다.
@@ -207,3 +207,9 @@ go install github.com/dlorenc/multiclaude/cmd/multiclaude@latest
 - InfoQ — "Dynamic Workflows in Claude Code" (2026-06-01): https://www.infoq.com/news/2026/06/dynamic-workflows-claude-code/
 - Shipyard — "Multi-agent orchestration for Claude Code in 2026" (2026-03-18): https://shipyard.build/blog/claude-code-multi-agent/
 - OpenAI — Codex 모델 목록·체인지로그 (GPT-5.6 Sol/Terra/Luna는 2026-07-09 GA): https://developers.openai.com/codex/models
+
+[^x-com-2074875092090470469]: CJ Zafir (@cjzafir), X 포스트 — Claude Code에서 Codex 서브에이전트를 설정하는 원 소스. [x.com](https://x.com/i/status/2074875092090470469)
+[^claude-com-introducing-dynamic-workflows]: Anthropic, "Introducing dynamic workflows in Claude Code" (2026-05-28) — 토큰 소모 경고와 소규모 시작 권고. [claude.com/blog](https://claude.com/blog/introducing-dynamic-workflows-in-claude-code)
+[^infoq-com-dynamic-workflows-claude-code]: InfoQ, "Dynamic Workflows in Claude Code" (2026-06-01) — 발표에 대한 개발자 반응 보도. [infoq.com](https://www.infoq.com/news/2026/06/dynamic-workflows-claude-code/)
+[^shipyard-build-claude-code-multi-agent]: Shipyard, "Multi-agent orchestration for Claude Code in 2026" (2026-03-18) — 오케스트레이션 도구 4종 비교와 "95%에 불필요" 결론. [shipyard.build/blog](https://shipyard.build/blog/claude-code-multi-agent/)
+[^developers-openai-com-models]: OpenAI, Codex 모델 목록·체인지로그 — GPT-5.6(Sol/Terra/Luna) 2026-07-09 GA. [developers.openai.com](https://developers.openai.com/codex/models)

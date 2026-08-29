@@ -19,13 +19,13 @@ sources:
 
 큰 리팩터링을 Sonnet에게 맡긴다고 가정하자. 400턴 중 380턴은 파일을 열고, 함수를 옮기고, 테스트를 실행하는 기계적인 작업이다. 그런데 3–4개의 순간 — 설계를 선택하는 시점, 같은 오류가 다섯 번째 반복되는 시점, 완료를 선언하기 직전 — 이 결과 전체를 좌우한다. 이 순간들 때문에 400턴 전부를 Opus로 실행해야 할까?
 
-Claude Code의 **advisor(어드바이저) 도구**는 이 질문에 "아니오"라고 답한다. 메인 모델은 평범한 턴을 값싸게 처리하고, 판단이 필요한 핵심 순간에만 더 강한 두 번째 모델에게 전체 대화를 넘겨 조언을 받는다.
+Claude Code의 **advisor(어드바이저) 도구**는 이 질문에 "아니오"라고 답한다. 메인 모델은 평범한 턴을 값싸게 처리하고, 판단이 필요한 핵심 순간에만 더 강한 두 번째 모델에게 전체 대화를 넘겨 조언을 받는다.[^code-claude-com-advisor]
 
 ## 핵심 주장: 상시 구동과 버티기 사이의 세 번째 선택지
 
 지금까지 모델 선택은 이분법이었다. 강한 모델을 처음부터 끝까지 돌리거나(비싸다), 약한 모델로 버티거나(품질이 흔들린다). advisor는 그 사이를 가른다. **프런티어급 추론을 필요한 순간에만 적용하고 나머지 실행은 실행자 모델의 비용으로 유지한다.**
 
-Anthropic이 공개한 벤치마크가 이 구조의 효과를 뒷받침한다. Sonnet에 Opus 어드바이저를 붙였더니 SWE-bench Multilingual 점수가 2.7%포인트 오르면서 태스크당 비용은 오히려 11.9% 줄었다. Haiku에 Opus 어드바이저를 붙인 경우 BrowseComp 점수가 19.7%에서 41.2%로 두 배 넘게 뛰었다. Haiku+Opus 어드바이저 조합은 Sonnet 단독보다 점수는 29% 낮지만 태스크당 비용은 85% 저렴하다.
+Anthropic이 공개한 벤치마크가 이 구조의 효과를 뒷받침한다. Sonnet에 Opus 어드바이저를 붙였더니 SWE-bench Multilingual 점수가 2.7%포인트 오르면서 태스크당 비용은 오히려 11.9% 줄었다. Haiku에 Opus 어드바이저를 붙인 경우 BrowseComp 점수가 19.7%에서 41.2%로 두 배 넘게 뛰었다. Haiku+Opus 어드바이저 조합은 Sonnet 단독보다 점수는 29% 낮지만 태스크당 비용은 85% 저렴하다.[^claude-com-the-advisor-strategy]
 
 한 문장으로: advisor는 near-Opus 지능을 near-Sonnet 가격에 근접시키는 장치다. 단, **실험적 기능이다.** Claude Code v2.1.98 이상 + Anthropic API 전용이며, 동작·과금·가용성이 바뀔 수 있다.
 
@@ -101,7 +101,7 @@ advisor의 비용 논리는 한 문장으로 요약된다. **조언 모델의 �
 
 **어드바이저 모델 쪽은 다르다.** Claude Code 문서 기준, 조언 모델 자신의 읽기는 캐시되지 않는다 — 매 호출이 전체 트랜스크립트를 처음부터 다시 처리하고, 호출 간 재사용이 없다. 조언이 열 번 불리면 매번 그 시점까지의 전체 대화를 새로 읽는다는 뜻이다. 대화가 길수록 조언 한 번의 입력 비용이 커진다.
 
-여기 실무자가 알아야 할 미묘한 층이 하나 더 있다. **저수준 Anthropic API에는 어드바이저 쪽 캐싱을 켜는 `caching` 옵션이 있다.** API 문서에 따르면 조언 프롬프트는 N번째 호출이 (N-1)번째 프롬프트에 한 세그먼트만 덧붙인 형태라 프리픽스가 안정적이고, 캐싱을 켜면 두 번째 호출부터 델타만 지불한다. 다만 캐시 쓰기 비용 때문에 조언이 2회 이하면 손해, 약 3회에서 손익분기, 그 이상이면 이득이다. 긴 에이전트 루프엔 켜고 짧은 작업엔 끄라는 게 공식 권고다. 단, 이 옵트인은 API를 직접 쓸 때 이야기다 — Claude Code CLI는 어드바이저 캐싱을 기본으로 끄며(그래서 위의 "캐시 안 됨"), 켜는 것은 저수준 API 사용자의 몫이다.
+여기 실무자가 알아야 할 미묘한 층이 하나 더 있다. **저수준 Anthropic API에는 어드바이저 쪽 캐싱을 켜는 `caching` 옵션이 있다.**[^platform-claude-com-advisor-tool] API 문서에 따르면 조언 프롬프트는 N번째 호출이 (N-1)번째 프롬프트에 한 세그먼트만 덧붙인 형태라 프리픽스가 안정적이고, 캐싱을 켜면 두 번째 호출부터 델타만 지불한다. 다만 캐시 쓰기 비용 때문에 조언이 2회 이하면 손해, 약 3회에서 손익분기, 그 이상이면 이득이다. 긴 에이전트 루프엔 켜고 짧은 작업엔 끄라는 게 공식 권고다. 단, 이 옵트인은 API를 직접 쓸 때 이야기다 — Claude Code CLI는 어드바이저 캐싱을 기본으로 끄며(그래서 위의 "캐시 안 됨"), 켜는 것은 저수준 API 사용자의 몫이다.
 
 정리하면, CTO 관점의 캐시 계산은 두 축이다. 메인 캐시는 advisor를 켜도 손해가 없다. 어드바이저 호출은 긴 대화일수록 비싸지므로, 호출 빈도와 대화 길이가 그대로 조언 비용을 결정한다.
 
@@ -154,3 +154,7 @@ advisor는 [[하네스-자기개선]]과도 이어진다. 하네스가 모델에
 - Claude Code Docs — "Escalate hard decisions with the advisor tool": https://code.claude.com/docs/en/advisor (2026-07-09 확인)
 - Claude API Docs — "Advisor tool" (tool-use): https://platform.claude.com/docs/en/agents-and-tools/tool-use/advisor-tool (2026-07-09 확인, 베타 헤더·서버 도구 메커니즘·usage.iterations 과금·caching 옵션)
 - Anthropic Blog — "The advisor strategy": https://claude.com/blog/the-advisor-strategy (2026-07-09 확인, SWE-bench/BrowseComp 벤치마크 수치)
+
+[^code-claude-com-advisor]: Claude Code Docs, "Escalate hard decisions with the advisor tool" — advisor 도구의 동작·페어링·활성화·캐시 정책. [code.claude.com/docs](https://code.claude.com/docs/en/advisor)
+[^platform-claude-com-advisor-tool]: Claude API Docs, "Advisor tool" — 서버 도구 메커니즘·베타 헤더·`caching` 옵션과 손익분기. [platform.claude.com/docs](https://platform.claude.com/docs/en/agents-and-tools/tool-use/advisor-tool)
+[^claude-com-the-advisor-strategy]: Anthropic Blog, "The advisor strategy" — SWE-bench Multilingual·BrowseComp 벤치마크 수치. [claude.com/blog](https://claude.com/blog/the-advisor-strategy)

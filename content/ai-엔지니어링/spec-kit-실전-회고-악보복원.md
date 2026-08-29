@@ -33,7 +33,7 @@ sources:
 
 ## 무엇을 하려 했나
 
-입력은 1080×1080, 4분 16초짜리 영상 하나. 노래방 기기의 멜로디악보 화면을 휴대폰으로 찍은 것이다. 여기서 네 가지를 뽑는 로컬 CLI 도구를 만들려 했다. (1) 전체 악보 이미지, (2) 편집 가능한 MusicXML, (3) 원곡 키로 되돌린 악보, (4) 보컬을 제거한 반주 음원. 진행은 [[github-spec-kit]]의 헌법 → 명세 → 계획 → 태스크 → 구현 파이프라인을 그대로 탔다.
+입력은 1080×1080, 4분 16초짜리 영상 하나. 노래방 기기의 멜로디악보 화면을 휴대폰으로 찍은 것이다. 여기서 네 가지를 뽑는 로컬 CLI 도구를 만들려 했다. (1) 전체 악보 이미지, (2) 편집 가능한 MusicXML, (3) 원곡 키로 되돌린 악보, (4) 보컬을 제거한 반주 음원. 진행은 [[github-spec-kit]]의 헌법 → 명세 → 계획 → 태스크 → 구현 파이프라인을 그대로 탔다.[^github-com-spec-kit]
 
 ## 결론부터
 
@@ -54,7 +54,7 @@ sources:
 
 ### 보컬 제거 — 라이브러리가 다 해줬다
 
-가장 잘 된 부분이고, 우리가 가장 적게 한 부분이다. `audio-separator`에 BS-Roformer 모델을 얹었다. 보컬은 34.8dB 억제됐고, 반주는 -19.5dBFS로 남았다. 원본이 -16dBFS였으니 3.5dB 낮은 수준이다. 귀로 들었을 때도 노래는 사라지고 반주는 살아 있었다 — 다만 이건 인상이지 측정이 아니다. 이 글의 원칙대로 말하자면, 여기서 근거는 34.8dB뿐이다.
+가장 잘 된 부분이고, 우리가 가장 적게 한 부분이다. `audio-separator`에 BS-Roformer 모델을 얹었다.[^github-com-python-audio-separator] 보컬은 34.8dB 억제됐고, 반주는 -19.5dBFS로 남았다. 원본이 -16dBFS였으니 3.5dB 낮은 수준이다. 귀로 들었을 때도 노래는 사라지고 반주는 살아 있었다 — 다만 이건 인상이지 측정이 아니다. 이 글의 원칙대로 말하자면, 여기서 근거는 34.8dB뿐이다.
 
 분리 모델이 놓친 구간이 2초 있었다. 노래가 아닌 사람 소리로 추정된다. 이건 스테레오 중앙 성분을 빼는 고전적인 방법으로 처리했다 — 그 구간만 -11.4dB, 나머지 구간은 0.0dB 변화. 국소 수술이었다.
 
@@ -84,7 +84,7 @@ MusicXML 118마디, 조표 G장조 → E♭장조, 모든 음이 정확히 -4반
 | 한글 가사 | **18×15px** (중앙값) | 읽히지 않음 |
 | 마디 번호 | 입체 테두리 글꼴 | 36을 8로, 16을 58로 오독 |
 
-tesseract 공식 문서는 픽셀 단위 하한을 명시하지 않는다. 대신 300dpi 스캔을 권장한다. 우리 입력은 그 근처에도 가지 못한다. 원본이 1080×1080이고, 그 안에서 악보 패널이 차지하는 영역이 약 1000×300px다. 여기서 나올 수 있는 글자 크기가 저 표다. **warp 배율을 키워도 없는 정보는 생기지 않는다.** 확대는 픽셀을 늘리지 정보를 늘리지 않는다.
+tesseract 공식 문서는 픽셀 단위 하한을 명시하지 않는다. 대신 300dpi 스캔을 권장한다.[^github-com-tesseract] 우리 입력은 그 근처에도 가지 못한다. 원본이 1080×1080이고, 그 안에서 악보 패널이 차지하는 영역이 약 1000×300px다. 여기서 나올 수 있는 글자 크기가 저 표다. **warp 배율을 키워도 없는 정보는 생기지 않는다.** 확대는 픽셀을 늘리지 정보를 늘리지 않는다.
 
 코드 심볼은 초록색이라 색으로 분리하는 것까지는 됐다. 그런데 정면화된 단 전체에서 초록 화소가 **325개**뿐이었다. 이 개수로는 덩어리 검출조차 절반을 놓친다. 마디 번호는 더 나쁘다. 입체 테두리 글꼴이라 이진화하면 속이 채워져 형태 자체가 사라진다. 직접 만든 템플릿 매칭도 실패했다.
 
@@ -100,7 +100,7 @@ tesseract 공식 문서는 픽셀 단위 하한을 명시하지 않는다. 대�
 
 ### A. 기성 OMR 엔진은 셋 다 쓸 수 없었다
 
-OMR(Optical Music Recognition, 광학 악보 인식) 엔진 세 개를 검토했다. Audiveris는 Java 기반이고 스캔본을 전제한다. oemer는 마지막 릴리스가 2024년 11월(v0.1.8), 마지막 커밋이 2025년 4월로 사실상 멈춰 있다. homr는 활발히 개발되지만 인쇄 악보 사진을 전제한다.
+OMR(Optical Music Recognition, 광학 악보 인식) 엔진 세 개를 검토했다. Audiveris는 Java 기반이고 스캔본을 전제한다.[^github-com-audiveris] oemer는 마지막 릴리스가 2024년 11월(v0.1.8), 마지막 커밋이 2025년 4월로 사실상 멈춰 있다.[^github-com-oemer] homr는 활발히 개발되지만 인쇄 악보 사진을 전제한다.[^github-com-homr]
 
 기능부터 안 맞는다. 셋 다 코드 심볼과 한글 가사를 주지 못한다. 음표를 완벽히 맞혀도 요구사항의 절반이 빈다.
 
@@ -196,3 +196,10 @@ Spec Kit은 **요구사항이 명확하고 가정이 검증된 프로젝트**에
 - Tesseract OCR — https://github.com/tesseract-ocr/tesseract
 - MusicXML 사양 — https://www.w3.org/2021/06/musicxml40/
 - 위 본문의 모든 수치는 2026년 이 실험에서 로컬로 실측한 값이다.
+
+[^github-com-spec-kit]: GitHub Spec Kit — 헌법·명세·계획·태스크 파이프라인. [github.com/github/spec-kit](https://github.com/github/spec-kit)
+[^github-com-python-audio-separator]: audio-separator — 보컬 분리에 사용한 라이브러리(BS-Roformer 모델). [github.com/nomadkaraoke/python-audio-separator](https://github.com/nomadkaraoke/python-audio-separator)
+[^github-com-audiveris]: Audiveris — Java 기반 OMR 엔진. [github.com/Audiveris/audiveris](https://github.com/Audiveris/audiveris)
+[^github-com-oemer]: oemer — 릴리스·커밋 이력 확인. [github.com/BreezeWhite/oemer](https://github.com/BreezeWhite/oemer)
+[^github-com-homr]: homr — 인쇄 악보 사진 전제 OMR 엔진. [github.com/liebharc/homr](https://github.com/liebharc/homr)
+[^github-com-tesseract]: Tesseract OCR — 입력 이미지 품질·해상도 권장 사항. [github.com/tesseract-ocr/tesseract](https://github.com/tesseract-ocr/tesseract)

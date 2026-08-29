@@ -22,7 +22,7 @@ sources:
 
 스킬 하나 잘 쓰는 법은 이제 웬만큼 안다. 그런데 스킬 47개를 한 도메인에 몰아넣으면 무슨 일이 벌어질까? 컨텍스트는 어떻게 공유하고, 품질은 어떻게 회귀 검증하며, 저작권과 환각은 어떻게 막을까? 대부분의 스킬 저장소는 이 질문에 답하기 전에 규모가 3–4개에서 멈춘다.
 
-Corey Haines의 [marketingskills](https://github.com/coreyhaines31/marketingskills)는 멈추지 않았다. 마케팅 한 도메인에 스킬 47개, zero-dependency CLI 64개, references 문서 146개를 쌓은 MIT 라이선스 오픈소스다. 약 4만 스타를 받았고 Claude Code·Codex·Cursor·Windsurf 등 Agent Skills 스펙을 지원하는 에이전트에서 돈다.
+Corey Haines의 [marketingskills](https://github.com/coreyhaines31/marketingskills)는 멈추지 않았다. 마케팅 한 도메인에 스킬 47개, zero-dependency CLI 64개, references 문서 146개를 쌓은 MIT 라이선스 오픈소스다.[^github-com-marketingskills] 약 4만 스타를 받았고 Claude Code·Codex·Cursor·Windsurf 등 Agent Skills 스펙을 지원하는 에이전트에서 돈다.[^agentskills-io]
 
 ## 이 글의 결론: 마케팅 내용은 잊고, 라이브러리 설계를 읽어라
 
@@ -44,7 +44,7 @@ Corey Haines의 [marketingskills](https://github.com/coreyhaines31/marketingskil
 
 AGENTS.md에 규칙 한 줄이 박혀 있다. "Keep SKILL.md under 500 lines (move details to references/)." 세부 지식은 SKILL.md 본문이 아니라 `references/` 폴더로 빼고, 에이전트가 필요할 때만 로드한다. references 문서가 146개라는 수치가 이 규칙의 결과물이다.
 
-이건 컨텍스트 예산 관리다. SKILL.md는 스킬이 로드될 때 항상 컨텍스트에 들어간다. 여기에 모든 세부를 적으면 스킬 하나가 창을 통째로 잡아먹는다. 상한을 걸고 세부를 필요할 때 불러오게 하면, **평소엔 적은 내용만 로드되고 필요할 때만 상세 내용을 추가한다.** Anthropic이 Agent Skills를 설계할 때 내세운 점진 공개(progressive disclosure) 원칙 그대로다.
+이건 컨텍스트 예산 관리다. SKILL.md는 스킬이 로드될 때 항상 컨텍스트에 들어간다. 여기에 모든 세부를 적으면 스킬 하나가 창을 통째로 잡아먹는다. 상한을 걸고 세부를 필요할 때 불러오게 하면, **평소엔 적은 내용만 로드되고 필요할 때만 상세 내용을 추가한다.** Anthropic이 Agent Skills를 설계할 때 내세운 점진 공개(progressive disclosure) 원칙 그대로다.[^anthropic-com-skills]
 
 [[디자인-스킬-비교-실험]]이 관측한 대로 스킬은 토큰을 사용하고 품질은 대체로 비용에 비례한다. 500줄 상한은 그 비용을 스킬 저자가 설계 단계에서 통제하게 만드는 장치다. 규모가 커질수록 이 규율의 가치도 높아진다 — 47개 스킬의 세부 내용이 모두 상시 로드되는 경우와 비교하면 차이가 분명하다.
 
@@ -114,3 +114,7 @@ VERSIONS.md를 보면 유지보수 편차가 드러난다. **스킬 절반 이�
 - [Agent Skills 스펙 — agentskills.io](https://agentskills.io) (크로스 에이전트 스킬 표준)
 - [Anthropic — Agent Skills / progressive disclosure](https://www.anthropic.com/news/skills) (점진 공개 원칙의 1차 근거, 2026-07-14 HTTP 200 확인)
 - 홈페이지 https://marketing-skills.com (제작자 상용 제품·잠재 고객 확보 맥락)
+
+[^github-com-marketingskills]: 이 글이 분석한 저장소 — README·AGENTS.md·VERSIONS.md·파일 트리 원문. [github.com/coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills)
+[^agentskills-io]: 크로스 에이전트 Agent Skills 스펙. [agentskills.io](https://agentskills.io)
+[^anthropic-com-skills]: Anthropic, Agent Skills 발표 — 점진 공개(progressive disclosure) 원칙의 1차 근거. [anthropic.com/news/skills](https://www.anthropic.com/news/skills)

@@ -61,13 +61,13 @@ sources:
 
 # AIDE² 비판적 리뷰 — "최초의 재귀적 자기개선"이라는 제목과 그 본문 사이
 
-2026년 7월 14일, Weco AI가 "AIDE²: The First Evidence of Recursive Self-Improvement"를 냈다. 자율 연구 에이전트가 8일 동안 무인으로 돌면서 자기 하네스를 다시 써서, 회사가 2년간 손으로 다듬은 에이전트를 외부 벤치마크 세 개에서 모두 이겼다는 보고다. 제목의 크기를 생각하면 반응은 이상할 만큼 조용했다. Hacker News 제출은 2건, 둘 다 댓글 0개다.
+2026년 7월 14일, Weco AI가 "AIDE²: The First Evidence of Recursive Self-Improvement"를 냈다.[^weco-ai-first-evidence-of-recursive-self] 자율 연구 에이전트가 8일 동안 무인으로 돌면서 자기 하네스를 다시 써서, 회사가 2년간 손으로 다듬은 에이전트를 외부 벤치마크 세 개에서 모두 이겼다는 보고다. 제목의 크기를 생각하면 반응은 이상할 만큼 조용했다. Hacker News 제출은 2건, 둘 다 댓글 0개다.[^news-ycombinator-com-item-id-48912723][^news-ycombinator-com-item-id-48917940]
 
 그런데 원문을 열어 보면 예상과 다른 구도가 드러난다. 이 글은 **핵심 반론의 근거를 본문에 직접 공개했다.** Level 2(점화) 미달, 통계적으로 유의하지 않은 효율 주장, 죽은 코드, 유지보수 불가 — 모두 저자들이 직접 적었다.
 
 ## 결론부터: 무너지는 건 본문이 아니라 제목이다
 
-원문의 본문은 좁고 조건부이며, 대체로 방어 가능하다. 무너지는 건 제목 한 줄이다. "최초"라는 단어는 STOP(2023)·ADAS(2024)·SICA·DGM·AlphaEvolve(2025) 앞에서 버티지 못한다.
+원문의 본문은 좁고 조건부이며, 대체로 방어 가능하다. 무너지는 건 제목 한 줄이다. "최초"라는 단어는 STOP(2023)·ADAS(2024)·SICA·DGM·AlphaEvolve(2025) 앞에서 버티지 못한다.[^arxiv-2310.02304][^arxiv-2408.08435][^arxiv-2504.15228][^arxiv-2505.22954][^deepmind-alphaevolve]
 
 그러니 이 글을 읽는 올바른 방법은 "최초냐 아니냐"를 따지는 게 아니다. **AIDE²의 진짜 기여는 델타의 크기가 아니라 평가의 엄격함이다.** 고정 달러 예산, public/private 점수 분리, held-out OOD 벤치마크 — 이 세 통제를 동시에 건 자기개선 실험은 드물다. 이 위키가 이 글에 붙일 값은 제목을 부수는 게 아니라, 기여를 **"가장 엄격하게 통제된 자기개선 사례"로** 다시 이름 붙이는 데 있다.
 
@@ -77,7 +77,7 @@ sources:
 
 먼저 구조. AIDE²는 루프가 두 개다. [[이중-루프-아키텍처]]가 갈라놓은 세 축 중 **(B) 학습축** — 바깥 루프가 실행 방식(하네스)을 고치고 안쪽 루프가 작업을 실행하는 — 의 교과서적 사례다.
 
-- **안쪽 루프**: 평범한 autoresearch 에이전트. 평가 지표를 향해 코드를 최적화한다. 시작점은 AIDE⁰ — MLE-Bench 1위를 했던 [AIDE](https://arxiv.org/abs/2502.13138)에서 ML 전용 기계장치를 걷어낸 단순화 버전. 모델은 `gemini-3-flash`.
+- **안쪽 루프**: 평범한 autoresearch 에이전트. 평가 지표를 향해 코드를 최적화한다. 시작점은 AIDE⁰ — MLE-Bench 1위를 했던 [AIDE](https://arxiv.org/abs/2502.13138)에서 ML 전용 기계장치를 걷어낸 단순화 버전.[^arxiv-2502.13138] 모델은 `gemini-3-flash`.
 - **바깥쪽 루프**: 안쪽 루프 에이전트의 **하네스 코드 자체**를 최적화한다. 실행 주체는 AIDEhuman(2년간 손으로 튜닝한 사내 에이전트), 모델은 `claude-opus-4.7`.
 
 100 스텝, 8일, 무인. 제안의 약 열에 아홉이 기각됐고, 살아남아 연속으로 개선된 버전이 7개. 최종 산물 AIDE⁸⁵가 발견한 것은 (1) 각 드래프트 서브트리를 multi-armed bandit의 팔로 쓰는 탐색 정책 — 정체되면 전역 최적해를 새 전략으로 포크한다, (2) 프롬프트를 평균 16배 압축하는 컨텍스트 시스템, (3) 3층 보상 해킹 방어.
@@ -116,15 +116,15 @@ Weco의 방어 논리는 이해할 만하다. 그들의 주장은 "자기개선 
 
 ## 사다리를 스스로 만들고, 그 위에서 자기를 채점했다
 
-Level 0–3 사다리(위임 → 순이익 → 점화 → 변곡)는 나흘 전인 2026년 7월 10일 Weco 자사 블로그에서 정의됐다. 그 사다리로 자기 시스템을 Level 1로 판정한다.
+Level 0–3 사다리(위임 → 순이익 → 점화 → 변곡)는 나흘 전인 2026년 7월 10일 Weco 자사 블로그에서 정의됐다.[^weco-ai-4-levels-of-rsi] 그 사다리로 자기 시스템을 Level 1로 판정한다.
 
 **자체 분류라는 사실 자체는 결함이 아니다.** 측정 가능한 눈금을 제안하는 건 정당한 기여이고, 원문은 각 레벨을 반증 가능하게 쓰려고 애썼다. 문제는 "최초"라는 주장이 **자기가 만든 눈금에 의존한다**는 점이다. 눈금을 만든 쪽이 그 눈금의 첫 통과자가 되는 건 구조적으로 거의 보장된 결과다.
 
-같은 구조가 한 층 더 있다. 보상 해킹 탐지법도 자기 것이다 — 원문은 "우리가 SpecBench에서 쓰던 탐지 아이디어를 KernelBench 태스크에 적용했다"고 밝힌다. SpecBench는 Weco 자사 벤치마크다. 그러니 "해킹률 63% → 34%"라는 측정도 자사 정의 지표 위에서 읽힌 숫자다.
+같은 구조가 한 층 더 있다. 보상 해킹 탐지법도 자기 것이다 — 원문은 "우리가 SpecBench에서 쓰던 탐지 아이디어를 KernelBench 태스크에 적용했다"고 밝힌다. SpecBench는 Weco 자사 벤치마크다.[^weco-ai-specbench] 그러니 "해킹률 63% → 34%"라는 측정도 자사 정의 지표 위에서 읽힌 숫자다.
 
 게다가 사다리는 개념적으로 새롭지 않다.
 
-- Weco의 Level 2(점화, "자기개선 능력 자체를 개선") ≈ Yampolskiy 2015의 강한 RSI
+- Weco의 Level 2(점화, "자기개선 능력 자체를 개선") ≈ Yampolskiy 2015의 강한 RSI[^arxiv-1502.06512]
 - Weco의 Level 3(변곡, 고정 예산에서 진보가 가속) ≈ I.J. Good 1965의 지능 폭발
 
 실제로 새로운 건 Level 1 — **"인간 대비 효율"이라는 눈금** 하나다. 이건 진짜 기여지만, 60년 된 이분법 아래에 계단 하나를 끼워 넣은 것이지 새 사다리를 세운 게 아니다. (참고: "net positive RSI"가 Weco 이전에 쓰이던 용어인지는 확인 불가 — 조어일 가능성이 있으나 단정하지 않는다.)
@@ -222,3 +222,16 @@ Level 0–3 사다리(위임 → 순이익 → 점화 → 변곡)는 나흘 전�
 - Rasp et al., "WeatherBench 2", arXiv:2308.15560 (Google)
 - Ouyang et al., "KernelBench: Can LLMs Write Efficient GPU Kernels?", arXiv:2502.10517 (ICML 2025)
 - Hacker News 제출 현황 (2026-07-17 조회, 댓글 0건) — https://news.ycombinator.com/item?id=48912723 · https://news.ycombinator.com/item?id=48917940
+
+[^weco-ai-first-evidence-of-recursive-self]: Weco Team, "AIDE²: The First Evidence of Recursive Self-Improvement", Weco AI Blog, 2026-07-14. [weco.ai/blog](https://www.weco.ai/blog/first-evidence-of-recursive-self-improvement) — 이 리뷰의 1차 소스.
+[^weco-ai-4-levels-of-rsi]: Weco Team, "4 Levels of Recursive Self-Improvement", Weco AI Blog, 2026-07-10. [weco.ai/blog](https://www.weco.ai/blog/4-levels-of-recursive-self-improvement) — RSI 사다리의 출처.
+[^weco-ai-specbench]: Weco Team, "SpecBench", Weco AI Blog. [weco.ai/blog](https://www.weco.ai/blog/specbench) — 원문 §2.3의 보상 해킹 탐지법이 온 자사 벤치마크.
+[^arxiv-2502.13138]: Jiang et al., "AIDE: AI-Driven Exploration in the Space of Code". [arXiv:2502.13138](https://arxiv.org/abs/2502.13138)
+[^arxiv-2310.02304]: Zelikman et al., "Self-Taught Optimizer (STOP): Recursively Self-Improving Code Generation", [arXiv:2310.02304](https://arxiv.org/abs/2310.02304) (COLM 2024).
+[^arxiv-2408.08435]: Hu, Lu & Clune, "Automated Design of Agentic Systems (ADAS)", [arXiv:2408.08435](https://arxiv.org/abs/2408.08435) (ICLR 2025).
+[^arxiv-2504.15228]: Robeyns, Szummer & Aitchison, "A Self-Improving Coding Agent (SICA)", [arXiv:2504.15228](https://arxiv.org/abs/2504.15228)
+[^arxiv-2505.22954]: Zhang et al., "Darwin Gödel Machine", [arXiv:2505.22954](https://arxiv.org/abs/2505.22954)
+[^deepmind-alphaevolve]: Google DeepMind, "AlphaEvolve: a Gemini-powered coding agent for designing advanced algorithms", 2025-05. [deepmind.google](https://deepmind.google/discover/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/)
+[^arxiv-1502.06512]: Yampolskiy, "From Seed AI to Technological Singularity via Recursively Self-Improving Software", [arXiv:1502.06512](https://arxiv.org/abs/1502.06512) (2015) — RSI의 정의와 유형 분류. 본문의 "강한 RSI" 대응은 2차 출처로 확인한 것이라 `≈`로만 적었다.
+[^news-ycombinator-com-item-id-48912723]: [Hacker News 제출 #48912723](https://news.ycombinator.com/item?id=48912723) (2026-07-17 조회, 댓글 0건)
+[^news-ycombinator-com-item-id-48917940]: [Hacker News 제출 #48917940](https://news.ycombinator.com/item?id=48917940) (2026-07-17 조회, 댓글 0건)

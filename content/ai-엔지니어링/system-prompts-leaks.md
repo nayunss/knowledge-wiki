@@ -28,7 +28,7 @@ sources:
 
 ## 이 저장소가 실제로 하는 일
 
-한 줄로 요약하면, **AI 산업 전체의 숨은 시스템 프롬프트를 벤더별로 모은 사실상의 공개 아카이브**다. README가 밝힌 목적 그대로다. "The purpose of this repo is to document the System Prompt instructions for all the AI chatbots out there - Claude, ChatGPT, Gemini etc."
+한 줄로 요약하면, **AI 산업 전체의 숨은 시스템 프롬프트를 벤더별로 모은 사실상의 공개 아카이브**다. README가 밝힌 목적 그대로다. "The purpose of this repo is to document the System Prompt instructions for all the AI chatbots out there - Claude, ChatGPT, Gemini etc."[^raw-githubusercontent-com-readme-md]
 
 규모와 활력은 스냅샷(2026-07-17 기준)으로 이렇다.
 
@@ -40,7 +40,7 @@ sources:
 | 최근 push | 2026-07-16 | 자주 갱신(최근 30일 86커밋) |
 | 라이선스 | CC0-1.0 | 편집물에 대한 퍼블릭 도메인 헌정 (뉘앙스는 아래) |
 
-출처는 GitHub API로 직접 확인했다. README 상단에는 워싱턴포스트 인용("As seen in The Washington Post", 2026-05-11)이 걸려 있는데, 그 기사 제목이 이 아카이브의 성격을 압축한다. "AI의 숨은 규칙을 보라. 그리고 그걸로 이 기사를 다시 써보라."
+출처는 GitHub API로 직접 확인했다.[^github-com-system-prompts-leaks] README 상단에는 워싱턴포스트 인용("As seen in The Washington Post", 2026-05-11)이 걸려 있는데, 그 기사 제목이 이 아카이브의 성격을 압축한다. "AI의 숨은 규칙을 보라. 그리고 그걸로 이 기사를 다시 써보라."[^wapo-st-49t4gsb]
 
 **중요한 오해 하나를 먼저 걷어내자.** 이 저장소는 단순 챗봇 프롬프트 모음이 아니다. 최상위 폴더는 Anthropic·OpenAI·Google·xAI·Microsoft·Cursor·Perplexity·DeepSeek·Kimi 등 벤더별로 갈리고, 그 안에는 세 층위가 섞여 있다.
 
@@ -81,7 +81,7 @@ sources:
 
 **CC0를 오해하지 마라.** 저장소는 CC0-1.0(퍼블릭 도메인 헌정)이 걸려 있다. 하지만 이 라이선스는 관리자 asgeirtj가 **수집·정리·구성한 자신의 편집물**에 부여한 것이지, **유출된 프롬프트 원문 자체의 저작권 지위와는 별개다.** 원 프롬프트는 각 벤더가 작성했고, 그 텍스트의 저작물성과 소유권은 다른 문제다. "CC0니까 마음대로 재사용해도 된다"는 단순 결론은 위험하다.
 
-**읽기와 능동 추출은 다르다.** 이미 공개된 유출물을 읽고 학습하는 것은 대체로 안전한 행위로 본다. 그러나 당신이 직접 라이브 AI에서 프롬프트를 뽑아내려는 능동 추출은 사정이 다르다. OpenAI 이용약관은 모델의 리버스 엔지니어링과 출력물의 프로그램적 추출을 금지하고, Anthropic 상용 약관도 리버스 엔지니어링·사람이 읽을 수 있는 형태로의 환원을 금지한다. "프롬프트 추출이 곧 리버스 엔지니어링"이라고 명문화한 건 아니지만, 이 조항들에 걸릴 소지가 있다. 관련 판례는 사실상 없고 집행도 드물다는 게 일반적 관측이라 단정하긴 어렵되, 소지가 있다는 사실만으로 실무에서는 충분히 조심할 이유가 된다. 팀 정책으로 정리하면 간단하다. **공개 아카이브 읽기는 허용, 라이브 제품에서 직접 추출은 법무 검토 전까지 금지.**
+**읽기와 능동 추출은 다르다.** 이미 공개된 유출물을 읽고 학습하는 것은 대체로 안전한 행위로 본다. 그러나 당신이 직접 라이브 AI에서 프롬프트를 뽑아내려는 능동 추출은 사정이 다르다. OpenAI 이용약관은 모델의 리버스 엔지니어링과 출력물의 프로그램적 추출을 금지하고, Anthropic 상용 약관도 리버스 엔지니어링·사람이 읽을 수 있는 형태로의 환원을 금지한다.[^openai-terms-of-use][^anthropic-commercial-terms] "프롬프트 추출이 곧 리버스 엔지니어링"이라고 명문화한 건 아니지만, 이 조항들에 걸릴 소지가 있다. 관련 판례는 사실상 없고 집행도 드물다는 게 일반적 관측이라 단정하긴 어렵되, 소지가 있다는 사실만으로 실무에서는 충분히 조심할 이유가 된다. 팀 정책으로 정리하면 간단하다. **공개 아카이브 읽기는 허용, 라이브 제품에서 직접 추출은 법무 검토 전까지 금지.**
 
 ## 실무 적용 — 팀이 내일 할 일
 
@@ -102,3 +102,9 @@ CTO 시각에서 이 자료를 팀 자산으로 만드는 세 가지 규칙을 �
 - The Washington Post, "See the hidden rules behind AI…" (2026-05-11) — README에 링크된 인용: https://wapo.st/49t4gSb
 - 파일 내용 예시(GPT-5.1 default 페르소나의 메타지시)는 저장소 `OpenAI/` 폴더 원본에서 발췌
 - 능동 추출과 이용약관: OpenAI Terms of Use(리버스 엔지니어링·출력물 자동 추출 금지), Anthropic Commercial Terms of Service(리버스 엔지니어링·human-readable 환원 금지) — 2026-07-17 확인
+
+[^github-com-system-prompts-leaks]: asgeirtj/system_prompts_leaks — 저장소 원본. 스타·포크·개설일·push·라이선스는 2026-07-17 GitHub API 조회. [github.com/asgeirtj/system_prompts_leaks](https://github.com/asgeirtj/system_prompts_leaks)
+[^raw-githubusercontent-com-readme-md]: 저장소 README 원문 — 목적문·워싱턴포스트 인용·"Recently Updated" 표·배너 설명. [raw.githubusercontent.com](https://raw.githubusercontent.com/asgeirtj/system_prompts_leaks/main/README.md)
+[^wapo-st-49t4gsb]: The Washington Post, "See the hidden rules behind AI…" (2026-05-11) — README에 링크된 인용. [wapo.st/49t4gSb](https://wapo.st/49t4gSb)
+[^openai-terms-of-use]: OpenAI Terms of Use — 리버스 엔지니어링·출력물 자동 추출 금지 조항(2026-07-17 확인). [openai.com/policies](https://openai.com/policies/row-terms-of-use/)
+[^anthropic-commercial-terms]: Anthropic Commercial Terms of Service — 리버스 엔지니어링·human-readable 환원 금지 조항(2026-07-17 확인). [anthropic.com/legal/commercial-terms](https://www.anthropic.com/legal/commercial-terms)

@@ -27,7 +27,7 @@ OpenKnowledge는 그 사이를 메우겠다는 도구다. **마크다운 파일�
 
 ## 1. 무엇인가, 왜 지금인가
 
-OpenKnowledge는 Inkeep이 만든 오픈소스 마크다운 지식베이스 IDE다. 공식 문서는 스스로를 세 겹으로 설명한다.
+OpenKnowledge는 Inkeep이 만든 오픈소스 마크다운 지식베이스 IDE다.[^github-com-open-knowledge] 공식 문서는 스스로를 세 겹으로 설명한다.
 
 | 레이어 | 정체 | 누가 쓰나 |
 |---|---|---|
@@ -37,7 +37,7 @@ OpenKnowledge는 Inkeep이 만든 오픈소스 마크다운 지식베이스 IDE�
 
 세 레이어가 **같은 파일**을 만진다. 앱으로 고치든, 에이전트가 MCP로 고치든, vim으로 고치든 결과는 동일한 마크다운이다. 문서의 표현을 빌리면 "파일 시스템이 데이터베이스"이고, DB 의존성이 없다.
 
-왜 지금이냐. 두 흐름이 만났기 때문이다. 하나는 노션 대신 마크다운을 단일 원본으로 삼는 흐름([[위키-설계-결정]]), 다른 하나는 Claude Code·Codex 같은 하네스가 파일을 직접 편집하는 [[에이전틱-엔지니어링]] 흐름. 전자는 에디터가 투박했고 후자는 문서의 관례를 몰랐다. OpenKnowledge는 그 교집합을 제품으로 만든 첫 시도에 가깝다. 실제로 공식 워크플로 문서는 Andrej Karpathy의 2026년 4월 LLM 위키 gist를 명시적으로 구현 대상으로 삼는다.
+왜 지금이냐. 두 흐름이 만났기 때문이다. 하나는 노션 대신 마크다운을 단일 원본으로 삼는 흐름([[위키-설계-결정]]), 다른 하나는 Claude Code·Codex 같은 하네스가 파일을 직접 편집하는 [[에이전틱-엔지니어링]] 흐름. 전자는 에디터가 투박했고 후자는 문서의 관례를 몰랐다. OpenKnowledge는 그 교집합을 제품으로 만든 첫 시도에 가깝다. 실제로 공식 워크플로 문서는 Andrej Karpathy의 2026년 4월 LLM 위키 gist를 명시적으로 구현 대상으로 삼는다.[^gist-github-com-442a6bf555914893e9891c11]
 
 ---
 
@@ -282,3 +282,6 @@ MCP 등록은 "surgical"하다고 문서화돼 있다 — 자기 항목만 추�
 - 최신성 재확인 (GitHub API, 2026-07-17): 최신 스테이블 v0.32.0 (2026-07-15), 도는 베타 v0.33.0-beta.13 (2026-07-17), 태그 370개. 최근 릴리스 100건 중 "Breaking for consumers" 명시는 v0.30.0과 그 베타 1건뿐
 - 저장소 통계 (`git log`, 2026-07-11 확인): 최초 공개 커밋 2026-06-03, 커밋 1,095개, 태그 327개
 - Andrej Karpathy, LLM 큐레이션 위키 gist (2026-04): https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f
+
+[^github-com-open-knowledge]: inkeep/open-knowledge — GitHub 저장소. [github.com/inkeep/open-knowledge](https://github.com/inkeep/open-knowledge)
+[^gist-github-com-442a6bf555914893e9891c11]: Andrej Karpathy, LLM 큐레이션 위키 gist (2026-04). [gist.github.com](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f)
