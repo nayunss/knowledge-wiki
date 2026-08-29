@@ -5,6 +5,25 @@ description: 저수준 학습 루프는 사용자가 쥐고 분산 인프라만 
 tags: [파인튜닝, 강화학습, 도구, 인프라]
 resource: https://github.com/thinking-machines-lab/tinker-cookbook
 created: 2026-07-19
+sources:
+  - id: raw-githubusercontent-com-readme-md
+    resource: https://raw.githubusercontent.com/thinking-machines-lab/tinker-cookbook/main/README.md
+    title: Tinker Cookbook README (raw, 1차)
+  - id: github-com-tinker-cookbook
+    resource: https://github.com/thinking-machines-lab/tinker-cookbook
+    title: GitHub 저장소 및 트리 (1차)
+  - id: thinkingmachines-ai-announcing-tinker
+    resource: https://thinkingmachines.ai/news/announcing-tinker/
+    title: Announcing Tinker
+  - id: x-com-1973447428977336578
+    resource: https://x.com/thinkymachines/status/1973447428977336578
+    title: 공식 X 공지 (1차)
+  - id: venturebeat-com-thinking-machines-first
+    resource: https://venturebeat.com/ai/thinking-machines-first-official-product-is-here-meet-tinker-an-api-for
+    title: VentureBeat 보도 (2차)
+  - id: deeplearning-ai-thinking-machines-new-ti
+    resource: https://www.deeplearning.ai/the-batch/thinking-machines-new-tinker-api-makes-it-easier-to-fine-tune-models-on-many-gpus
+    title: DeepLearning.AI The Batch (2차)
 ---
 
 # Tinker & tinker-cookbook: 파인튜닝의 '중간 층'을 여는 매니지드 학습 SDK

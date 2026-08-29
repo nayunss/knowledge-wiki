@@ -5,6 +5,16 @@ description: 에이전트 스킬 문서를 가중치처럼 최적화하는 Skill
 tags: [에이전트, 스킬, 하네스, 논문리뷰]
 resource: https://arxiv.org/abs/2605.23904
 date: 2026-07-12
+sources:
+  - id: arxiv-2605.23904
+    resource: https://arxiv.org/abs/2605.23904
+    title: "SkillOpt: Executive Strategy for Self-Evolving Agent Skills."
+  - id: arxiv-org-2605-23904v2
+    resource: https://arxiv.org/html/2605.23904v2
+    title: HTML 전문 (v2)
+  - id: aka-ms-skillopt
+    resource: https://aka.ms/skillopt
+    title: 코드
 ---
 
 에이전트 스킬 문서는 지금까지 사람이 손으로 썼다. 잘되면 남기고, 안되면 고쳤다. 감으로. SkillOpt는 이 과정을 최적화 문제로 다시 정의한다. 스킬 문서를 동결된 모델의 "외부 상태"로 보고, 롤아웃으로 점수를 매기고, 편집 폭을 학습률처럼 제한하고, held-out 분할에서 개선될 때만 채택한다. 결과는 6개 벤치마크·7개 모델·3개 하네스에 걸친 평가 대상 52개 셀 전부에서 최고 또는 공동 최고다.

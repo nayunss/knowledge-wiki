@@ -5,6 +5,16 @@ description: 메인 모델이 접근 확정·반복 에러·완료 선언 같은
 tags: [claude-code, 하네스, 비용최적화, 모델선택]
 resource: https://code.claude.com/docs/en/advisor
 date: 2026-07-09
+sources:
+  - id: code-claude-com-advisor
+    resource: https://code.claude.com/docs/en/advisor
+    title: Escalate hard decisions with the advisor tool
+  - id: platform-claude-com-advisor-tool
+    resource: https://platform.claude.com/docs/en/agents-and-tools/tool-use/advisor-tool
+    title: Advisor tool
+  - id: claude-com-the-advisor-strategy
+    resource: https://claude.com/blog/the-advisor-strategy
+    title: The advisor strategy
 ---
 
 큰 리팩터링을 Sonnet에게 맡긴다고 가정하자. 400턴 중 380턴은 파일을 열고, 함수를 옮기고, 테스트를 실행하는 기계적인 작업이다. 그런데 3–4개의 순간 — 설계를 선택하는 시점, 같은 오류가 다섯 번째 반복되는 시점, 완료를 선언하기 직전 — 이 결과 전체를 좌우한다. 이 순간들 때문에 400턴 전부를 Opus로 실행해야 할까?

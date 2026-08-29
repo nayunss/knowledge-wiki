@@ -4,6 +4,34 @@ type: 도구
 description: kinetics.colorion.co를 소스 수준에서 분석한다. 슬라이더는 히어로의 공 하나만 움직이고 117개 스니펫은 고정 이징이다. 그런데 그 실체가 간판보다 흥미롭다.
 tags: [프론트엔드, 애니메이션, css, 프롬프트]
 resource: https://kinetics.colorion.co
+sources:
+  - id: kinetics-colorion-co
+    resource: https://kinetics.colorion.co
+    title: Kinetics 사이트 (히어로 카피·117개 카드·코드 패널)
+  - id: github-com-kinetics
+    resource: https://github.com/ckissi/kinetics
+    title: Kinetics 소스
+  - id: api-github-com-kinetics
+    resource: https://api.github.com/repos/ckissi/kinetics`
+    title: GitHub API
+  - id: developer-mozilla-org-linear
+    resource: https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function/linear
+    title: CSS linear() 이징 함수
+  - id: web-platform-dx-github-io-linear-easing
+    resource: https://web-platform-dx.github.io/web-features-explorer/features/linear-easing/
+    title: CSS linear() 지원·Baseline (Widely available 2026-06-11; Chrome/Edge 113, Firefox 112, Safari 17.2)
+  - id: developer-chrome-com-css-linear-easing-f
+    resource: https://developer.chrome.com/docs/css-ui/css-linear-easing-function
+    title: CSS linear() 지원·Baseline (Widely available 2026-06-11; Chrome/Edge 113, Firefox 112, Safari 17.2)
+  - id: en-wikipedia-org-damping
+    resource: https://en.wikipedia.org/wiki/Damping
+    title: Damping
+  - id: docs-github-com-licensing-a-repository
+    resource: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository
+    title: Licensing a repository
+  - id: copyright-gov-copyright-and-artificial-i
+    resource: https://www.copyright.gov/ai/Copyright-and-Artificial-Intelligence-Part-2-Copyrightability-Report.pdf
+    title: "Copyright and Artificial Intelligence, Part 2: Copyrightability"
 ---
 
 ## 슬라이더를 움직여도 복사되는 코드는 바뀌지 않는다

@@ -4,6 +4,13 @@ type: 도구
 description: inkeep/open-knowledge 설치·사용법과 장단점(v0.29.1 실측). MCP·에이전틱 서치·git 동기화를 갖춘 로컬 우선 마크다운 에디터를 Quartz+git 위키 운영자 관점에서 평가하고, 현재 릴리스와 실측 기준을 구분한다.
 tags: [도구, 위키, mcp, 마크다운]
 resource: https://github.com/inkeep/open-knowledge
+sources:
+  - id: github-com-open-knowledge
+    resource: https://github.com/inkeep/open-knowledge
+    title: inkeep/open-knowledge
+  - id: gist-github-com-442a6bf555914893e9891c11
+    resource: https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f
+    title: Andrej Karpathy, LLM 큐레이션 위키 gist (2026-04)
 ---
 
 마크다운 위키를 LLM과 함께 굴려본 사람은 같은 벽에 부딪힌다. 파일은 쌓이는데 링크는 끊기고, 에이전트는 `cat`과 `grep`으로 더듬거리며, 정리는 영원히 "나중에"다. 벡터 DB를 붙이면 원본과 인덱스가 갈라지고, Obsidian을 쓰면 에이전트가 볼트의 관례를 모른다.

@@ -5,6 +5,31 @@ description: 깨진 Markdown을 막는 검수 스킬을 만들고, 단일 원본
 tags: [agent-skills, markdown, codex, claude-code]
 resource: https://github.com/nayunss/md-verify-skill
 date: 2026-08-03
+sources:
+  - id: github-com-md-verify-skill
+    resource: https://github.com/nayunss/md-verify-skill
+    title: Markdown Verify Skill 저장소
+  - id: spec-commonmark-org-current
+    resource: https://spec.commonmark.org/current/
+    title: CommonMark Specification
+  - id: github-github-com-gfm
+    resource: https://github.github.com/gfm/
+    title: GitHub Flavored Markdown Specification
+  - id: developers-openai-com-plugins
+    resource: https://developers.openai.com/plugins/build/plugins
+    title: OpenAI, Package your plugin
+  - id: developers-openai-com-submission
+    resource: https://developers.openai.com/plugins/deploy/submission
+    title: OpenAI, Submit plugins
+  - id: code-claude-com-plugin-marketplaces
+    resource: https://code.claude.com/docs/en/plugin-marketplaces
+    title: Claude Code, Create and distribute a plugin marketplace
+  - id: code-claude-com-plugins
+    resource: https://code.claude.com/docs/en/plugins
+    title: Claude Code, Create plugins
+  - id: code-claude-com-plugins-reference
+    resource: https://code.claude.com/docs/en/plugins-reference
+    title: Claude Code, Plugins reference
 ---
 
 문서 생성은 성공했는데 결과를 열어 보면 강조 기호가 글자 그대로 남고, 줄바꿈은 붙고, 목록은 불릿이 아니라 평문으로 보였다. 내용은 맞아도 읽을 수 없는 Markdown은 완성품이 아니다. 그런데 이 문제를 매번 눈으로만 찾으면 같은 실수가 반복된다.

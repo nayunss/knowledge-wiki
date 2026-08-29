@@ -5,6 +5,25 @@ description: "AWS가 공개한 에이전트 거버넌스 언어 Dogwood를 원�
 tags: [ai-에이전트, 거버넌스, 정책언어, 런타임검증]
 resource: https://aws.amazon.com/ko/blogs/opensource/introducing-dogwood-runtime-verification-for-ai-agents/
 date: 2026-08-29
+sources:
+  - id: aws-amazon-com-introducing-dogwood-runti
+    resource: https://aws.amazon.com/ko/blogs/opensource/introducing-dogwood-runtime-verification-for-ai-agents/
+    title: 1차 출처
+  - id: github-com-dogwood
+    resource: https://github.com/dogwood-policy/dogwood
+    title: Dogwood 저장소 (README·CONTRIBUTING, Apache 2.0)
+  - id: github-com-07-api-and-workflow-md
+    resource: https://github.com/dogwood-policy/dogwood/blob/main/dogwood-docs/guide/07-api-and-workflow.md
+    title: Dogwood 언어 가이드
+  - id: github-com-12-cli-md
+    resource: https://github.com/dogwood-policy/dogwood/blob/main/dogwood-docs/guide/12-cli.md
+    title: Dogwood 언어 가이드
+  - id: aws-amazon-com-authoring-dogwood-policie
+    resource: https://aws.amazon.com/blogs/machine-learning/authoring-dogwood-policies-from-natural-language-in-amazon-bedrock-agentcore/
+    title: AgentCore에서의 집행 단위
+  - id: aws-agentcore-chose-cedar
+    resource: https://aws.amazon.com/blogs/security/why-policy-in-amazon-bedrock-agentcore-chose-cedar-for-securing-agentic-workflows/
+    title: Why Policy in Amazon Bedrock AgentCore chose Cedar for securing agentic workflows
 ---
 
 에이전트에게 "5천 달러 넘게 송금하지 마"라는 규칙을 써본 적이 있다면, 그 규칙이 왜 잘 안 써지는지도 알 것이다. 요청 하나만 보면 이번 송금은 2천 달러다. 문제없다. 문제는 이번이 세 번째라는 사실인데, 그건 요청 안에 안 적혀 있다.

@@ -3,9 +3,20 @@ title: Google agents-cli
 type: 도구
 description: 코딩 어시스턴트를 Google Cloud 에이전트 개발 전문가로 바꾸는 오픈소스 CLI + 스킬 묶음
 resource: https://github.com/google/agents-cli
-tags:
-  - agent
-  - tool
+tags: [agent, tool]
+sources:
+  - id: github-com-agents-cli
+    resource: https://github.com/google/agents-cli
+    title: google/agents-cli (GitHub)
+  - id: google-github-io-agents-cli
+    resource: https://google.github.io/agents-cli/
+    title: agents-cli 공식 문서
+  - id: docs-cloud-google-com-quickstart-adk
+    resource: https://docs.cloud.google.com/gemini-enterprise-agent-platform/agents/quickstart-adk
+    title: Google Cloud 문서
+  - id: github-com-releases
+    resource: https://github.com/google/agents-cli/releases
+    title: agents-cli 릴리스
 ---
 
 # Google agents-cli

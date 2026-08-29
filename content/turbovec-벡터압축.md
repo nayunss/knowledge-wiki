@@ -5,6 +5,16 @@ description: "화제의 벡터 압축 헤드라인이 합쳐버린 두 가지 �
 tags: [벡터양자화, 벡터검색, faiss, 추론인프라]
 resource: https://arxiv.org/abs/2504.19874
 date: 2026-07-19
+sources:
+  - id: arxiv-org-2504-19874
+    resource: https://arxiv.org/abs/2504.19874
+    title: "TurboQuant: Online Vector Quantization with Near-optimal Distortion Rate"
+  - id: github-com-turbovec
+    resource: https://github.com/RyanCodrai/turbovec
+    title: turbovec 리포 (1차, 라이브러리)
+  - id: techstartups-com-google-shrinks-ai-memor
+    resource: https://techstartups.com/2026/06/06/google-shrinks-ai-memory-from-31gb-to-4gb-with-turbovec-beating-faiss-on-speed/
+    title: Google shrinks AI memory from 31GB to 4GB with TurboVec, beating FAISS on speed
 ---
 
 # TurboQuant과 TurboVec — "31GB→4GB, FAISS보다 빠름" 헤드라인을 뜯어보다

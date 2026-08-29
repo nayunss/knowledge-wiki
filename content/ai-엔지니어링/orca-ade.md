@@ -5,6 +5,16 @@ description: git worktree로 코딩 에이전트를 병렬 격리하는 오픈�
 tags: [멀티에이전트, 오케스트레이션, 코딩에이전트, 개발환경]
 resource: https://github.com/stablyai/orca
 date: 2026-07-14
+sources:
+  - id: github-com-orca
+    resource: https://github.com/stablyai/orca
+    title: stablyai/orca
+  - id: onorca-dev
+    resource: https://onorca.dev
+    title: Orca 공식 사이트 (onorca.dev)
+  - id: onorca-dev-design-mode
+    resource: https://www.onorca.dev/docs/browser/design-mode
+    title: Design Mode
 ---
 
 에이전트를 두 개 이상 동시에 굴려본 사람은 같은 벽을 만난다. 한 세션이 `src/auth.ts`를 고치는 동안 다른 세션이 같은 파일을 고친다. 되돌리면 둘 다 죽는다. 그래서 대부분은 병렬을 포기하고 하나씩 순서대로 돌린다.

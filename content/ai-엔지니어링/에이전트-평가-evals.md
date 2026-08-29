@@ -3,6 +3,28 @@ title: 에이전트 평가(evals) — AI 에이전트를 어떻게 믿는가
 type: 개념
 description: pass@1 벤치마크가 프로덕션 신뢰성을 과대평가하는 이유와, 일관성·강건성·실패모드 진단을 함께 재는 다차원 평가 방법론 정리
 tags: [ai-에이전트, 평가, 신뢰성, evals]
+sources:
+  - id: arxiv-org-2507-21504
+    resource: https://arxiv.org/abs/2507.21504
+    title: 에이전트 평가 서베이 (에이전트 평가는 확률적·동적이라 결정론적 테스트로 부족)
+  - id: arxiv-org-2601-06112
+    resource: https://arxiv.org/abs/2601.06112
+    title: Reliability Surface / pass^k·ε·λ 3차원, 섭동 실험 (비심사 단일저자 프리프린트, 소규모)
+  - id: arxiv-org-2601-12560
+    resource: https://arxiv.org/abs/2601.12560
+    title: CLASSic 5차원(cost·latency·accuracy·security·stability)과 실패 모드 연결
+  - id: arxiv-org-2410-10934
+    resource: https://arxiv.org/abs/2410.10934
+    title: Agent-as-a-Judge (행동 체인 평가, DevAI)
+  - id: arxiv-org-2508-02994
+    resource: https://arxiv.org/abs/2508.02994
+    title: LLM/에이전트 as-a-Judge 서베이
+  - id: arxiv-org-2503-13657
+    resource: https://arxiv.org/abs/2503.13657
+    title: MAST
+  - id: arxiv-org-2604-16706
+    resource: https://arxiv.org/abs/2604.16706
+    title: 오류 전파(약 0.62)와 3계층 런타임 인터셉터 (비심사 프리프린트)
 ---
 
 # 에이전트 평가(evals) — AI 에이전트를 어떻게 믿는가

@@ -5,6 +5,28 @@ description: Uber가 만든 first-pass AI PRD 리뷰어를 원문 그대로 렌�
 tags: [ai-엔지니어링, llm-as-judge, 게이트설계, 사내도구]
 date: 2026-08-02
 resource: https://www.uber.com/us/en/blog/first-pass-prd/
+sources:
+  - id: uber-com-first-pass-prd
+    resource: https://www.uber.com/us/en/blog/first-pass-prd/
+    title: Lessons from Building a First-Pass AI PRD Reviewer at Uber
+  - id: arxiv-org-2306-05685
+    resource: https://arxiv.org/abs/2306.05685
+    title: Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena
+  - id: arxiv-org-2510-27106
+    resource: https://arxiv.org/abs/2510.27106
+    title: "Rating Roulette: Self-Inconsistency in LLM-As-A-Judge Frameworks"
+  - id: arxiv-org-2506-22316
+    resource: https://arxiv.org/abs/2506.22316
+    title: Evaluating Scoring Bias in LLM-as-a-Judge
+  - id: doi-org-ijhc-1999-0252
+    resource: https://doi.org/10.1006/ijhc.1999.0252
+    title: Does automation bias decision-making?
+  - id: doi-org-001872097778543886
+    resource: https://doi.org/10.1518/001872097778543886
+    title: "Humans and Automation: Use, Misuse, Disuse, Abuse"
+  - id: leanpub-com-leprechauns
+    resource: https://leanpub.com/leprechauns
+    title: The Leprechauns of Software Engineering
 ---
 
 제품 요구사항 문서(PRD) 리뷰 회의에 들어갔는데 첫 30분이 "이거 작년에 비슷한 실험 없었나요"로 흘러간 경험이 있다면, Uber가 무엇을 풀려 했는지는 설명이 필요 없다. 2026년 5월 Uber 엔지니어링 블로그에 올라온 글은 그 30분을 겨냥한다. 다만 겨냥 지점이 특이하다. **회의를 고치지 않고, 회의에 들어오는 문서를 고친다.**

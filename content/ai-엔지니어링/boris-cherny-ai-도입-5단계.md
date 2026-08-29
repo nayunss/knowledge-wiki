@@ -5,6 +5,16 @@ description: Boris Cherny의 조직 AI 도입 5단계(Stage 0–4)를 단계별(
 tags: [ai-native, ai-엔지니어링, 조직전환, sdlc]
 resource: https://shellypalmer.com/2026/07/boris-chernys-steps-of-ai-adoption-a-roadmap/
 date: 2026-08-02
+sources:
+  - id: shellypalmer-com-boris-chernys-steps-of
+    resource: https://shellypalmer.com/2026/07/boris-chernys-steps-of-ai-adoption-a-roadmap/
+    title: "Boris Cherny's Steps of AI Adoption: A Roadmap"
+  - id: arxiv-2605.23135
+    resource: https://arxiv.org/abs/2605.23135
+    title: "The Impact of AI Coding Assistants on Software Engineering: A Longitudinal Study"
+  - id: arxiv-2605.23135-2
+    resource: https://arxiv.org/abs/2605.23135
+    title: ": Vella & Blincoe(arXiv:2605.23135)의 실측치. n=95 자기보고라 일반화 주의."
 ---
 
 "우리 조직은 지금 AI 도입의 어디쯤 와 있나?" 이 질문에 대한 답은 대개 두 극단이다. "이제 막 시작했다"거나 "이미 잘 쓰고 있다"거나. 둘 다 자기 위치를 말해주지 않는다. Boris Cherny의 5단계 로드맵이 유용한 건 정확히 이 지점이다. 목표가 아니라 **좌표**를 준다.

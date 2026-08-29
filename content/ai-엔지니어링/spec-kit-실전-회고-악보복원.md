@@ -3,6 +3,28 @@ title: 노래방 화면에서 악보를 복원할 수 있는가 — Spec Kit 실
 type: 설계결정
 description: 노래방 기기의 멜로디악보 화면을 찍은 영상에서 악보·MusicXML·MR을 복원하려 한 실험의 실측 회고. 무엇이 됐고 무엇이 안 됐는지, 왜 안 됐는지.
 tags: [spec-kit, computer-vision, omr, 회고]
+sources:
+  - id: github-com-spec-kit
+    resource: https://github.com/github/spec-kit
+    title: GitHub Spec Kit
+  - id: github-com-python-audio-separator
+    resource: https://github.com/nomadkaraoke/python-audio-separator
+    title: audio-separator
+  - id: github-com-audiveris
+    resource: https://github.com/Audiveris/audiveris
+    title: Audiveris (OMR)
+  - id: github-com-oemer
+    resource: https://github.com/BreezeWhite/oemer
+    title: oemer
+  - id: github-com-homr
+    resource: https://github.com/liebharc/homr
+    title: homr
+  - id: github-com-tesseract
+    resource: https://github.com/tesseract-ocr/tesseract
+    title: Tesseract OCR
+  - id: w3-org-musicxml40
+    resource: https://www.w3.org/2021/06/musicxml40/
+    title: MusicXML 사양
 ---
 
 휴대폰으로 찍은 노래방 멜로디악보 화면에서 악보를 되살릴 수 있을까. 해봤다. 절반은 됐고, 절반은 안 됐고, 나머지 하나는 **됐는지 안 됐는지조차 모른다.** 이 글은 그 셋을 실측 수치로 남긴다. 성공담이 아니다.

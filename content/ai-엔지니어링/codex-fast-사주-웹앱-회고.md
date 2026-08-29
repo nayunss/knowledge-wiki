@@ -3,6 +3,19 @@ title: 프롬프트를 다듬지 않고 Codex fast로 사주 웹앱을 만든 �
 type: 회고
 description: 빈 저장소에서 사용자 API 키 방식의 사주 웹앱을 만든 과정을 돌아보고, 빠른 구현을 가능하게 한 조건과 남은 기술 부채를 정리한다.
 tags: [codex, 바이브코딩, 프론트엔드, 회고]
+sources:
+  - id: developers-openai-com-codex
+    resource: https://developers.openai.com/codex/
+    title: OpenAI Codex 문서
+  - id: console-upstage-ai-api-keys-api-chat
+    resource: https://console.upstage.ai/api-keys?api=chat
+    title: Upstage Console Chat API
+  - id: ai-google-dev-models
+    resource: https://ai.google.dev/gemini-api/docs/models
+    title: Gemini API 모델 목록
+  - id: ai-google-dev-interactions-overview
+    resource: https://ai.google.dev/gemini-api/docs/interactions-overview
+    title: Gemini Interactions API
 ---
 
 프롬프트를 길게 다듬지 않으면 결과도 거칠어질까. 이번에는 요구사항을 평범한 한국어로 전달하고, 별도의 프롬프트 최적화 과정 없이 작은 사주 웹앱을 만들었다. 실행 환경은 사용자가 지정한 Codex `gpt-5.6-sol`, `default fast`였다.

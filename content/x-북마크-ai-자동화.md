@@ -3,6 +3,16 @@ title: X 북마크 관리, 앱을 만들 줄 알았는데 AI 자동화로 끝났
 type: 플레이북
 description: X 북마크 통합 아카이브를 하루 만에 만든 경험기 — 앱 대신 기존 플랫폼과 Claude 일일 루틴을 조합해 서버 0·프론트 0·운영비 0원으로 끝낸 SDLC·엔지니어링 기법·실전 시행착오. 운영 첫날 발견한 결함을 당일 스펙에 되먹인 기록까지.
 tags: [바이브코딩, ai-에이전트, 개인도구, 프롬프트, sdlc]
+sources:
+  - id: publish-x-com-oembed
+    resource: https://publish.x.com/oembed`
+    title: X oEmbed 공식 엔드포인트
+  - id: api-fxtwitter-com
+    resource: https://api.fxtwitter.com`
+    title: FixTweet / fxtwitter API
+  - id: notion-web-clipper
+    resource: https://www.notion.com/web-clipper
+    title: Notion Web Clipper (공식·무료 브라우저 확장)
 ---
 
 X 북마크는 저장할 때만 뿌듯하다. 며칠 지나면 수백 개가 쌓여 다시는 안 열어보는 무덤이 된다. 분류도, 검색도 안 되니까. 나도 이 문제를 풀려고 하루를 잡았고, 시작할 때는 당연히 "무언가를 만들어야 한다"고 생각했다. 크롬 익스텐션이든, 작은 웹앱이든.

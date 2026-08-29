@@ -4,6 +4,10 @@ type: 분석
 description: 하루 15,000개 질문을 받는 Cerebras 사내 지식 베이스의 설계 결정에서 사내 검색·RAG 엔지니어가 얻는 원리와, 각 원리에 딸린 조건·비용을 뜯어본다.
 tags: [rag, 지식베이스, 검색, mcp]
 resource: https://www.cerebras.ai/blog/how-we-built-our-knowledge-base
+sources:
+  - id: cerebras-ai-how-we-built-our-knowledge-b
+    resource: https://www.cerebras.ai/blog/how-we-built-our-knowledge-base
+    title: Cerebras, How We Built Our Enterprise Knowledge Base
 ---
 
 분기마다 누군가는 같은 제안을 한다. "모든 걸 한 플랫폼에 기록합시다. 그러면 정보가 한 곳에 모입니다." 그리고 분기마다 그 위키는 비어 간다. Cerebras가 사내 지식 베이스를 만들며 내린 첫 결정은 이 꿈을 정면으로 포기하는 것이었다.

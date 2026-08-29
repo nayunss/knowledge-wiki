@@ -4,6 +4,28 @@ type: 설계결정
 description: 종료 조건·증거 기반 검증·라우팅·멀티 에이전트의 경계를 중심으로 Avid의 에이전트 스택을 비판적으로 재구성한다.
 tags: [ai-agent, harness, evals, multi-agent]
 resource: https://x.com/Av1dlive/status/2076705482904101136
+sources:
+  - id: x-com-2076705482904101136
+    resource: https://x.com/Av1dlive/status/2076705482904101136
+    title: Avid, AI Agent Stack everyone must use with GPT 5.6 + Fable 5
+  - id: openai-com-gpt-5-6
+    resource: https://openai.com/index/gpt-5-6/
+    title: OpenAI, GPT-5.6
+  - id: anthropic-com-redeploying-fable-5
+    resource: https://www.anthropic.com/news/redeploying-fable-5
+    title: Anthropic, Redeploying Fable 5
+  - id: anthropic-com-building-c-compiler
+    resource: https://www.anthropic.com/engineering/building-c-compiler
+    title: Anthropic, Building a C compiler with a team of parallel Claudes
+  - id: arxiv-org-2601-07206
+    resource: https://arxiv.org/abs/2601.07206
+    title: LLMRouterBench
+  - id: arxiv-org-2604-02460
+    resource: https://arxiv.org/abs/2604.02460
+    title: Single-Agent LLMs Outperform Multi-Agent Systems on Multi-Hop Reasoning Under Equal Thinking Token Budgets
+  - id: arxiv-org-2605-01566
+    resource: https://arxiv.org/abs/2605.01566
+    title: Multi-Agent Reasoning Improves Compute Efficiency
 ---
 
 # AI 에이전트의 경쟁력은 모델이 아니라 통제 시스템에서 나온다

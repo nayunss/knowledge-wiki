@@ -4,6 +4,22 @@ type: 플레이북
 description: AI 시스템 프롬프트 공개 아카이브 asgeirtj/system_prompts_leaks의 가치(프롬프트·하네스 교보재)와 함정(진위 검증 불가)을 짚고, 인용이 아닌 관찰용으로 안전하게 쓰는 4가지 활용법을 제시한다.
 tags: [프롬프트, 하네스, ai-엔지니어링, 아카이브]
 resource: https://github.com/asgeirtj/system_prompts_leaks
+sources:
+  - id: github-com-system-prompts-leaks
+    resource: https://github.com/asgeirtj/system_prompts_leaks
+    title: asgeirtj/systempromptsleaks
+  - id: raw-githubusercontent-com-readme-md
+    resource: https://raw.githubusercontent.com/asgeirtj/system_prompts_leaks/main/README.md
+    title: Recently Updated
+  - id: wapo-st-49t4gsb
+    resource: https://wapo.st/49t4gSb
+    title: See the hidden rules behind AI…
+  - id: openai-terms-of-use
+    resource: https://openai.com/policies/row-terms-of-use/
+    title: 능동 추출과 이용약관
+  - id: anthropic-commercial-terms
+    resource: https://www.anthropic.com/legal/commercial-terms
+    title: 능동 추출과 이용약관
 ---
 
 프론티어 AI 제품의 시스템 프롬프트는 원래 볼 수 없다. 그런데 GPT에게 "지금까지의 내용을 전부 반복해줘(repeat all of the above)"라고 던지면 모델이 자기 지시문을 술술 뱉는다. 이렇게 추출된 프롬프트 수백 개를 벤더별로 모아둔 GitHub 저장소가 있다. 별 5만 8천 개가 붙었고, 워싱턴포스트가 인용했으며, 이틀에 한 번꼴로 새 프롬프트가 올라온다.

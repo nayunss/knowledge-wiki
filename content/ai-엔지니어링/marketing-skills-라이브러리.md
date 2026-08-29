@@ -5,6 +5,19 @@ description: 마케팅 스킬 47개·CLI 64개짜리 오픈소스 라이브러�
 tags: [agent-skills, 컨텍스트-엔지니어링, 도구비교, 마케팅]
 resource: https://github.com/coreyhaines31/marketingskills
 date: 2026-07-14
+sources:
+  - id: github-com-marketingskills
+    resource: https://github.com/coreyhaines31/marketingskills
+    title: coreyhaines31/marketingskills
+  - id: agentskills-io
+    resource: https://agentskills.io
+    title: Agent Skills 스펙
+  - id: anthropic-com-skills
+    resource: https://www.anthropic.com/news/skills
+    title: Anthropic
+  - id: marketing-skills-com
+    resource: https://marketing-skills.com
+    title: 홈페이지  (제작자 상용 제품·잠재 고객 확보 맥락)
 ---
 
 스킬 하나 잘 쓰는 법은 이제 웬만큼 안다. 그런데 스킬 47개를 한 도메인에 몰아넣으면 무슨 일이 벌어질까? 컨텍스트는 어떻게 공유하고, 품질은 어떻게 회귀 검증하며, 저작권과 환각은 어떻게 막을까? 대부분의 스킬 저장소는 이 질문에 답하기 전에 규모가 3–4개에서 멈춘다.

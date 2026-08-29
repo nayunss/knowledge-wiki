@@ -4,6 +4,16 @@ type: 토론
 description: subicura의 AX 여정, AWS AI-DLC 사례, Boris Cherny의 AI 도입 단계를 나란히 읽고 전환 리더·현장 개발자·회의적 아키텍트 세 시각으로 토론해 도출한 조직 차원 AI 전환(AI Native / AI-DLC)의 좌표.
 tags: [ai-엔지니어링, ai-native, sdlc, 전환]
 created: 2026-07-19
+sources:
+  - id: subicura-com-ax-journey-html
+    resource: https://subicura.com/2026/07/14/ax-journey.html
+    title: AX journey
+  - id: aws-amazon-com-build-production-apps-in
+    resource: https://aws.amazon.com/ko/blogs/tech/build-production-apps-in-2-weeks-with-aws-ai-dlc/
+    title: AWS AI-DLC로 2주 만에 프로덕션 앱 만들기
+  - id: explainx-ai-boris-cherny-steps-ai-adopti
+    resource: https://www.explainx.ai/blog/boris-cherny-steps-ai-adoption-claude-code-july-2026
+    title: Boris Cherny — steps to AI adoption with Claude Code
 ---
 
 요즘 나오는 AI 전환 글은 두 목소리로 말한다. 표지는 크게 외친다 — "2주 만에 프로덕션 앱", "에이전트 1,000개, AI-native 조직", "성숙도 사다리 최상단". 그런데 같은 글의 본문을 끝까지 읽으면 작은 글씨가 나온다 — 실제 타임라인은 약 5주였고, 실증된 자율성은 "사람이 다 리뷰하는 낮은 단계"이며, 보안 리뷰는 여전히 수동이다. 나는 이 간극이 흥미로웠다. 그래서 세 편의 실무기를 나란히 놓고 서로 다른 세 직군의 시각으로 토론을 붙였다.

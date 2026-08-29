@@ -4,6 +4,22 @@ type: 플레이북
 description: Claude Code에 OpenAI Codex 플러그인을 붙여 교차 모델 위임을 구성하는 절차를 직접 실행해 검증하고(2026-07-11), 그것이 실제로 어떤 구조인지(세션 교체가 아닌 필요할 때 호출하는 도구)와 멀티에이전트 오케스트레이션 지형 속 위치를 정리한다.
 tags: [claude-code, 멀티에이전트, 오케스트레이션, 서브에이전트]
 date: 2026-07-11
+sources:
+  - id: x-com-2074875092090470469
+    resource: https://x.com/i/status/2074875092090470469
+    title: CJ Zafir (@cjzafir), X 포스트
+  - id: claude-com-introducing-dynamic-workflows
+    resource: https://claude.com/blog/introducing-dynamic-workflows-in-claude-code
+    title: Introducing dynamic workflows in Claude Code
+  - id: infoq-com-dynamic-workflows-claude-code
+    resource: https://www.infoq.com/news/2026/06/dynamic-workflows-claude-code/
+    title: Dynamic Workflows in Claude Code
+  - id: shipyard-build-claude-code-multi-agent
+    resource: https://shipyard.build/blog/claude-code-multi-agent/
+    title: Multi-agent orchestration for Claude Code in 2026
+  - id: developers-openai-com-models
+    resource: https://developers.openai.com/codex/models
+    title: OpenAI
 ---
 
 ## 한 오케스트레이터가 남의 모델을 부린다

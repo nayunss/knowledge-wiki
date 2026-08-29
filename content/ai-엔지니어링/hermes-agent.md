@@ -5,6 +5,16 @@ description: Nous Research의 Hermes Agent는 스스로 스킬을 만들고 세�
 tags: [ai-에이전트, 오케스트레이션, 오픈소스, claude-code]
 resource: https://github.com/nousresearch/hermes-agent
 date: 2026-07-10
+sources:
+  - id: x-com-2075132466751549632
+    resource: https://x.com/i/status/2075132466751549632
+    title: AI 자동화 제대로 하려면 Hermes를 알면 좋습니다
+  - id: github-com-hermes-agent
+    resource: https://github.com/nousresearch/hermes-agent
+    title: Nous Research, hermes-agent README
+  - id: hermes-agent-nousresearch-com-autonomous
+    resource: https://hermes-agent.nousresearch.com/docs/user-guide/skills/bundled/autonomous-ai-agents/autonomous-ai-agents-claude-code
+    title: Hermes 공식 문서, Claude Code 번들 스킬
 ---
 
 ## 도구를 늘리는 게 아니라 연결하는 문제

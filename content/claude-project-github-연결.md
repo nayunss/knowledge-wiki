@@ -2,9 +2,7 @@
 title: Claude Project와 GitHub 연결의 동작 방식
 type: 개념
 description: claude.ai Project에 GitHub 저장소를 연결했을 때 답변이 만들어지는 원리 — Claude 자체 지식 + 프로젝트 문서의 결합
-tags:
-  - meta
-  - claude
+tags: [meta, claude]
 ---
 
 claude.ai Project에 GitHub 저장소를 연결했을 때, 프롬프트에 대한 답변이 어떻게 만들어지는지 정리. 이 위키의 RAG 활용 방식([[위키-설계-결정]] 참고)가 실제로 작동하는 원리다.

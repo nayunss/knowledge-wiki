@@ -5,6 +5,25 @@ description: "Anthropic이 Claude Code 시스템 프롬프트의 80% 이상을 �
 tags: [컨텍스트-엔지니어링, claude-code, 하네스, 프롬프트]
 resource: https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models
 date: 2026-08-02
+sources:
+  - id: claude-com-the-new-rules-of-context-engi
+    resource: https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models
+    title: The new rules of context engineering for Claude 5 generation models
+  - id: anthropic-com-effective-context-engineer
+    resource: https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents
+    title: context engineering
+  - id: claude-com-a-field-guide-to-claude-fable
+    resource: https://claude.com/blog/a-field-guide-to-claude-fable-finding-your-unknowns
+    title: A field guide to Claude Fable 5
+  - id: claude-com-a-harness-for-every-task-dyna
+    resource: https://claude.com/blog/a-harness-for-every-task-dynamic-workflows-in-claude-code
+    title: 파일 트리
+  - id: code-claude-com-skills
+    resource: https://code.claude.com/docs/en/skills
+    title: Claude Code
+  - id: code-claude-com-commands
+    resource: https://code.claude.com/docs/en/commands
+    title: Reports findings first and asks for confirmation before changing anything
 ---
 
 지난 2년간 컨텍스트 엔지니어링의 미덕은 촘촘함이었다. 규칙을 빠짐없이 적고, 예시를 붙이고, 중요한 건 두 번 쓰고, 팀 지식을 `CLAUDE.md` 한 파일에 모았다. 그런데 2026년 7월 24일, Anthropic의 Thariq Shihipar가 정반대 이야기를 들고 나왔다. Claude Code 시스템 프롬프트의 **80% 이상을 지웠는데** 자사 코딩 평가에서 측정 가능한 손실이 없었다는 것이다.

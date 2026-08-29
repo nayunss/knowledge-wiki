@@ -4,6 +4,31 @@ type: 플레이북
 description: OpenKnowledge의 MCP·워크플로·스킬 심링크를 로컬 전용으로 쓰는 법(v0.29.1 실측). ok init부터 코드베이스 위키 생성·그래프 위생 복구·인제스트까지, 최신 버전 재확인이 필요한 경계와 기존 위키 파이프라인의 연결 방식을 설명한다.
 tags: [openknowledge, mcp, 에이전트, 지식관리]
 resource: https://openknowledge.ai/docs
+sources:
+  - id: openknowledge-ai-mcp
+    resource: https://openknowledge.ai/docs/reference/mcp
+    title: The surface is 19 tools
+  - id: openknowledge-ai-agentic-search
+    resource: https://openknowledge.ai/docs/reference/agentic-search
+    title: never replaces lexical search
+  - id: openknowledge-ai-configuration
+    resource: https://openknowledge.ai/docs/reference/configuration
+    title: OpenKnowledge Docs
+  - id: openknowledge-ai-skills
+    resource: https://openknowledge.ai/docs/features/skills
+    title: OpenKnowledge Docs
+  - id: openknowledge-ai-codebase-wiki
+    resource: https://openknowledge.ai/docs/workflows/codebase-wiki
+    title: OpenKnowledge Docs
+  - id: openknowledge-ai-karpathy-llm-wiki
+    resource: https://openknowledge.ai/docs/workflows/karpathy-llm-wiki
+    title: OpenKnowledge Docs
+  - id: openknowledge-ai-meeting-ingestion
+    resource: https://openknowledge.ai/docs/workflows/meeting-ingestion
+    title: OpenKnowledge Docs
+  - id: openknowledge-ai-claude-code
+    resource: https://openknowledge.ai/docs/integrations/claude-code
+    title: OpenKnowledge Docs
 ---
 
 앱을 깔았고, 첫 실행 다이얼로그를 수락했고, Claude Code·Claude Desktop·Codex 세 군데에 MCP 서버가 등록됐다. 그런데 Claude Code에서 "내 노트 검색해줘"라고 하면 아무 일도 일어나지 않는다. 고장이 아니다. **OpenKnowledge의 MCP 서버는 프로젝트 스코프로 동작하고, 아직 프로젝트가 하나도 없기 때문이다.**

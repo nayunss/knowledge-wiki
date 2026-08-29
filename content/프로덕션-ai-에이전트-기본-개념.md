@@ -4,6 +4,46 @@ type: 개념
 description: "O'Reilly 'AI Agents: The Definitive Guide' 코드 저장소를 읽고, LLM에서 에이전트로·프로토타입에서 프로덕션까지 필요한 기본 개념을 재구성·검증한 정리"
 tags: [ai-agents, langgraph, mcp, 평가, 거버넌스, 프로덕션]
 resource: https://github.com/Nicolepcx/ai-agents-the-definitive-guide
+sources:
+  - id: github-com-ai-agents-the-definitive-guid
+    resource: https://github.com/Nicolepcx/ai-agents-the-definitive-guide
+    title: "AI Agents: The Definitive Guide"
+  - id: modelcontextprotocol-io
+    resource: https://modelcontextprotocol.io/
+    title: MCP
+  - id: a2a-protocol-org
+    resource: https://a2a-protocol.org/latest/
+    title: A2A
+  - id: openpipe-art
+    resource: https://github.com/OpenPipe/ART
+    title: ART / RULER
+  - id: arxiv-2503.04412
+    resource: https://arxiv.org/abs/2503.04412
+    title: AB-MCTS / TreeQuest
+  - id: langchain-deepagents
+    resource: https://github.com/langchain-ai/deepagents
+    title: deepagents
+  - id: e2b-dev
+    resource: https://e2b.dev/
+    title: E2B
+  - id: github-com-monty
+    resource: https://github.com/pydantic/monty
+    title: Monty
+  - id: arxiv-2505.03574
+    resource: https://arxiv.org/abs/2505.03574
+    title: LlamaFirewall
+  - id: owasp-agentic-top10-2026
+    resource: https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/
+    title: OWASP Top 10 for Agentic Applications (2026)
+  - id: trydeepteam
+    resource: https://www.trydeepteam.com/
+    title: DeepTeam
+  - id: 567-labs-instructor
+    resource: https://github.com/567-labs/instructor
+    title: Instructor
+  - id: arxiv-2602.23166
+    resource: https://arxiv.org/abs/2602.23166
+    title: AgentVista
 ---
 
 # 프로덕션 AI 에이전트의 기본 개념

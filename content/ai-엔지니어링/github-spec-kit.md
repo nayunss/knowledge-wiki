@@ -5,6 +5,22 @@ description: spec-kit v0.12.11을 실제로 설치해 뜯어본 기록. 워크�
 tags: [spec-driven-development, 코딩에이전트, sdlc, 도구비교]
 resource: https://github.com/github/spec-kit
 date: 2026-07-11
+sources:
+  - id: github-com-spec-kit
+    resource: https://github.com/github/spec-kit
+    title: 30+ AI coding agents
+  - id: github-github-io-spec-kit
+    resource: https://github.github.io/spec-kit/
+    title: GitHub, Spec Kit 공식 문서
+  - id: github-com-releases
+    resource: https://github.com/github/spec-kit/releases
+    title: GitHub, spec-kit 릴리스 노트
+  - id: papers-ssrn-com-papers-cfm-abstract-id-6
+    resource: https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6515898
+    title: Does Spec-Driven Development Reduce Defects? An Empirical Test of Industry Claims Across 119 Open-Source Repositories
+  - id: medium-com-is-your-safe-choice-burning-y
+    resource: https://medium.com/it-chronicles/is-your-safe-choice-burning-your-budget-1cfddf8782e4
+    title: Is Your Safe Choice Burning Your Budget?
 ---
 
 프롬프트 한 줄로 기능을 만들어달라고 하면 에이전트는 만들어준다. 문제는 그다음이다. 무엇을 만들기로 했는지가 어디에도 남지 않아서, 다음 세션의 에이전트는 어제의 결정을 모른다. spec-kit은 이 구멍을 "명세를 파일로 남기고, 파일을 게이트로 삼는다"로 메운다.

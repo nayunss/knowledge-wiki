@@ -5,6 +5,58 @@ description: Weco AI의 AIDE² 블로그를 원문·선행연구와 대조해 �
 tags: [rsi, 하네스, 에이전트, 평가]
 resource: https://www.weco.ai/blog/first-evidence-of-recursive-self-improvement
 date: 2026-07-17
+sources:
+  - id: weco-ai-first-evidence-of-recursive-self
+    resource: https://www.weco.ai/blog/first-evidence-of-recursive-self-improvement
+    title: "AIDE²: The First Evidence of Recursive Self-Improvement"
+  - id: weco-ai-4-levels-of-rsi
+    resource: https://www.weco.ai/blog/4-levels-of-recursive-self-improvement
+    title: 4 Levels of Recursive Self-Improvement
+  - id: weco-ai-specbench
+    resource: https://www.weco.ai/blog/specbench
+    title: SpecBench
+  - id: arxiv-2502.13138
+    resource: https://arxiv.org/abs/2502.13138
+    title: "AIDE: AI-Driven Exploration in the Space of Code"
+  - id: arxiv-2502.13138-2
+    resource: https://github.com/WecoAI/aideml
+    title: "AIDE: AI-Driven Exploration in the Space of Code"
+  - id: arxiv-2310.02304
+    resource: https://arxiv.org/abs/2310.02304
+    title: "Self-Taught Optimizer (STOP): Recursively Self-Improving Code Generation"
+  - id: arxiv-2408.08435
+    resource: https://arxiv.org/abs/2408.08435
+    title: Automated Design of Agentic Systems (ADAS)
+  - id: arxiv-2504.15228
+    resource: https://arxiv.org/abs/2504.15228
+    title: A Self-Improving Coding Agent (SICA)
+  - id: arxiv-2505.22954
+    resource: https://arxiv.org/abs/2505.22954
+    title: Darwin Gödel Machine
+  - id: deepmind-alphaevolve
+    resource: https://deepmind.google/discover/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/
+    title: "AlphaEvolve: a Gemini-powered coding agent for designing advanced algorithms"
+  - id: arxiv-1502.06512
+    resource: https://arxiv.org/abs/1502.06512
+    title: From Seed AI to Technological Singularity via Recursively Self-Improving Software
+  - id: arxiv-2410.07095
+    resource: https://github.com/openai/mle-bench
+    title: "MLE-bench: Evaluating Machine Learning Agents on Machine Learning Engineering"
+  - id: arxiv-2506.09050
+    resource: https://arxiv.org/abs/2506.09050
+    title: "ALE-Bench: A Benchmark for Long-Horizon Objective-Driven Algorithm Engineering"
+  - id: arxiv-2308.15560
+    resource: https://arxiv.org/abs/2308.15560
+    title: WeatherBench 2
+  - id: arxiv-2502.10517
+    resource: https://arxiv.org/abs/2502.10517
+    title: "KernelBench: Can LLMs Write Efficient GPU Kernels?"
+  - id: news-ycombinator-com-item-id-48912723
+    resource: https://news.ycombinator.com/item?id=48912723
+    title: Hacker News 제출 현황 (2026-07-17 조회, 댓글 0건)
+  - id: news-ycombinator-com-item-id-48917940
+    resource: https://news.ycombinator.com/item?id=48917940
+    title: Hacker News 제출 현황 (2026-07-17 조회, 댓글 0건)
 ---
 
 # AIDE² 비판적 리뷰 — "최초의 재귀적 자기개선"이라는 제목과 그 본문 사이
