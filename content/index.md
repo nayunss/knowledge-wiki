@@ -10,6 +10,11 @@ title: 지식 위키
 <p class="section-label">AI 엔지니어링</p>
 
 <div class="post-grid">
+  <a class="post-card feature" data-date="2026-08-29" href="ai-엔지니어링/dogwood-런타임-검증">
+    <span class="post-type">분석</span>
+    <span class="post-title">Dogwood 비판적 검토 — 인가의 입력이 '요청 하나'에서 '지나온 궤적'으로 바뀔 때</span>
+    <span class="post-dek">AWS가 공개한 에이전트 거버넌스 언어를 원문 대조로 검토했다. 연산자 넷보다 중요한 건 정책 계층이 상태를 갖게 됐다는 사실이고, 그래서 남는 질문은 이벤트 로그를 누가 어디에 보관하느냐다.</span>
+  </a>
   <a class="post-card feature" data-date="2026-08-28" href="ai-엔지니어링/codex-fast-사주-웹앱-회고">
     <span class="post-type">회고</span>
     <span class="post-title">프롬프트를 다듬지 않고 Codex fast로 사주 웹앱을 만든 회고</span>
