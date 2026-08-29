@@ -5,6 +5,16 @@ description: Boris Cherny의 조직 AI 도입 5단계(Stage 0–4)를 단계별(
 tags: [ai-native, ai-엔지니어링, 조직전환, sdlc]
 resource: https://shellypalmer.com/2026/07/boris-chernys-steps-of-ai-adoption-a-roadmap/
 date: 2026-08-02
+sources:
+  - id: shellypalmer-com-boris-chernys-steps-of
+    resource: https://shellypalmer.com/2026/07/boris-chernys-steps-of-ai-adoption-a-roadmap/
+    title: "Boris Cherny's Steps of AI Adoption: A Roadmap"
+  - id: arxiv-2605.23135
+    resource: https://arxiv.org/abs/2605.23135
+    title: "The Impact of AI Coding Assistants on Software Engineering: A Longitudinal Study"
+  - id: arxiv-2605.23135-2
+    resource: https://arxiv.org/abs/2605.23135
+    title: ": Vella & Blincoe(arXiv:2605.23135)의 실측치. n=95 자기보고라 일반화 주의."
 ---
 
 "우리 조직은 지금 AI 도입의 어디쯤 와 있나?" 이 질문에 대한 답은 대개 두 극단이다. "이제 막 시작했다"거나 "이미 잘 쓰고 있다"거나. 둘 다 자기 위치를 말해주지 않는다. Boris Cherny의 5단계 로드맵이 유용한 건 정확히 이 지점이다. 목표가 아니라 **좌표**를 준다.
@@ -23,7 +33,7 @@ Cherny의 로드맵(Palmer가 요약·해설)은 **진단 좌표계**로 읽어�
 
 ## 먼저: 이건 누구의 뼈대이고 누구의 살인가
 
-이 5단계를 인용하기 전에 출처의 층위를 못 박아야 한다. 우리가 읽는 텍스트는 Shelly Palmer의 블로그 글이지만, 그 안의 **5단계 골격은 Boris Cherny 본인의 1차 문서**다. Cherny는 2026년 7월 16일 Anthropic 사이트(Claude 아티팩트)에 "Steps of AI Adoption"이라는 제목으로 이 단계 모델을 직접 발표했고, Palmer의 글은 본문에서 그 아티팩트를 링크한다. Boris Cherny는 Anthropic에서 Claude Code를 만들고 이끄는 인물이다.
+이 5단계를 인용하기 전에 출처의 층위를 못 박아야 한다. 우리가 읽는 텍스트는 Shelly Palmer의 블로그 글이지만, 그 안의 **5단계 골격은 Boris Cherny 본인의 1차 문서**다.[^shellypalmer-com-boris-chernys-steps-of] Cherny는 2026년 7월 16일 Anthropic 사이트(Claude 아티팩트)에 "Steps of AI Adoption"이라는 제목으로 이 단계 모델을 직접 발표했고, Palmer의 글은 본문에서 그 아티팩트를 링크한다. Boris Cherny는 Anthropic에서 Claude Code를 만들고 이끄는 인물이다.
 
 그래서 이 글은 두 층을 명확히 갈라 서술한다.
 
@@ -83,7 +93,7 @@ Cherny가 제시한 다섯 단계다. 각 단계는 **규모(개발자당 에이
 
 Palmer의 글에는 5단계 골격 위에 얹힌 해설 층이 있다. 이 둘의 지위는 다르다.
 
-- **"82%"** — Palmer는 소프트웨어 엔지니어 대상 종단 연구(longitudinal study)를 인용해, 참가자의 82%가 코드 작성 시간이 줄었다고 답했다고 쓴다 (감독 업무는 늘면서). 원 연구는 실재한다 — Vella & Blincoe, "The Impact of AI Coding Assistants on Software Engineering: A Longitudinal Study"(오클랜드대, arXiv:2605.23135, 2026-05-22)로, 6개월 간격 2회 설문·매칭 코호트 **n=95의 자기보고**다. 숫자 자체는 확인되지만, **표본이 작고(n=95) 자기보고라 어떤 조직에도 그대로 일반화하기는 어렵다.** 이것은 Palmer가 골격 위에 얹은 인용이다.
+- **"82%"** — Palmer는 소프트웨어 엔지니어 대상 종단 연구(longitudinal study)를 인용해, 참가자의 82%가 코드 작성 시간이 줄었다고 답했다고 쓴다 (감독 업무는 늘면서). 원 연구는 실재한다 — Vella & Blincoe, "The Impact of AI Coding Assistants on Software Engineering: A Longitudinal Study"(오클랜드대, arXiv:2605.23135, 2026-05-22)로, 6개월 간격 2회 설문·매칭 코호트 **n=95의 자기보고**다.[^arxiv-2605.23135] 숫자 자체는 확인되지만, **표본이 작고(n=95) 자기보고라 어떤 조직에도 그대로 일반화하기는 어렵다.** 이것은 Palmer가 골격 위에 얹은 인용이다.
 - **"문화 부채(cultural debt)"** — 기술 역량과 조직 준비도의 격차가 주 제약이고, AI 대체에 대한 인력 불안이 이를 심화시킨다는 진단. 이것은 **Palmer의 주장**이다 (Cherny가 아니라). 개념 자체는 날카롭지만, 프레임워크의 검증 가능한 단계 모델과 같은 층에 두면 안 된다.
 - **"우리 시대의 리더십 과제"** — Palmer의 마무리 수사다. 골격이 아니라 해석 틀.
 
@@ -122,3 +132,6 @@ Palmer의 글에는 5단계 골격 위에 얹힌 해설 층이 있다. 이 둘�
 - **82%**: Vella & Blincoe(arXiv:2605.23135)의 실측치. n=95 자기보고라 일반화 주의. **다른 글의 유사 수치(예: 83%)와는 척도·출처·정의가 달라 나란히 비교하지 않음.**
 - **"문화 부채(cultural debt)"·"우리 시대의 리더십 과제"**: Palmer의 주장·수사 (Cherny의 것이 아님).
 - **5단계 골격(Stage 0–4 이름·규모·병목·해법)**: Cherny의 1차 발표(2026-07-16 Anthropic 아티팩트, Palmer가 링크). 확정.
+
+[^shellypalmer-com-boris-chernys-steps-of]: Shelly Palmer, "Boris Cherny's Steps of AI Adoption: A Roadmap", 2026-07-19. [shellypalmer.com](https://shellypalmer.com/2026/07/boris-chernys-steps-of-ai-adoption-a-roadmap/) — 본문에서 Cherny의 Anthropic 아티팩트를 링크한다.
+[^arxiv-2605.23135]: Vella & Blincoe, "The Impact of AI Coding Assistants on Software Engineering: A Longitudinal Study", University of Auckland, [arXiv:2605.23135](https://arxiv.org/abs/2605.23135), 2026-05-22. 6개월 간격 2회 설문, 매칭 코호트 n=95, 자기보고.

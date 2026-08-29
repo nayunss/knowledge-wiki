@@ -5,9 +5,19 @@ description: 에이전트 스킬 문서를 가중치처럼 최적화하는 Skill
 tags: [에이전트, 스킬, 하네스, 논문리뷰]
 resource: https://arxiv.org/abs/2605.23904
 date: 2026-07-12
+sources:
+  - id: arxiv-2605.23904
+    resource: https://arxiv.org/abs/2605.23904
+    title: "SkillOpt: Executive Strategy for Self-Evolving Agent Skills."
+  - id: arxiv-org-2605-23904v2
+    resource: https://arxiv.org/html/2605.23904v2
+    title: HTML 전문 (v2)
+  - id: aka-ms-skillopt
+    resource: https://aka.ms/skillopt
+    title: 코드
 ---
 
-에이전트 스킬 문서는 지금까지 사람이 손으로 썼다. 잘되면 남기고, 안되면 고쳤다. 감으로. SkillOpt는 이 과정을 최적화 문제로 다시 정의한다. 스킬 문서를 동결된 모델의 "외부 상태"로 보고, 롤아웃으로 점수를 매기고, 편집 폭을 학습률처럼 제한하고, held-out 분할에서 개선될 때만 채택한다. 결과는 6개 벤치마크·7개 모델·3개 하네스에 걸친 평가 대상 52개 셀 전부에서 최고 또는 공동 최고다.
+에이전트 스킬 문서는 지금까지 사람이 손으로 썼다. 잘되면 남기고, 안되면 고쳤다. 감으로. SkillOpt는 이 과정을 최적화 문제로 다시 정의한다. 스킬 문서를 동결된 모델의 "외부 상태"로 보고, 롤아웃으로 점수를 매기고, 편집 폭을 학습률처럼 제한하고, held-out 분할에서 개선될 때만 채택한다. 결과는 6개 벤치마크·7개 모델·3개 하네스에 걸친 평가 대상 52개 셀 전부에서 최고 또는 공동 최고다.[^arxiv-2605.23904]
 
 **그런데 그 숫자는 대부분 "스킬이 아예 없는 에이전트"와 비교한 것이다.** 이 글의 결론부터 말한다. SkillOpt에서 가져갈 것은 벤치마크 승률이 아니라 **규율** — 검증 게이트가 달린 유계 편집 루프 — 이다. 그 규율은 진짜이고, 어블레이션이 증명한다. 반면 논문이 파는 성능 서사는 최선 베이스라인 앞에서 상당히 얇아지고, 적용 범위는 생각보다 좁으며, 프런티어 옵티마이저라는 세금이 붙는다. 도입 판단은 이 셋을 다 보고 해야 한다.
 
@@ -81,7 +91,7 @@ SkillOpt는 스킬 라이브러리를 키우지 않는다. **이식 가능한 �
 
 "Executive Strategy"는 제목에만 있다. 본문에 정의가 없다. 무엇이 executive이고 무엇이 그냥 strategy인지 논문은 말하지 않는다. 알고리즘 자체는 정직한데 포장에 한 겹 덧칠이 있다. 이런 건 논문의 실질을 해치진 않지만, 초록의 +24.8과 함께 놓고 보면 이 논문이 자기를 어떻게 팔고 싶어하는지가 보인다.
 
-세부에서도 한 군데 어긋난다. Table 2 캡션은 학습량 어블레이션의 분할을 4:1:5로 적었는데, Appendix C의 어블레이션 프로토콜은 같은 실험을 2:1:7로 적는다. 둘 중 하나는 틀렸다. 재현하려는 사람에게는 사소하지 않은 구멍이다.
+세부에서도 한 군데 어긋난다. Table 2 캡션은 학습량 어블레이션의 분할을 4:1:5로 적었는데, Appendix C의 어블레이션 프로토콜은 같은 실험을 2:1:7로 적는다.[^arxiv-org-2605-23904v2] 둘 중 하나는 틀렸다. 재현하려는 사람에게는 사소하지 않은 구멍이다.
 
 ## 그래서 도입하나
 
@@ -97,7 +107,7 @@ SkillOpt는 스킬 라이브러리를 키우지 않는다. **이식 가능한 �
 
 TextGrad·GEPA 같은 [[프롬프트-엔지니어링]] 최적화 계열이 이미 있었는데 왜 스킬인가 하는 질문도 나온다. 답은 대상의 층위다. 프롬프트는 모델에 붙고, 스킬은 하네스에 붙는다. [[ai-엔지니어링-4계층]]에서 층이 다르면 최적화의 수명도 다르다 — 프롬프트는 모델이 바뀌면 죽고, 스킬은 모델 간 전이가 된다(GPT-5.4 → mini +9.4, nano +3.0, 전 행 양수).
 
-이 방향에 사람이 몰리고 있다는 신호는 있다. 논문 공개 한 달 만에 SkillCAT·SkillAxe·Skill-MAS 같은 후속 라인이 붙었다. Microsoft와 상하이교통대·통지대·푸단대의 산학 공동 연구이고, 코드는 github.com/microsoft/SkillOpt에 공개돼 있다.
+이 방향에 사람이 몰리고 있다는 신호는 있다. 논문 공개 한 달 만에 SkillCAT·SkillAxe·Skill-MAS 같은 후속 라인이 붙었다. Microsoft와 상하이교통대·통지대·푸단대의 산학 공동 연구이고, 코드는 github.com/microsoft/SkillOpt에 공개돼 있다.[^aka-ms-skillopt]
 
 ## 한 줄 요약
 
@@ -110,3 +120,7 @@ SkillOpt는 "스킬을 학습시킬 수 있다"를 증명했다. 다만 증명�
 - Yang, Y. et al. "SkillOpt: Executive Strategy for Self-Evolving Agent Skills." arXiv:2605.23904 (2026-05). https://arxiv.org/abs/2605.23904
 - HTML 전문 (v2): https://arxiv.org/html/2605.23904v2
 - 코드: https://aka.ms/skillopt
+
+[^arxiv-2605.23904]: Yang, Y. et al. "SkillOpt: Executive Strategy for Self-Evolving Agent Skills." arXiv:2605.23904 (2026-05). [arxiv.org/abs/2605.23904](https://arxiv.org/abs/2605.23904)
+[^arxiv-org-2605-23904v2]: 같은 논문 HTML 전문(v2) — 어블레이션 표와 Appendix 프로토콜. [arxiv.org/html/2605.23904v2](https://arxiv.org/html/2605.23904v2)
+[^aka-ms-skillopt]: SkillOpt 공개 코드. [aka.ms/skillopt](https://aka.ms/skillopt)

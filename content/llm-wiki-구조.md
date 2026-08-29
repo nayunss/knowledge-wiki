@@ -2,8 +2,7 @@
 title: LLM 위키 구조
 type: 개념
 description: 이 저장소를 위키·RAG·편집 세 가지 방식으로 쓰는 단일 원본 구조 개요
-tags:
-  - meta
+tags: [meta]
 ---
 
 이 저장소는 세 가지 관점에서 동시에 사용한다.

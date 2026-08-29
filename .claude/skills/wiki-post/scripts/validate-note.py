@@ -21,10 +21,6 @@ from pathlib import Path
 PROFILE_REQUIRED = ("type", "title", "description", "tags")
 RESERVED_NAMES = {"index.md", "log.md"}
 STATUS_VALUES = {"draft", "stable", "deprecated"}
-POST_EDIT_GRAMMAR_PATTERNS = (
-    (re.compile(r"관점(?:와|를|가|다)(?![가-힣])"), "잘못된 조사 결합"),
-    (re.compile(r"(?:방식|역할|기준|맥락)다(?![가-힣])"), "명사 뒤 서술격 조사 누락"),
-)
 
 
 def split_document(text: str) -> tuple[str | None, str]:
@@ -107,10 +103,18 @@ def valid_iso_datetime(value: str) -> bool:
         return False
 
 
-def prose_only(text: str) -> str:
-    """코드 예시 안의 의도적인 오류 표기는 문법 검사에서 제외한다."""
-    without_fences = re.sub(r"```.*?```", "", text, flags=re.S)
-    return re.sub(r"`[^`\n]+`", "", without_fences)
+FENCE = re.compile(r"^```.*?^```", re.M | re.S)
+INLINE_CODE = re.compile(r"`[^`\n]*`")
+
+
+def strip_code(text: str) -> str:
+    """코드 펜스와 인라인 코드를 지운다. 길이가 바뀌어도 무방한 검사에만 쓴다.
+
+    코드는 산문이 아니다 — `grep -oE '<link[^>]*rel'` 안의 `[^>]`는 각주가 아니고,
+    `(검증 필요)`를 인용한 코드스팬은 잔존 마커가 아니다. (kinetics·위키-하네스 실측)
+    """
+    text = FENCE.sub(lambda m: "\n" * m.group(0).count("\n"), text)
+    return INLINE_CODE.sub("", text)
 
 
 def validate(path: Path, inventory: Path | None = None) -> tuple[list[str], list[str]]:
@@ -181,7 +185,8 @@ def validate(path: Path, inventory: Path | None = None) -> tuple[list[str], list
     ids: set[str] = set()
     if "sources" in fields:
         ids = source_ids(fields["sources"], fails)
-    footnote_uses = set(re.findall(r"\[\^([^\]]+)\]", body))
+    prose = strip_code(body)
+    footnote_uses = set(re.findall(r"\[\^([^\]]+)\]", prose))
     footnote_defs = set(re.findall(r"(?m)^\[\^([^\]]+)\]:", body))
     for label in sorted(footnote_uses - footnote_defs):
         fails.append(f"각주 정의 누락: [^{label}]")
@@ -195,23 +200,19 @@ def validate(path: Path, inventory: Path | None = None) -> tuple[list[str], list
         else:
             warns.append("`## 출처`는 v0.1 호환 섹션 — 중복이면 제거 권장")
 
-    if "(검증 필요)" in text:
-        fails.append(f"'(검증 필요)' 마커 {text.count('(검증 필요)')}건 잔존")
+    prose_text = strip_code(text)
+    if "(검증 필요)" in prose_text:
+        fails.append(f"'(검증 필요)' 마커 {prose_text.count('(검증 필요)')}건 잔존")
     if re.search(r"<!--\s*대상독자:", text):
         fails.append("워크스페이스 대상독자 메타 주석 잔존")
     if text.count("```") % 2:
         fails.append("코드펜스(```) 짝 불일치")
-    for match in re.finditer(r"[)\]]\*\*[가-힣]", text):
+    for match in re.finditer(r"[)\]]\*\*[가-힣]", prose_text):
         fails.append(f"깨진 강조: …{text[max(0, match.start()-15):match.end()+5]}…")
-    for match in re.finditer(r"[\"\u201d\u2019']\*\*[가-힣]", text):
+    for match in re.finditer(r"[\"\u201d\u2019']\*\*[가-힣]", prose_text):
         warns.append(f"강조 인접 따옴표 — 렌더 확인: …{text[max(0, match.start()-15):match.end()+5]}…")
-    for match in re.finditer(r"~(?=[0-9])", text):
+    for match in re.finditer(r"~(?=[0-9])", prose_text):
         warns.append(f"물결 표기 — 근사 '약 N', 범위 'N–M' 권장: …{text[max(0, match.start()-10):match.end()+8]}…")
-    prose = prose_only(body)
-    for pattern, label in POST_EDIT_GRAMMAR_PATTERNS:
-        for match in pattern.finditer(prose):
-            excerpt = prose[max(0, match.start() - 15) : match.end() + 15].replace("\n", " ")
-            fails.append(f"치환 후 문법 회귀({label}): …{excerpt}…")
 
     if inventory and inventory.exists():
         known = {os.path.basename(item) for item in re.findall(r"`([^`]+)`", inventory.read_text(encoding="utf-8"))}

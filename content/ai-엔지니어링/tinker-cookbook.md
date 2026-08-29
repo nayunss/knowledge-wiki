@@ -5,6 +5,25 @@ description: 저수준 학습 루프는 사용자가 쥐고 분산 인프라만 
 tags: [파인튜닝, 강화학습, 도구, 인프라]
 resource: https://github.com/thinking-machines-lab/tinker-cookbook
 created: 2026-07-19
+sources:
+  - id: raw-githubusercontent-com-readme-md
+    resource: https://raw.githubusercontent.com/thinking-machines-lab/tinker-cookbook/main/README.md
+    title: Tinker Cookbook README (raw, 1차)
+  - id: github-com-tinker-cookbook
+    resource: https://github.com/thinking-machines-lab/tinker-cookbook
+    title: GitHub 저장소 및 트리 (1차)
+  - id: thinkingmachines-ai-announcing-tinker
+    resource: https://thinkingmachines.ai/news/announcing-tinker/
+    title: Announcing Tinker
+  - id: x-com-1973447428977336578
+    resource: https://x.com/thinkymachines/status/1973447428977336578
+    title: 공식 X 공지 (1차)
+  - id: venturebeat-com-thinking-machines-first
+    resource: https://venturebeat.com/ai/thinking-machines-first-official-product-is-here-meet-tinker-an-api-for
+    title: VentureBeat 보도 (2차)
+  - id: deeplearning-ai-thinking-machines-new-ti
+    resource: https://www.deeplearning.ai/the-batch/thinking-machines-new-tinker-api-makes-it-easier-to-fine-tune-models-on-many-gpus
+    title: DeepLearning.AI The Batch (2차)
 ---
 
 # Tinker & tinker-cookbook: 파인튜닝의 '중간 층'을 여는 매니지드 학습 SDK
@@ -26,7 +45,7 @@ created: 2026-07-19
 | 위치 | Thinking Machines가 운영하는 서비스 | GitHub 공개 저장소 (`thinking-machines-lab/tinker-cookbook`) |
 | README 정의 | "a training SDK ... to fine-tune language models" | "builds on the Tinker API and provides common abstractions" |
 
-README(공식)는 Tinker를 "연구자·개발자가 언어 모델을 파인튜닝하는 학습 SDK"로, 사용자가 "API 요청을 보내면 우리가 분산 학습의 복잡성을 처리한다"고 정의한다. cookbook은 "Tinker API 위에 얹혀, 파인튜닝에 흔히 쓰는 추상화를 제공"하는 레이어다. 저장소 태그라인 한 줄이 관계를 요약한다 — "Post-training with Tinker."
+README(공식)는 Tinker를 "연구자·개발자가 언어 모델을 파인튜닝하는 학습 SDK"로, 사용자가 "API 요청을 보내면 우리가 분산 학습의 복잡성을 처리한다"고 정의한다.[^raw-githubusercontent-com-readme-md] cookbook은 "Tinker API 위에 얹혀, 파인튜닝에 흔히 쓰는 추상화를 제공"하는 레이어다. 저장소 태그라인 한 줄이 관계를 요약한다 — "Post-training with Tinker."
 
 ## 어떤 '층'을 여는가: 저수준 연산 + 위임된 인프라
 
@@ -53,7 +72,7 @@ sampling_client.sample(...)
 
 여기서 핵심은 **API가 `Trainer` 같은 고수준 덩어리가 아니라, 조합 가능한 저수준 연산 몇 가지를 준다**는 점이다. `forward_backward`로 gradient를 구하고 `optim_step`으로 갱신하는 흐름을 사용자가 직접 배열한다. 공지(2025-10)의 표현대로 "가장 흔한 post-training 방법 대부분"을 이 조각들의 조합으로 표현하게 하려는 것이다. 고수준 API로는 손대기 어려운 새 알고리즘을 실험하려는 층을 겨냥한 설계로 보인다(추정 — 소스는 "저수준 primitive 제공"과 "학계 얼리어답터"를 각각 말할 뿐, 둘을 인과로 잇지는 않았다).
 
-인프라 쪽은 반대로 완전히 가려져 있다. 공지는 서비스가 "스케줄링·리소스 할당·장애 복구를 처리"한다고 밝혔고, X 공지는 이를 "노트북에서 파이썬으로 학습 루프를 쓰면, 우리가 분산 GPU에서 돌린다"로 요약했다. 비용 구조도 공지에 명시돼 있다. Tinker는 **LoRA**(Low-Rank Adaptation, 원본 가중치를 얼리고 작은 저계수 행렬만 학습하는 기법)를 쓰는데, 그 이유를 공지는 "여러 학습 잡이 같은 컴퓨트 풀을 공유해 비용을 낮추기 위해서"라고 직접 밝힌다. README는 LoRA를 쓴다고만 하고, 채택 이유는 공지 쪽에 있다.
+인프라 쪽은 반대로 완전히 가려져 있다. 공지는 서비스가 "스케줄링·리소스 할당·장애 복구를 처리"한다고 밝혔고, X 공지는 이를 "노트북에서 파이썬으로 학습 루프를 쓰면, 우리가 분산 GPU에서 돌린다"로 요약했다.[^x-com-1973447428977336578] 비용 구조도 공지에 명시돼 있다. Tinker는 **LoRA**(Low-Rank Adaptation, 원본 가중치를 얼리고 작은 저계수 행렬만 학습하는 기법)를 쓰는데, 그 이유를 공지는 "여러 학습 잡이 같은 컴퓨트 풀을 공유해 비용을 낮추기 위해서"라고 직접 밝힌다.[^thinkingmachines-ai-announcing-tinker] README는 LoRA를 쓴다고만 하고, 채택 이유는 공지 쪽에 있다.
 
 정리하면 Tinker가 여는 층은 이렇다.
 
@@ -62,7 +81,7 @@ sampling_client.sample(...)
 
 ## cookbook의 레시피: 폴더가 곧 지원 범위
 
-cookbook 저장소의 `tinker_cookbook/recipes/` 아래 폴더들은 곧 "무엇을 학습시킬 수 있나"의 목록이다. 실제 트리에서 확인한 폴더를 기준으로 지원 패러다임을 묶으면 이렇다.
+cookbook 저장소의 `tinker_cookbook/recipes/` 아래 폴더들은 곧 "무엇을 학습시킬 수 있나"의 목록이다. 실제 트리에서 확인한 폴더를 기준으로 지원 패러다임을 묶으면 이렇다.[^github-com-tinker-cookbook]
 
 | 학습 방식 | 근거 폴더 |
 |---|---|
@@ -135,3 +154,8 @@ Tinker의 '중간 층' 포지션은 공짜가 아니다.
 - 공식 X 공지 (1차) — https://x.com/thinkymachines/status/1973447428977336578
 - VentureBeat 보도 (2차) — https://venturebeat.com/ai/thinking-machines-first-official-product-is-here-meet-tinker-an-api-for
 - DeepLearning.AI The Batch (2차) — https://www.deeplearning.ai/the-batch/thinking-machines-new-tinker-api-makes-it-easier-to-fine-tune-models-on-many-gpus
+
+[^raw-githubusercontent-com-readme-md]: Tinker Cookbook README 원문(1차, 관찰 2026-07-19) — Tinker·cookbook 정의와 코드 예제. [raw.githubusercontent.com](https://raw.githubusercontent.com/thinking-machines-lab/tinker-cookbook/main/README.md)
+[^github-com-tinker-cookbook]: GitHub 저장소 및 파일 트리(1차, 관찰 2026-07-19) — `recipes/`·패키지 폴더 구성. [github.com/thinking-machines-lab/tinker-cookbook](https://github.com/thinking-machines-lab/tinker-cookbook)
+[^thinkingmachines-ai-announcing-tinker]: Thinking Machines Lab, "Announcing Tinker"(1차, 2025-10) — 인프라 위임 범위, LoRA 채택 이유, 초기 접근·과금 계획. [thinkingmachines.ai](https://thinkingmachines.ai/news/announcing-tinker/)
+[^x-com-1973447428977336578]: Thinking Machines Lab 공식 X 공지(1차). [x.com/thinkymachines](https://x.com/thinkymachines/status/1973447428977336578)

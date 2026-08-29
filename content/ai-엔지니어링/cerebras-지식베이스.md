@@ -4,11 +4,15 @@ type: 분석
 description: 하루 15,000개 질문을 받는 Cerebras 사내 지식 베이스의 설계 결정에서 사내 검색·RAG 엔지니어가 얻는 원리와, 각 원리에 딸린 조건·비용을 뜯어본다.
 tags: [rag, 지식베이스, 검색, mcp]
 resource: https://www.cerebras.ai/blog/how-we-built-our-knowledge-base
+sources:
+  - id: cerebras-ai-how-we-built-our-knowledge-b
+    resource: https://www.cerebras.ai/blog/how-we-built-our-knowledge-base
+    title: Cerebras, How We Built Our Enterprise Knowledge Base
 ---
 
 분기마다 누군가는 같은 제안을 한다. "모든 걸 한 플랫폼에 기록합시다. 그러면 정보가 한 곳에 모입니다." 그리고 분기마다 그 위키는 비어 간다. Cerebras가 사내 지식 베이스를 만들며 내린 첫 결정은 이 꿈을 정면으로 포기하는 것이었다.
 
-그 지식 베이스는 지금 하루 **15,000개**의 질문을 받는다. 출시 **3개월** 만에 사내에서 가장 널리 쓰이는 도구 중 하나가 됐고, 사람뿐 아니라 자동화와 에이전트까지 이걸 호출한다. 데이터센터 운영, 칩 설계, 하드웨어, 트레이닝, 인퍼런스, 클라우드 플랫폼 팀이 매년 수백 명씩 새 얼굴을 받는 회사에서, 채널은 늘 같은 질문으로 차 있었다. "X는 어디 있어요?", "Y 전문가는 누구예요?", "Z가 뭐예요?"
+그 지식 베이스는 지금 하루 **15,000개**의 질문을 받는다.[^cerebras-ai-how-we-built-our-knowledge-b] 출시 **3개월** 만에 사내에서 가장 널리 쓰이는 도구 중 하나가 됐고, 사람뿐 아니라 자동화와 에이전트까지 이걸 호출한다. 데이터센터 운영, 칩 설계, 하드웨어, 트레이닝, 인퍼런스, 클라우드 플랫폼 팀이 매년 수백 명씩 새 얼굴을 받는 회사에서, 채널은 늘 같은 질문으로 차 있었다. "X는 어디 있어요?", "Y 전문가는 누구예요?", "Z가 뭐예요?"
 
 **이 글에서 얻을 인사이트는 화려한 검색 알고리즘이 아니다.** 진짜 원리는 이것이다 — 조직의 습관을 바꾸지 않고 정보를 끌어오는 설계가 검색 품질보다 먼저 온다. 그리고 그 원리를 실제로 굴러가게 하는 대여섯 개의 결정 하나하나엔, 공짜가 아닌 조건이 딸려 있다. 이 글은 그 결정들을 원문에 붙여 뜯어보고, 각 인사이트 옆에 그 인사이트를 유지하는 비용을 나란히 적는다. (원문을 세 관점 — 실무 도입가·회의적 아키텍트·IR 연구자 — 으로 토론한 결과를 재구성했다.)
 
@@ -139,3 +143,5 @@ Cerebras는 벡터 검색만으로 부족하다는 걸 금방 깨닫고 **하이
 ## 출처
 - Cerebras, [How We Built Our Enterprise Knowledge Base](https://www.cerebras.ai/blog/how-we-built-our-knowledge-base) — 이 글의 모든 수치·설계 결정의 1차 출처.
 - 원문이 인용한 이론적 배경: HNSW(Malkov & Yashunin), Contextual Retrieval(Anthropic, 2024), Reciprocal Rank Fusion(Cormack et al., SIGIR 2009), Search-o1(2025), Code Execution with MCP(Anthropic, 2025), Lost in the Middle(2023), Use XML Tags(Anthropic), Slack AI, Cursor의 시맨틱 검색(2025).
+
+[^cerebras-ai-how-we-built-our-knowledge-b]: Cerebras, "How We Built Our Enterprise Knowledge Base". [cerebras.ai/blog](https://www.cerebras.ai/blog/how-we-built-our-knowledge-base) — 이 글의 모든 수치·설계 결정의 1차 출처.

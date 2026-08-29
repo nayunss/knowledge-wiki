@@ -5,11 +5,33 @@ description: Uber가 만든 first-pass AI PRD 리뷰어를 원문 그대로 렌�
 tags: [ai-엔지니어링, llm-as-judge, 게이트설계, 사내도구]
 date: 2026-08-02
 resource: https://www.uber.com/us/en/blog/first-pass-prd/
+sources:
+  - id: uber-com-first-pass-prd
+    resource: https://www.uber.com/us/en/blog/first-pass-prd/
+    title: Lessons from Building a First-Pass AI PRD Reviewer at Uber
+  - id: arxiv-org-2306-05685
+    resource: https://arxiv.org/abs/2306.05685
+    title: Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena
+  - id: arxiv-org-2510-27106
+    resource: https://arxiv.org/abs/2510.27106
+    title: "Rating Roulette: Self-Inconsistency in LLM-As-A-Judge Frameworks"
+  - id: arxiv-org-2506-22316
+    resource: https://arxiv.org/abs/2506.22316
+    title: Evaluating Scoring Bias in LLM-as-a-Judge
+  - id: doi-org-ijhc-1999-0252
+    resource: https://doi.org/10.1006/ijhc.1999.0252
+    title: Does automation bias decision-making?
+  - id: doi-org-001872097778543886
+    resource: https://doi.org/10.1518/001872097778543886
+    title: "Humans and Automation: Use, Misuse, Disuse, Abuse"
+  - id: leanpub-com-leprechauns
+    resource: https://leanpub.com/leprechauns
+    title: The Leprechauns of Software Engineering
 ---
 
 제품 요구사항 문서(PRD) 리뷰 회의에 들어갔는데 첫 30분이 "이거 작년에 비슷한 실험 없었나요"로 흘러간 경험이 있다면, Uber가 무엇을 풀려 했는지는 설명이 필요 없다. 2026년 5월 Uber 엔지니어링 블로그에 올라온 글은 그 30분을 겨냥한다. 다만 겨냥 지점이 특이하다. **회의를 고치지 않고, 회의에 들어오는 문서를 고친다.**
 
-Product Lead인 Lakshmi Ashok이 쓴 이 글의 제목은 "Lessons from Building a First-Pass AI PRD Reviewer at Uber"다. 성과 발표가 아니라 만들면서 배운 것, 즉 설계 회고다. 이 장르 구분이 뒤에서 계속 걸린다. 나는 이 글을 읽고 여섯 가지 직무 관점에서 토론을 붙였다. 백엔드/플랫폼, 데이터/ML 평가, 보안/거버넌스, 프로덕트 디자인, EM/CTO, QA/릴리스. 여섯은 실존 인물이 아니라 **직무 관점의 의인화**이고, 그들이 낸 의견은 전부 원문에 다시 대조한 뒤에만 이 글에 남겼다.
+Product Lead인 Lakshmi Ashok이 쓴 이 글의 제목은 "Lessons from Building a First-Pass AI PRD Reviewer at Uber"다.[^uber-com-first-pass-prd] 성과 발표가 아니라 만들면서 배운 것, 즉 설계 회고다. 이 장르 구분이 뒤에서 계속 걸린다. 나는 이 글을 읽고 여섯 가지 직무 관점에서 토론을 붙였다. 백엔드/플랫폼, 데이터/ML 평가, 보안/거버넌스, 프로덕트 디자인, EM/CTO, QA/릴리스. 여섯은 실존 인물이 아니라 **직무 관점의 의인화**이고, 그들이 낸 의견은 전부 원문에 다시 대조한 뒤에만 이 글에 남겼다.
 
 ## 핵심 주장 — 이 글이 말하려는 것
 
@@ -111,7 +133,7 @@ QA 관점에서는 이 주장을 정면으로 반박했다. "이건 shift-left�
 
 세 직무가 같은 구멍을 각자의 언어로 불렀다는 게 이 토론에서 가장 선명한 수렴이었다.
 
-- **평가 관점:** "판정자 편향은 이미 문서화된 실패 모드다([Zheng 외 2023](https://arxiv.org/abs/2306.05685)). 거기서 한 걸음 더 나쁜 게 재현성이다. 동일 입력 반복 채점에서 LLM 판정자(LLM-as-judge)의 신뢰도는 낮게 보고돼 있고([Haldar·Hockenmaier 2025](https://arxiv.org/abs/2510.27106)), 루브릭 항목 순서나 점수 레이블 같은 채점 프롬프트 표면만 바꿔도 점수가 흔들린다([Li 외 2025](https://arxiv.org/abs/2506.22316)). 원문은 등급 안정성을 언급조차 하지 않는다."
+- **평가 관점:** "판정자 편향은 이미 문서화된 실패 모드다([Zheng 외 2023](https://arxiv.org/abs/2306.05685)).[^arxiv-org-2306-05685] 거기서 한 걸음 더 나쁜 게 재현성이다. 동일 입력 반복 채점에서 LLM 판정자(LLM-as-judge)의 신뢰도는 낮게 보고돼 있고([Haldar·Hockenmaier 2025](https://arxiv.org/abs/2510.27106)), 루브릭 항목 순서나 점수 레이블 같은 채점 프롬프트 표면만 바꿔도 점수가 흔들린다([Li 외 2025](https://arxiv.org/abs/2506.22316)).[^arxiv-org-2510-27106][^arxiv-org-2506-22316] 원문은 등급 안정성을 언급조차 하지 않는다."
 - **QA 관점:** "게이트의 최소 요건은 같은 입력에 같은 판정이다. 그래야 회귀를 재고, 규칙 변경 효과를 분리하고, '왜 저번엔 통과했는데'에 답한다. 더 아픈 건 순환이다 — 원문이 진단한 문제 중 하나가 **피드백의 비일관성**인데, 일관성을 보증하지 않은 판정기로 그 문제를 푼다."
 - **보안 관점:** "'리뷰 준비에 가깝다'는 판정이 붙은 PRD가 사고를 냈을 때 되짚을 건 셋이다. 그때 무엇을 근거로 봤는지(문서 스냅샷), 어떤 등급으로 분류했는지, 모델·프롬프트가 어떤 버전이었는지. 하나만 없어도 사후 조사는 'AI가 그랬다'에서 멈춘다. 원문에 감사 추적은 없다."
 
@@ -155,7 +177,7 @@ QA 관점에서는 이 주장을 정면으로 반박했다. "이건 shift-left�
 
 QA 관점이 두 번째 해석을 보탰다. "사람이 덜 파고들어도 회의는 빨라진다. 스모크 테스트가 초록불이면 탐색적 테스트를 건너뛰는 패턴을 우리는 20년 봤다. 'AI가 훑은 문서'라는 라벨이 붙으면 리뷰어가 같은 강도로 읽는다는 보장이 없다."
 
-EM 관점이 외부 근거를 댔다. 신뢰도 높지만 완벽하지 않은 자동 보조가 붙은 조건에서 사람의 감시 성능이 오히려 낮아진다는 실험 결과가 있고([Skitka·Mosier·Burdick 1999](https://doi.org/10.1006/ijhc.1999.0252)), 과의존은 자동화의 알려진 오용 양식으로 정리돼 있다([Parasuraman·Riley 1997](https://doi.org/10.1518/001872097778543886)). "이 도구에서 실제로 그런 잠식이 일어났는지는 원문에 데이터가 없다. 다만 **등급이 리뷰어에게 보이는 순간** '통과된 PRD'라는 라벨이 생기고, 그건 우리가 사려던 효과의 반대로 작동할 수 있다."
+EM 관점이 외부 근거를 댔다. 신뢰도 높지만 완벽하지 않은 자동 보조가 붙은 조건에서 사람의 감시 성능이 오히려 낮아진다는 실험 결과가 있고([Skitka·Mosier·Burdick 1999](https://doi.org/10.1006/ijhc.1999.0252)), 과의존은 자동화의 알려진 오용 양식으로 정리돼 있다([Parasuraman·Riley 1997](https://doi.org/10.1518/001872097778543886)).[^doi-org-ijhc-1999-0252][^doi-org-001872097778543886] "이 도구에서 실제로 그런 잠식이 일어났는지는 원문에 데이터가 없다. 다만 **등급이 리뷰어에게 보이는 순간** '통과된 PRD'라는 라벨이 생기고, 그건 우리가 사려던 효과의 반대로 작동할 수 있다."
 
 같은 관측이 세 해석을 모두 지지한다는 게 요점이다. 문서가 좋아졌다, 이견 표면이 줄었다, 리뷰어가 덜 읽는다. 원문은 이 셋을 갈라낼 데이터를 제시하지 않았고, 나도 갈라낼 수 없다. 그래서 이 관측의 지위는 **가설**이다.
 
@@ -229,3 +251,10 @@ EM 관점이 외부 근거를 댔다. 신뢰도 높지만 완벽하지 않은 �
 - L. Bossavit, "The Leprechauns of Software Engineering". https://leanpub.com/leprechauns (shift-left 논의에 흔히 붙는 "단계마다 결함 비용 10배" 계열 수치의 출처 사슬 문제. 이 글에서 그 수치를 쓰지 않은 이유)
 
 > 원문에 등장하는 성과·효과 관련 정량 지표는 "dozens of PMs" 하나뿐이며(집계 범위: 원문 본문 Introduction–Conclusion, 사이트 내비게이션·저자 프로필·푸터 제외), 분모가 없어 채택률로 환산하거나 다른 조직 수치와 비교하지 않았다. 여섯 직무 토론과 이전 가능성 판단은 원문 위에서 재구성한 해석이다.
+
+[^uber-com-first-pass-prd]: Lakshmi Ashok, "Lessons from Building a First-Pass AI PRD Reviewer at Uber", Uber Blog, 2026-05-12. [uber.com/blog](https://www.uber.com/us/en/blog/first-pass-prd/) — 1차 출처.
+[^arxiv-org-2306-05685]: L. Zheng et al., "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena", 2023. [arXiv:2306.05685](https://arxiv.org/abs/2306.05685) — LLM 판정자의 장황함 편향·자기선호 편향 문서화.
+[^arxiv-org-2510-27106]: R. Haldar, J. Hockenmaier, "Rating Roulette: Self-Inconsistency in LLM-As-A-Judge Frameworks", 2025-10-31. [arXiv:2510.27106](https://arxiv.org/abs/2510.27106) — 동일 입력 반복 채점 시 판정자 내 신뢰도가 낮게 나온다는 보고.
+[^arxiv-org-2506-22316]: Q. Li, S. Dou, K. Shao, C. Chen, H. Hu, "Evaluating Scoring Bias in LLM-as-a-Judge", 2025-06-27. [arXiv:2506.22316](https://arxiv.org/abs/2506.22316) — 루브릭 항목 순서 편향·점수 레이블 편향·참조 답안 편향.
+[^doi-org-ijhc-1999-0252]: L. Skitka, K. Mosier, M. Burdick, "Does automation bias decision-making?", International Journal of Human-Computer Studies, 1999. [doi.org](https://doi.org/10.1006/ijhc.1999.0252)
+[^doi-org-001872097778543886]: R. Parasuraman, V. Riley, "Humans and Automation: Use, Misuse, Disuse, Abuse", Human Factors, 1997. [doi.org](https://doi.org/10.1518/001872097778543886)

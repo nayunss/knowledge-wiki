@@ -5,15 +5,25 @@ description: git worktree로 코딩 에이전트를 병렬 격리하는 오픈�
 tags: [멀티에이전트, 오케스트레이션, 코딩에이전트, 개발환경]
 resource: https://github.com/stablyai/orca
 date: 2026-07-14
+sources:
+  - id: github-com-orca
+    resource: https://github.com/stablyai/orca
+    title: stablyai/orca
+  - id: onorca-dev
+    resource: https://onorca.dev
+    title: Orca 공식 사이트 (onorca.dev)
+  - id: onorca-dev-design-mode
+    resource: https://www.onorca.dev/docs/browser/design-mode
+    title: Design Mode
 ---
 
 에이전트를 두 개 이상 동시에 굴려본 사람은 같은 벽을 만난다. 한 세션이 `src/auth.ts`를 고치는 동안 다른 세션이 같은 파일을 고친다. 되돌리면 둘 다 죽는다. 그래서 대부분은 병렬을 포기하고 하나씩 순서대로 돌린다.
 
-[Orca](https://github.com/stablyai/orca)는 이 문제에 뻔한 답을 낸다. 작업마다 git worktree(같은 저장소를 서로 다른 브랜치로 여러 디렉터리에 동시 체크아웃하는 git 표준 기능)를 파서 에이전트를 격리한다. 답이 뻔한 만큼 이 도구의 진짜 이야기는 격리가 아니다. **CLI를 직접 뜯어보면 나온다.**
+[Orca](https://github.com/stablyai/orca)는 이 문제에 뻔한 답을 낸다. 작업마다 git worktree(같은 저장소를 서로 다른 브랜치로 여러 디렉터리에 동시 체크아웃하는 git 표준 기능)를 파서 에이전트를 격리한다.[^github-com-orca] 답이 뻔한 만큼 이 도구의 진짜 이야기는 격리가 아니다. **CLI를 직접 뜯어보면 나온다.**
 
 ## 핵심 주장: 이 CLI의 사용자는 사람이 아니다
 
-Orca를 "AI가 붙은 IDE"로 소개하는 글이 많지만, 필자가 로컬에 설치된 Orca CLI를 직접 조사한 결과는 다른 그림을 가리킨다. 커맨드 표면 전체가 **에이전트가 읽고 호출하도록** 설계돼 있다. 사람이 쓰기 편한 도구가 아니라, 에이전트가 다른 에이전트를 부리도록 만든 관제 API에 GUI를 얹은 물건이다. 그래서 Orca의 자기 규정도 IDE가 아니라 ADE(Agent Development Environment)다.
+Orca를 "AI가 붙은 IDE"로 소개하는 글이 많지만, 필자가 로컬에 설치된 Orca CLI를 직접 조사한 결과는 다른 그림을 가리킨다. 커맨드 표면 전체가 **에이전트가 읽고 호출하도록** 설계돼 있다. 사람이 쓰기 편한 도구가 아니라, 에이전트가 다른 에이전트를 부리도록 만든 관제 API에 GUI를 얹은 물건이다. 그래서 Orca의 자기 규정도 IDE가 아니라 ADE(Agent Development Environment)다.[^onorca-dev]
 
 근거는 세 가지다.
 
@@ -100,7 +110,7 @@ $ orca eval --expression "document.title"
 
 좌표가 아니라 ref다. 픽셀 클릭은 해상도·스크롤·애니메이션에 쉽게 깨지지만 ref는 그렇지 않다. 다만 `orca tab current --help`가 직접 경고한다. "Element refs change after navigation — always re-snapshot before interacting." 페이지가 넘어가면 ref는 무효다. 그리고 워크트리를 여러 개 병렬로 돌릴 때는 `orca tab list --json`에서 `tabs[].browserPageId`를 받아 `--page <id>`로 고정하라고 권한다. 안 하면 두 에이전트가 같은 탭을 밟는다. 격리 도구인데도 브라우저 층에서는 격리를 사용자가 챙겨야 한다는 뜻이다.
 
-Design Mode는 여기서 한 걸음 더 간다. 워크트리마다 실제 Chromium 창이 뜨고, UI 요소를 클릭하면 그 HTML·CSS·크롭 스크린샷이 에이전트로 전송된다(공식 문서 기준). "헤더 오른쪽 위 파란 버튼 있잖아, 그거 말고 그 아래"라는 좌표 설명을 없애는 게 목적이다.
+Design Mode는 여기서 한 걸음 더 간다. 워크트리마다 실제 Chromium 창이 뜨고, UI 요소를 클릭하면 그 HTML·CSS·크롭 스크린샷이 에이전트로 전송된다(공식 문서 기준).[^onorca-dev-design-mode] "헤더 오른쪽 위 파란 버튼 있잖아, 그거 말고 그 아래"라는 좌표 설명을 없애는 게 목적이다.
 
 ## 트레이드오프: 격리의 청구서
 
@@ -160,3 +170,7 @@ Orca의 가치는 워크트리 격리가 아니다. 그건 git이 원래 하던 
 - [Orca 공식 사이트 (onorca.dev)](https://onorca.dev) — ADE 규정, 지원 에이전트, 플랫폼
 - [Design Mode — Orca 공식 문서](https://www.onorca.dev/docs/browser/design-mode) — 워크트리별 Chromium 창, 요소의 HTML·CSS·크롭 스크린샷을 에이전트로 전송
 - 로컬 관측 (2026-07-14, macOS): `orca --help`, `orca agent-context [--json]`, `orca worktree create --help`, `orca terminal wait --help`, `orca tab current --help`, `orca worktree ps`, `orca status`
+
+[^github-com-orca]: Orca 저장소 — 워크트리 격리 구조, MIT 라이선스, `skills/` 디렉터리(2026-07-14 조회). [github.com/stablyai/orca](https://github.com/stablyai/orca)
+[^onorca-dev]: Orca 공식 사이트 — ADE(Agent Development Environment) 자기 규정, 지원 에이전트, 플랫폼. [onorca.dev](https://onorca.dev)
+[^onorca-dev-design-mode]: Orca 공식 문서, "Design Mode" — 워크트리별 Chromium 창과 요소 HTML·CSS·크롭 스크린샷 전송. [onorca.dev/docs/browser/design-mode](https://www.onorca.dev/docs/browser/design-mode)

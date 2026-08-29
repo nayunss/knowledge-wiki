@@ -5,11 +5,21 @@ description: "화제의 벡터 압축 헤드라인이 합쳐버린 두 가지 �
 tags: [벡터양자화, 벡터검색, faiss, 추론인프라]
 resource: https://arxiv.org/abs/2504.19874
 date: 2026-07-19
+sources:
+  - id: arxiv-org-2504-19874
+    resource: https://arxiv.org/abs/2504.19874
+    title: "TurboQuant: Online Vector Quantization with Near-optimal Distortion Rate"
+  - id: github-com-turbovec
+    resource: https://github.com/RyanCodrai/turbovec
+    title: turbovec 리포 (1차, 라이브러리)
+  - id: techstartups-com-google-shrinks-ai-memor
+    resource: https://techstartups.com/2026/06/06/google-shrinks-ai-memory-from-31gb-to-4gb-with-turbovec-beating-faiss-on-speed/
+    title: Google shrinks AI memory from 31GB to 4GB with TurboVec, beating FAISS on speed
 ---
 
 # TurboQuant과 TurboVec — "31GB→4GB, FAISS보다 빠름" 헤드라인을 뜯어보다
 
-"Google이 AI 메모리를 31GB에서 4GB로 줄였다, 게다가 FAISS보다 빠르다." 2026년 6월 TechStartups 기사가 붙인 이 제목은 두 가지 서로 다른 것을 한 문장에 욱여넣었다. Google이 낸 것은 라이브러리가 아니라 논문 한 편이고, 31GB를 4GB로 줄인 벤치마크를 실제로 돌린 코드는 Google이 만든 것이 아니다.
+"Google이 AI 메모리를 31GB에서 4GB로 줄였다, 게다가 FAISS보다 빠르다." 2026년 6월 TechStartups 기사가 붙인 이 제목은 두 가지 서로 다른 것을 한 문장에 욱여넣었다.[^techstartups-com-google-shrinks-ai-memor] Google이 낸 것은 라이브러리가 아니라 논문 한 편이고, 31GB를 4GB로 줄인 벤치마크를 실제로 돌린 코드는 Google이 만든 것이 아니다.
 
 이 글의 결론부터. **화제의 주인공은 사실 둘이다.** 하나는 Google Research가 arXiv에 올린 양자화 알고리즘 TurboQuant, 다른 하나는 그 알고리즘을 Rust로 구현한 개인 오픈소스 TurboVec다. 헤드라인의 숫자는 대부분 후자(라이브러리)의 README에서 나왔고, "Google이 만들었다"는 권위는 전자(논문)에서 빌려 왔다. 둘을 갈라놓고 보면 진짜 새로운 것이 무엇인지가 선명해진다 — 그것은 "무조건 FAISS보다 빠르다"가 아니라 "코드북 학습 단계를 통째로 없앤 data-oblivious 양자화"다. 이 차이가 왜 중요한지를 이제부터 짚는다.
 
@@ -31,7 +41,7 @@ date: 2026-07-19
 
 ## TurboQuant: 학습 없이 벡터를 압축하는 법
 
-TurboQuant가 푸는 문제는 벡터 양자화(vector quantization) — 고차원 실수 벡터를 더 적은 비트로 표현하되, 벡터 사이의 거리·내적 같은 기하 구조가 최대한 덜 망가지게 하는 것이다. 뿌리는 섀넌의 소스 코딩(source coding) 이론에 닿아 있고, 논문은 평균제곱오차(MSE)와 내적 왜곡(inner-product distortion) 두 지표를 함께 다룬다. 2025년 4월 arXiv에 올라온 뒤 ICLR 2026에 정식 게재됐다.
+TurboQuant가 푸는 문제는 벡터 양자화(vector quantization) — 고차원 실수 벡터를 더 적은 비트로 표현하되, 벡터 사이의 거리·내적 같은 기하 구조가 최대한 덜 망가지게 하는 것이다. 뿌리는 섀넌의 소스 코딩(source coding) 이론에 닿아 있고, 논문은 평균제곱오차(MSE)와 내적 왜곡(inner-product distortion) 두 지표를 함께 다룬다. 2025년 4월 arXiv에 올라온 뒤 ICLR 2026에 정식 게재됐다.[^arxiv-org-2504-19874]
 
 핵심 기법은 놀랄 만큼 단순하다. **입력 벡터를 무작위로 회전시킨다.** 랜덤 회전을 거치면 원래 분포가 무엇이었든 좌표값이 특정 Beta 분포로 모인다. 그 분포의 모양은 미리 알고 있으니, 데이터를 들여다보지 않고도(data-oblivious) 각 좌표를 어떻게 양자화할지 정할 수 있다. 여기서 "data-oblivious"가 이 알고리즘의 심장이다 — 입력 데이터를 학습해 코드북을 만드는 과정 자체가 없다.
 
@@ -39,7 +49,7 @@ TurboQuant가 푸는 문제는 벡터 양자화(vector quantization) — 고차�
 
 ## TurboVec: 알고리즘을 제품으로 만든 것들
 
-TurboQuant가 "이렇게 하면 된다"는 증명이라면, TurboVec는 "이만큼 빠르게 돌아간다"는 구현이다. README가 보고한 실측 숫자는 이렇다.
+TurboQuant가 "이렇게 하면 된다"는 증명이라면, TurboVec는 "이만큼 빠르게 돌아간다"는 구현이다. README가 보고한 실측 숫자는 이렇다.[^github-com-turbovec]
 
 - **압축률.** 1,536차원 벡터 하나가 FP32(32비트 부동소수점)로 6,144바이트인데, 2비트 양자화로 384바이트가 된다 — 16배 압축.
 - **메모리.** 1천만 개 문서 코퍼스가 float32로 약 31GB, TurboVec로 약 4GB. 절감률로는 약 87%다.
@@ -95,3 +105,7 @@ TurboQuant가 "이렇게 하면 된다"는 증명이라면, TurboVec는 "이만�
 - TurboQuant 논문 (1차, 알고리즘) — "TurboQuant: Online Vector Quantization with Near-optimal Distortion Rate", Zandieh·Daliri·Hadian·Mirrokni (Google Research 주도), ICLR 2026. https://arxiv.org/abs/2504.19874
 - turbovec 리포 (1차, 라이브러리) — RyanCodrai/turbovec, MIT. https://github.com/RyanCodrai/turbovec
 - TechStartups 기사 (2차, 발단) — "Google shrinks AI memory from 31GB to 4GB with TurboVec, beating FAISS on speed". https://techstartups.com/2026/06/06/google-shrinks-ai-memory-from-31gb-to-4gb-with-turbovec-beating-faiss-on-speed/
+
+[^arxiv-org-2504-19874]: Zandieh·Daliri·Hadian·Mirrokni, "TurboQuant: Online Vector Quantization with Near-optimal Distortion Rate", ICLR 2026. [arXiv 2504.19874](https://arxiv.org/abs/2504.19874)
+[^github-com-turbovec]: RyanCodrai/turbovec — 라이브러리 리포와 README 실측치. [github.com/RyanCodrai/turbovec](https://github.com/RyanCodrai/turbovec)
+[^techstartups-com-google-shrinks-ai-memor]: TechStartups, "Google shrinks AI memory from 31GB to 4GB with TurboVec, beating FAISS on speed" (2026-06-06). [techstartups.com](https://techstartups.com/2026/06/06/google-shrinks-ai-memory-from-31gb-to-4gb-with-turbovec-beating-faiss-on-speed/)

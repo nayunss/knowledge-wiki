@@ -5,9 +5,28 @@ description: "Anthropic이 Claude Code 시스템 프롬프트의 80% 이상을 �
 tags: [컨텍스트-엔지니어링, claude-code, 하네스, 프롬프트]
 resource: https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models
 date: 2026-08-02
+sources:
+  - id: claude-com-the-new-rules-of-context-engi
+    resource: https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models
+    title: The new rules of context engineering for Claude 5 generation models
+  - id: anthropic-com-effective-context-engineer
+    resource: https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents
+    title: context engineering
+  - id: claude-com-a-field-guide-to-claude-fable
+    resource: https://claude.com/blog/a-field-guide-to-claude-fable-finding-your-unknowns
+    title: A field guide to Claude Fable 5
+  - id: claude-com-a-harness-for-every-task-dyna
+    resource: https://claude.com/blog/a-harness-for-every-task-dynamic-workflows-in-claude-code
+    title: 파일 트리
+  - id: code-claude-com-skills
+    resource: https://code.claude.com/docs/en/skills
+    title: Claude Code
+  - id: code-claude-com-commands
+    resource: https://code.claude.com/docs/en/commands
+    title: Reports findings first and asks for confirmation before changing anything
 ---
 
-지난 2년간 컨텍스트 엔지니어링의 미덕은 촘촘함이었다. 규칙을 빠짐없이 적고, 예시를 붙이고, 중요한 건 두 번 쓰고, 팀 지식을 `CLAUDE.md` 한 파일에 모았다. 그런데 2026년 7월 24일, Anthropic의 Thariq Shihipar가 정반대 이야기를 들고 나왔다. Claude Code 시스템 프롬프트의 **80% 이상을 지웠는데** 자사 코딩 평가에서 측정 가능한 손실이 없었다는 것이다.
+지난 2년간 컨텍스트 엔지니어링의 미덕은 촘촘함이었다. 규칙을 빠짐없이 적고, 예시를 붙이고, 중요한 건 두 번 쓰고, 팀 지식을 `CLAUDE.md` 한 파일에 모았다. 그런데 2026년 7월 24일, Anthropic의 Thariq Shihipar가 정반대 이야기를 들고 나왔다. Claude Code 시스템 프롬프트의 **80% 이상을 지웠는데** 자사 코딩 평가에서 측정 가능한 손실이 없었다는 것이다.[^claude-com-the-new-rules-of-context-engi]
 
 숫자가 크다. 그래서 위험하다.
 
@@ -19,7 +38,7 @@ date: 2026-08-02
 
 그렇다고 이 글이 마케팅인 것은 아니다. 원문에 흩어진 항목을 우리가 순서로 묶은 삭제 우선순위(충돌하는 지시부터, 다음은 뻔한 것, 다음은 반복)는 수치 없이도 성립하고, 그중 일부는 오늘 바로 적용해도 안전하다. 반대로 그대로 옮기면 다치는 항목도 섞여 있다. 그 둘을 가르는 것이 이 글의 목적이다.
 
-관련 배경은 [[컨텍스트-엔지니어링]]과 [[ai-엔지니어링-4계층]]에 있으니 여기서는 다시 설명하지 않는다. 참고로 원문이 "context engineering"이라는 표현에 거는 링크는 Anthropic의 "Effective context engineering for AI agents"인데, 우리 [[컨텍스트-엔지니어링]] 노트가 근거로 쓴 바로 그 문서다. 같은 계보의 후속편으로 읽으면 된다.
+관련 배경은 [[컨텍스트-엔지니어링]]과 [[ai-엔지니어링-4계층]]에 있으니 여기서는 다시 설명하지 않는다. 참고로 원문이 "context engineering"이라는 표현에 거는 링크는 Anthropic의 "Effective context engineering for AI agents"인데, 우리 [[컨텍스트-엔지니어링]] 노트가 근거로 쓴 바로 그 문서다.[^anthropic-com-effective-context-engineer] 같은 계보의 후속편으로 읽으면 된다.
 
 ## 원문이 정확히 무엇에 대해 말했나
 
@@ -92,7 +111,7 @@ date: 2026-08-02
    - 체크인된 `CLAUDE.md`에서 Claude가 코드베이스만 봐도 유추할 수 있는 내용을 잘라낸다. 디렉터리 구조·의존성 목록·아키텍처 개요 같은 절이다. 함정과 근거, 도구 기본값과 다른 관례는 남긴다(이 트림은 Claude Code v2.1.206 이상에서만 동작한다).
    - 남는 상시 로드 지침은 스킬과, 필요할 때 로드되는 중첩 `CLAUDE.md`로 옮긴다.
 
-   삭제 판단을 사람이 쥐라는 권고는 이 도구의 설계와도 맞아떨어진다. 문서는 `/doctor`가 "Reports findings first and asks for confirmation before changing anything"이라고 못 박는다. 먼저 재보고, 무엇을 지울지는 확인을 거친 뒤에 정한다.
+   삭제 판단을 사람이 쥐라는 권고는 이 도구의 설계와도 맞아떨어진다. 문서는 `/doctor`가 "Reports findings first and asks for confirmation before changing anything"이라고 못 박는다.[^code-claude-com-commands] 먼저 재보고, 무엇을 지울지는 확인을 거친 뒤에 정한다.
 2. **충돌부터 지운다.** 한 요청에 실리는 모든 텍스트(시스템 프롬프트·`CLAUDE.md`·활성 스킬·사용자 지시)를 실제 로드 순서대로 늘어놓고 서로 부딪히는 문장을 찾는다. 가장 싼 삭제다.
 3. **뻔한 것을 지운다.** 에이전트가 `ls` 한 번, `grep` 한 번으로 확인할 사실은 뺀다. 그 자리를 gotcha로 채운다.
 4. **반복을 도구 설명으로 옮긴다.** 같은 지시가 시스템 프롬프트와 도구 설명에 이중으로 있으면 도구 쪽만 남긴다.
@@ -122,3 +141,7 @@ date: 2026-08-02
 - [Claude Code — Slash commands 문서](https://code.claude.com/docs/en/commands) — `/doctor`의 동작 범위(미사용 스킬·MCP·플러그인 점검, `CLAUDE.md` 중복 제거·트림·이관), "Reports findings first and asks for confirmation before changing anything", v2.1.206 버전 조건의 출처(2026-08-02 확인).
 
 **세션 관찰의 방법**: 이 글을 작성한 Claude Code 세션에서 시스템 프롬프트에 노출된 문자열을 직접 확인했다. 환경은 macOS, `claude --version` → `2.1.220`, 모델 Claude Opus 5(1M), 확인 시점 2026-08-02. 다른 버전·플랜에서는 다를 수 있다.
+
+[^claude-com-the-new-rules-of-context-engi]: Thariq Shihipar(Anthropic), "The new rules of context engineering for Claude 5 generation models" (2026-07-24) — 이 글의 1차 소스. [claude.com/blog](https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models)
+[^anthropic-com-effective-context-engineer]: Anthropic, "Effective context engineering for AI agents" — 원문이 "context engineering"에 거는 링크. [anthropic.com/engineering](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)
+[^code-claude-com-commands]: Claude Code Docs, "Slash commands" — `/doctor`의 동작 범위와 확인 절차 문구. [code.claude.com/docs](https://code.claude.com/docs/en/commands)

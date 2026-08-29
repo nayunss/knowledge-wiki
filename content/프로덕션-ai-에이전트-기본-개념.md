@@ -4,11 +4,51 @@ type: 개념
 description: "O'Reilly 'AI Agents: The Definitive Guide' 코드 저장소를 읽고, LLM에서 에이전트로·프로토타입에서 프로덕션까지 필요한 기본 개념을 재구성·검증한 정리"
 tags: [ai-agents, langgraph, mcp, 평가, 거버넌스, 프로덕션]
 resource: https://github.com/Nicolepcx/ai-agents-the-definitive-guide
+sources:
+  - id: github-com-ai-agents-the-definitive-guid
+    resource: https://github.com/Nicolepcx/ai-agents-the-definitive-guide
+    title: "AI Agents: The Definitive Guide"
+  - id: modelcontextprotocol-io
+    resource: https://modelcontextprotocol.io/
+    title: MCP
+  - id: a2a-protocol-org
+    resource: https://a2a-protocol.org/latest/
+    title: A2A
+  - id: openpipe-art
+    resource: https://github.com/OpenPipe/ART
+    title: ART / RULER
+  - id: arxiv-2503.04412
+    resource: https://arxiv.org/abs/2503.04412
+    title: AB-MCTS / TreeQuest
+  - id: langchain-deepagents
+    resource: https://github.com/langchain-ai/deepagents
+    title: deepagents
+  - id: e2b-dev
+    resource: https://e2b.dev/
+    title: E2B
+  - id: github-com-monty
+    resource: https://github.com/pydantic/monty
+    title: Monty
+  - id: arxiv-2505.03574
+    resource: https://arxiv.org/abs/2505.03574
+    title: LlamaFirewall
+  - id: owasp-agentic-top10-2026
+    resource: https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/
+    title: OWASP Top 10 for Agentic Applications (2026)
+  - id: trydeepteam
+    resource: https://www.trydeepteam.com/
+    title: DeepTeam
+  - id: 567-labs-instructor
+    resource: https://github.com/567-labs/instructor
+    title: Instructor
+  - id: arxiv-2602.23166
+    resource: https://arxiv.org/abs/2602.23166
+    title: AgentVista
 ---
 
 # 프로덕션 AI 에이전트의 기본 개념
 
-O'Reilly 책 *AI Agents: The Definitive Guide*의 공개 코드 저장소(챕터별 Jupyter 노트북 35개)를 읽고, 거기서 다루는 개념 지도를 **직접 재서술**한 노트다. 책 본문이 아니라 코드 노트북의 개념·사용 도구만 뽑아 정리했고, 등장하는 프레임워크·주장·수치는 문서 끝의 독립 출처로 따로 검증했다. 표현이 아니라 뼈대만 가져왔다.
+O'Reilly 책 *AI Agents: The Definitive Guide*의 공개 코드 저장소(챕터별 Jupyter 노트북 35개)를 읽고, 거기서 다루는 개념 지도를 **직접 재서술**한 노트다.[^github-com-ai-agents-the-definitive-guid] 책 본문이 아니라 코드 노트북의 개념·사용 도구만 뽑아 정리했고, 등장하는 프레임워크·주장·수치는 문서 끝의 독립 출처로 따로 검증했다. 표현이 아니라 뼈대만 가져왔다.
 
 한 문장으로 요약하면, 이 책의 12장은 **"LLM 한 번 호출"에서 시작해 "무너지지 않는 프로덕션 에이전트 시스템"까지 가는 길**을 순서대로 깐다. 그 길에서 반복해 나오는 교훈이 하나 있다.
 
@@ -50,8 +90,8 @@ O'Reilly 책 *AI Agents: The Definitive Guide*의 공개 코드 저장소(챕터
 
 품질을 "손으로 짠 보상"이 아니라 학습·탐색으로 끌어올리는 기법들.
 
-- **RULER** — 여러 후보 궤적을 상대적으로 순위 매기는 LLM 심판(OpenPipe ART의 일부). 정답 라벨이나 수제 보상 함수 없이 "이 중 뭐가 더 나은가"만 물어 강화학습·선호 워크플로에 쓴다.
-- **AB-MCTS / TreeQuest** — 몬테카를로 트리 탐색으로 답을 반복 개선한다. "더 깊이 파기(refine)"와 "더 넓게 다시 뽑기(regenerate)" 사이를 적응적으로 저울질하는 추론시(inference-time) 스케일링. (Sakana AI)
+- **RULER** — 여러 후보 궤적을 상대적으로 순위 매기는 LLM 심판(OpenPipe ART의 일부). 정답 라벨이나 수제 보상 함수 없이 "이 중 뭐가 더 나은가"만 물어 강화학습·선호 워크플로에 쓴다.[^openpipe-art]
+- **AB-MCTS / TreeQuest** — 몬테카를로 트리 탐색으로 답을 반복 개선한다. "더 깊이 파기(refine)"와 "더 넓게 다시 뽑기(regenerate)" 사이를 적응적으로 저울질하는 추론시(inference-time) 스케일링. (Sakana AI)[^arxiv-2503.04412]
 - **ART + RULER 강화학습** — 실제로 로컬 모델을 강화튜닝한다. 딱딱한 정답 검사와 부드러운 RULER 품질 신호를 섞어 보상으로 쓴다.
 
 ### 4장. 모델 능력과 최적화
@@ -66,17 +106,17 @@ O'Reilly 책 *AI Agents: The Definitive Guide*의 공개 코드 저장소(챕터
 
 - **Pydantic 계약** — 시스템 경계마다 타입 계약을 명시해, 제공자(provider)별 JSON 차이나 타입 불일치를 하류로 전파되기 전에 경계에서 차단한다. 실패 시 자가 치유(그래프 refine 노드 또는 Instructor 자동 재시도)로 복구한다.
 - **Lusser의 법칙 (곱셈 신뢰성 법칙)** — 직렬 시스템의 성공률은 각 단계 성공률의 **곱**이다. 그래서 에이전트를 길게 이으면 정확도가 빠르게 무너진다. 해법은 경계마다 검증을 넣는 것. 이건 로버트 루서가 1950년대 로켓 신뢰성에서 정립한 실제 공학 원리다.
-- **MCP (Model Context Protocol)** — 도구를 에이전트 코드에서 분리하는 범용 어댑터. 서버가 도구를 노출하고 클라이언트가 소비하며, 거버넌스는 모델이 아니라 서버 경계에서 강제한다. (Anthropic, 2024)
-- **deep agents** — 계획·서브에이전트·가상 파일시스템을 갖춘 장기 실행 에이전트 하네스(LangChain, Claude Code에서 영감).
+- **MCP (Model Context Protocol)** — 도구를 에이전트 코드에서 분리하는 범용 어댑터. 서버가 도구를 노출하고 클라이언트가 소비하며, 거버넌스는 모델이 아니라 서버 경계에서 강제한다. (Anthropic, 2024)[^modelcontextprotocol-io]
+- **deep agents** — 계획·서브에이전트·가상 파일시스템을 갖춘 장기 실행 에이전트 하네스(LangChain, Claude Code에서 영감).[^langchain-deepagents]
 
 ### 6장. 안전한 실행과 도구 거버넌스
 
 "어떤 도구가 도는가"와 "어떻게 도는가"를 통제한다.
 
-- **A2A 거버넌스 층** — 에이전트와 도구 사이에 강제 층을 끼운다. 모든 외부 접근이 하나의 `governed_call()`(기본 거부, fail-closed)을 통과한다. 허용목록·예산 한도·인자 게이트·연결/실행 분리·사람 승인·감사 로그의 여섯 장치. (A2A는 Google이 만든 에이전트 간 프로토콜)
+- **A2A 거버넌스 층** — 에이전트와 도구 사이에 강제 층을 끼운다. 모든 외부 접근이 하나의 `governed_call()`(기본 거부, fail-closed)을 통과한다. 허용목록·예산 한도·인자 게이트·연결/실행 분리·사람 승인·감사 로그의 여섯 장치. (A2A는 Google이 만든 에이전트 간 프로토콜)[^a2a-protocol-org]
 - **코드 모드 (programmatic tool calling)** — 도구를 한 번에 하나씩 부르는 대신, 모델이 여러 도구 호출을 오케스트레이션하는 파이썬 프로그램 하나를 짠다. 반복·정렬·필터 같은 제어 흐름이 코드에 살고, 중간 결과는 샌드박스에 남아 왕복이 줄고 싸진다.
-- **Monty** — 그 코드를 가두는 경계. 파일시스템·네트워크·임포트·호스트 전역을 기본 거부하는 최소 파이썬 인터프리터(Rust 작성, Pydantic). 샌드박스가 없으면 프롬프트 인젝션이 곧 원격 코드 실행이 된다는 걸 보여준다.
-- **E2B** — 에이전트가 생성한 코드를 격리된 클라우드 샌드박스(마이크로 VM)에서 돌린다. 세션마다 샌드박스 하나씩, 병렬 격리가 프로덕션 패턴.
+- **Monty** — 그 코드를 가두는 경계. 파일시스템·네트워크·임포트·호스트 전역을 기본 거부하는 최소 파이썬 인터프리터(Rust 작성, Pydantic).[^github-com-monty] 샌드박스가 없으면 프롬프트 인젝션이 곧 원격 코드 실행이 된다는 걸 보여준다.
+- **E2B** — 에이전트가 생성한 코드를 격리된 클라우드 샌드박스(마이크로 VM)에서 돌린다. 세션마다 샌드박스 하나씩, 병렬 격리가 프로덕션 패턴.[^e2b-dev]
 
 ## 국면 C — 배포와 하드닝 (7장)
 
@@ -91,13 +131,13 @@ O'Reilly 책 *AI Agents: The Definitive Guide*의 공개 코드 저장소(챕터
 ### 8장. 기초 평가와 관측
 
 - **평가 하네스** — 시나리오 구성 → 제한 동시성 비동기 생성 → 배치 채점(LLM 심판 + 결정적 검사) → 위반 우선 리뷰 → CSV 내보내기. 좋은 시나리오는 페르소나·감정 상태·다중 턴 흐름·명시적 스트레스 차원(긴급·모호·좌절·지식 불일치·적대적 의도)을 담는다. CI/CD에서 임계값 게이트로 승격을 막는다.
-- **적대적 평가** — 도구 예산·승인 검사·명시적 차단 같은 하드 제약을 런타임에 건 에이전트를, <strong>OWASP Top 10 for Agentic Applications (2026)</strong>의 **ASI02: 도구 오용·악용** 항목으로 시험한다(DeepTeam 사용). 핵심 명제는 다시 이것 — 신뢰성은 모델이 아니라 오케스트레이션·제약에서 온다.
+- **적대적 평가** — 도구 예산·승인 검사·명시적 차단 같은 하드 제약을 런타임에 건 에이전트를, <strong>OWASP Top 10 for Agentic Applications (2026)</strong>의 **ASI02: 도구 오용·악용** 항목으로 시험한다(DeepTeam 사용).[^owasp-agentic-top10-2026][^trydeepteam] 핵심 명제는 다시 이것 — 신뢰성은 모델이 아니라 오케스트레이션·제약에서 온다.
 
 ### 9장. 맞춤·고급 평가
 
 - **관측 ≠ 평가** — LangSmith·Langfuse에 궤적을 남기는 건 시작일 뿐, 그 위에 외부 평가 파이프라인을 따로 얹는다. 대표 트레이스를 뽑아 하드 검사·루브릭·트레이스 심판 세 신호로 채점하고, 치명적 실패는 재생 가능한 벤치마크(JSONL)로 승격해 모델 교체 전에 비교한다.
 - **RULER의 상대 순위** — 트레이스별 점수를 보완해, 같은 시나리오의 여러 후보 답을 서로 견주어 약한 답을 골라낸다.
-- **AgentVista** — 멀티모달·장기·도구 상호작용 209과제의 초난도 벤치마크(HKUST-NLP). 최상위 모델도 30%를 넘기기 어렵다는 점이 "에이전트는 아직 멀었다"를 정직하게 보여준다.
+- **AgentVista** — 멀티모달·장기·도구 상호작용 209과제의 초난도 벤치마크(HKUST-NLP).[^arxiv-2602.23166] 최상위 모델도 30%를 넘기기 어렵다는 점이 "에이전트는 아직 멀었다"를 정직하게 보여준다.
 
 ### 10장. 에이전트 메모리
 
@@ -113,7 +153,7 @@ O'Reilly 책 *AI Agents: The Definitive Guide*의 공개 코드 저장소(챕터
 
 ### 12장. 위협 모델링
 
-- **LlamaFirewall** — 신뢰 맥락을 아는 계층형 프롬프트 보안 방화벽(Meta). 규칙 스캐너가 프롬프트 인젝션·유출·보이지 않는 유니코드·역할 조작을 잡고, 출처(신뢰 못 할 사용자 vs 개발자 vs 도구 출력)에 따라 공격성을 조절한다. 규칙을 피해가는 의역 공격은 의미 기반 LLM 심판 층이 잡되, 명백히 양성·악성인 입력은 규칙이 처리하고 **애매한 것만** 모델로 에스컬레이션해 호출을 아낀다.
+- **LlamaFirewall** — 신뢰 맥락을 아는 계층형 프롬프트 보안 방화벽(Meta).[^arxiv-2505.03574] 규칙 스캐너가 프롬프트 인젝션·유출·보이지 않는 유니코드·역할 조작을 잡고, 출처(신뢰 못 할 사용자 vs 개발자 vs 도구 출력)에 따라 공격성을 조절한다. 규칙을 피해가는 의역 공격은 의미 기반 LLM 심판 층이 잡되, 명백히 양성·악성인 입력은 규칙이 처리하고 **애매한 것만** 모델로 에스컬레이션해 호출을 아낀다.
 
 ## 관통하는 원칙
 
@@ -175,3 +215,16 @@ O'Reilly 책 *AI Agents: The Definitive Guide*의 공개 코드 저장소(챕터
 - Instructor — Jason Liu (567-labs).
 - 서빙: PagedAttention(vLLM) · RadixAttention(SGLang) · 연속 배칭(Orca, OSDI'22 원조 / TGI 구현).
 - AgentVista — HKUST-NLP, arXiv:2602.23166.
+
+[^github-com-ai-agents-the-definitive-guid]: *AI Agents: The Definitive Guide* 공개 코드 저장소. [github.com/Nicolepcx/ai-agents-the-definitive-guide](https://github.com/Nicolepcx/ai-agents-the-definitive-guide)
+[^modelcontextprotocol-io]: MCP — Model Context Protocol 공식 사이트. [modelcontextprotocol.io](https://modelcontextprotocol.io/)
+[^a2a-protocol-org]: A2A — Agent2Agent Protocol 공식 문서. [a2a-protocol.org](https://a2a-protocol.org/latest/)
+[^openpipe-art]: ART / RULER — OpenPipe, Agent Reinforcement Trainer. [github.com/OpenPipe/ART](https://github.com/OpenPipe/ART)
+[^arxiv-2503.04412]: AB-MCTS / TreeQuest — Sakana AI. [arXiv 2503.04412](https://arxiv.org/abs/2503.04412)
+[^langchain-deepagents]: deepagents — LangChain. [github.com/langchain-ai/deepagents](https://github.com/langchain-ai/deepagents)
+[^github-com-monty]: Monty — Pydantic. [github.com/pydantic/monty](https://github.com/pydantic/monty)
+[^e2b-dev]: E2B — 격리 클라우드 샌드박스. [e2b.dev](https://e2b.dev/)
+[^arxiv-2505.03574]: LlamaFirewall — Meta PurpleLlama. [arXiv 2505.03574](https://arxiv.org/abs/2505.03574)
+[^owasp-agentic-top10-2026]: OWASP Top 10 for Agentic Applications (2026) — OWASP GenAI Security Project. [genai.owasp.org](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/)
+[^trydeepteam]: DeepTeam — Confident AI. [trydeepteam.com](https://www.trydeepteam.com/)
+[^arxiv-2602.23166]: AgentVista — HKUST-NLP. [arXiv 2602.23166](https://arxiv.org/abs/2602.23166)

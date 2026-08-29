@@ -4,11 +4,39 @@ type: 도구
 description: kinetics.colorion.co를 소스 수준에서 분석한다. 슬라이더는 히어로의 공 하나만 움직이고 117개 스니펫은 고정 이징이다. 그런데 그 실체가 간판보다 흥미롭다.
 tags: [프론트엔드, 애니메이션, css, 프롬프트]
 resource: https://kinetics.colorion.co
+sources:
+  - id: kinetics-colorion-co
+    resource: https://kinetics.colorion.co
+    title: Kinetics 사이트 (히어로 카피·117개 카드·코드 패널)
+  - id: github-com-kinetics
+    resource: https://github.com/ckissi/kinetics
+    title: Kinetics 소스
+  - id: api-github-com-kinetics
+    resource: https://api.github.com/repos/ckissi/kinetics
+    title: GitHub API
+  - id: developer-mozilla-org-linear
+    resource: https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function/linear
+    title: CSS linear() 이징 함수
+  - id: web-platform-dx-github-io-linear-easing
+    resource: https://web-platform-dx.github.io/web-features-explorer/features/linear-easing/
+    title: CSS linear() 지원·Baseline (Widely available 2026-06-11; Chrome/Edge 113, Firefox 112, Safari 17.2)
+  - id: developer-chrome-com-css-linear-easing-f
+    resource: https://developer.chrome.com/docs/css-ui/css-linear-easing-function
+    title: CSS linear() 지원·Baseline (Widely available 2026-06-11; Chrome/Edge 113, Firefox 112, Safari 17.2)
+  - id: en-wikipedia-org-damping
+    resource: https://en.wikipedia.org/wiki/Damping
+    title: Damping
+  - id: docs-github-com-licensing-a-repository
+    resource: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository
+    title: Licensing a repository
+  - id: copyright-gov-copyright-and-artificial-i
+    resource: https://www.copyright.gov/ai/Copyright-and-Artificial-Intelligence-Part-2-Copyrightability-Report.pdf
+    title: "Copyright and Artificial Intelligence, Part 2: Copyrightability"
 ---
 
 ## 슬라이더를 움직여도 복사되는 코드는 바뀌지 않는다
 
-[Kinetics](https://kinetics.colorion.co)의 히어로는 이렇게 말한다. "stiffness와 damping을 튜닝하고, 그 CSS·React·AI 프롬프트를 복사해 앱에 그대로 넣어라. 당신은 추측이 아니라 튜닝된 스프링을 복사하는 것이다."
+[Kinetics](https://kinetics.colorion.co)의 히어로는 이렇게 말한다. "stiffness와 damping을 튜닝하고, 그 CSS·React·AI 프롬프트를 복사해 앱에 그대로 넣어라. 당신은 추측이 아니라 튜닝된 스프링을 복사하는 것이다."[^kinetics-colorion-co]
 
 솔깃한 약속이다. 그래서 슬라이더를 끝까지 밀고 스니펫을 열어봤다. 코드는 한 글자도 바뀌지 않았다.
 
@@ -73,7 +101,7 @@ print(len(decls), c.most_common())"
 
 즉 사이트 전체의 "스프링"은 사실상 **고정 오버슈트 베지어 딱 하나**다. 흔히 back-out으로 불리는 곡선이고, 제어점 y=1.56이 1을 넘으므로 목표값을 한 번 지나쳤다가 돌아온다. 물리 시뮬레이션이 아니라 물리처럼 보이는 모양을 손으로 그린 것이다. 그 하나마저 소수파다. 이펙트 CSS를 지배하는 이징은 `ease` 키워드(89회)다.
 
-세 파일 어디에도 CSS `linear()` 이징 함수는 쓰이지 않았다(0회). `linear()`는 여러 번 진동하며 잦아드는 진짜 스프링 곡선을 CSS만으로 근사하는 표준 수단이다. 값 목록으로 임의의 곡선을 찍는다. 게다가 실험적 도구도 아니다 — Baseline "널리 사용 가능"(2026-06) 등급이고, Chrome/Edge 113·Firefox 112·Safari 17.2 이상에서 돌아간다. 이미 널리 쓸 수 있는 표준 도구를 두고 안 썼다는 뜻이다. 스프링을 표방하는 라이브러리가 스프링을 CSS로 표현하는 그 도구를 쓰지 않는다는 건, 이 프로젝트의 관심이 물리가 아니라 룩앤필에 있다는 가장 정직한 증거다.
+세 파일 어디에도 CSS `linear()` 이징 함수는 쓰이지 않았다(0회). `linear()`는 여러 번 진동하며 잦아드는 진짜 스프링 곡선을 CSS만으로 근사하는 표준 수단이다. 값 목록으로 임의의 곡선을 찍는다.[^developer-mozilla-org-linear] 게다가 실험적 도구도 아니다 — Baseline "널리 사용 가능"(2026-06) 등급이고, Chrome/Edge 113·Firefox 112·Safari 17.2 이상에서 돌아간다.[^web-platform-dx-github-io-linear-easing][^developer-chrome-com-css-linear-easing-f] 이미 널리 쓸 수 있는 표준 도구를 두고 안 썼다는 뜻이다. 스프링을 표방하는 라이브러리가 스프링을 CSS로 표현하는 그 도구를 쓰지 않는다는 건, 이 프로젝트의 관심이 물리가 아니라 룩앤필에 있다는 가장 정직한 증거다.
 
 ### 사이트 자신의 설명도 어긋난다
 
@@ -81,7 +109,7 @@ print(len(decls), c.most_common())"
 
 > Spring-driven height with a single cubic-bezier that mimics **critically damped** motion.
 
-그런데 이 카드가 쓰는 값은 `cubic-bezier(0.34, 1.56, 0.64, 1)`, 오버슈트하는 곡선이다. 임계감쇠(critically damped, ζ=1)는 정의상 오버슈트 없이 가장 빨리 정착하는 경우다. 오버슈트하는 곡선을 임계감쇠의 모방이라 부르는 건 방향이 반대다. 저감쇠(underdamped, ζ<1)에 해당한다.
+그런데 이 카드가 쓰는 값은 `cubic-bezier(0.34, 1.56, 0.64, 1)`, 오버슈트하는 곡선이다. 임계감쇠(critically damped, ζ=1)는 정의상 오버슈트 없이 가장 빨리 정착하는 경우다.[^en-wikipedia-org-damping] 오버슈트하는 곡선을 임계감쇠의 모방이라 부르는 건 방향이 반대다. 저감쇠(underdamped, ζ<1)에 해당한다.
 
 재미있는 건, 같은 카드의 Prompt 탭이 정반대로 정확하다는 점이다. "gently overshoots before settling"이라고 적혀 있다. 자기 설명은 틀렸고, 프롬프트는 맞았다.
 
@@ -153,19 +181,19 @@ style={{ transition: 'height 0.5s cubic-bezier(0.34,1.56,0.64,1)' }}
 
 ## 7. CTO 체크: 라이선스가 없다
 
-가장 실무적인 경고를 마지막에 둔다. **이 저장소에는 라이선스가 없다.**
+가장 실무적인 경고를 마지막에 둔다. **이 저장소에는 라이선스가 없다.**[^api-github-com-kinetics]
 
 - GitHub API의 `license` 필드가 `null`이다: `curl -s https://api.github.com/repos/ckissi/kinetics | grep license`
 - 저장소 루트에 LICENSE 파일이 없다: `curl -s https://api.github.com/repos/ckissi/kinetics/contents/` → `[.claude, .gitattributes, .gitignore, README.md, astro.config.mjs, package-lock.json, package.json, public, src]`
 
-퍼블릭 저장소라는 사실은 사용 허가가 아니다. GitHub 문서는 라이선스 없는 저장소에 대해 "누구도 복제·배포·2차적저작물 작성을 할 수 없다(no one may reproduce, distribute, or create derivative works)"고 명시한다. 저작권이 저작자에게 그대로 남기 때문이다. 예외는 GitHub 이용약관이 허용하는 열람과 포크뿐이다. 복붙을 전제로 설계된 라이브러리에서 이건 사소한 흠이 아니라 구조적 결함이다. 사용자에게 "복사해 가라"고 말하면서 복사해도 된다는 근거는 주지 않는다.
+퍼블릭 저장소라는 사실은 사용 허가가 아니다. GitHub 문서는 라이선스 없는 저장소에 대해 "누구도 복제·배포·2차적저작물 작성을 할 수 없다(no one may reproduce, distribute, or create derivative works)"고 명시한다.[^docs-github-com-licensing-a-repository] 저작권이 저작자에게 그대로 남기 때문이다. 예외는 GitHub 이용약관이 허용하는 열람과 포크뿐이다. 복붙을 전제로 설계된 라이브러리에서 이건 사소한 흠이 아니라 구조적 결함이다. 사용자에게 "복사해 가라"고 말하면서 복사해도 된다는 근거는 주지 않는다.
 
-여기에 프로젝트 나이가 겹친다. 저장소는 2026-06-24에 만들어졌고, 이 글을 쓰는 시점에 갓 3주를 넘긴 프로젝트다(2026-07-17 재확인 기준 stars 213 / forks 24 / open issues 1, 최종 푸시 2026-07-14 — 별점은 변동값이니 스냅샷으로 읽어라).
+여기에 프로젝트 나이가 겹친다. 저장소는 2026-06-24에 만들어졌고, 이 글을 쓰는 시점에 갓 3주를 넘긴 프로젝트다(2026-07-17 재확인 기준 stars 213 / forks 24 / open issues 1, 최종 푸시 2026-07-14 — 별점은 변동값이니 스냅샷으로 읽어라).[^github-com-kinetics]
 
 실무 결론:
 
 1. **CSS/React 스니펫을 프로덕션에 복붙하려면** — 최소한 이슈로 라이선스를 문의하고 답을 받아라. 회사 코드베이스라면 법무 리스크를 감수할 이유가 없다.
-2. **Prompt 탭은 상대적으로 안전하다 — 단, 조건이 붙는다.** 프롬프트를 읽고 그 의도대로 내 코드를 AI로 생성하는 것은 코드 복제와 층위가 다르다. 미국 저작권청 2025년 보고서(Part 2)도 프롬프트만으로는 AI 산출물의 저작권을 주장하기 어렵다고 본다. 다만 두 가지를 혼동하면 안 된다. AI가 생성한 산출물과 Kinetics가 쓴 프롬프트 문장은 다른 층위다. 같은 보고서는 프롬프트 문장 자체가 충분히 창작적이면 독립 저작물로 보호될 수 있다고 본다. 즉 **프롬프트 텍스트를 그대로 붙여넣는 것 역시 그 텍스트의 복제**다. 안전한 건 읽고 내 말로 다시 쓰는 쪽이다.
+2. **Prompt 탭은 상대적으로 안전하다 — 단, 조건이 붙는다.** 프롬프트를 읽고 그 의도대로 내 코드를 AI로 생성하는 것은 코드 복제와 층위가 다르다. 미국 저작권청 2025년 보고서(Part 2)도 프롬프트만으로는 AI 산출물의 저작권을 주장하기 어렵다고 본다.[^copyright-gov-copyright-and-artificial-i] 다만 두 가지를 혼동하면 안 된다. AI가 생성한 산출물과 Kinetics가 쓴 프롬프트 문장은 다른 층위다. 같은 보고서는 프롬프트 문장 자체가 충분히 창작적이면 독립 저작물로 보호될 수 있다고 본다. 즉 **프롬프트 텍스트를 그대로 붙여넣는 것 역시 그 텍스트의 복제**다. 안전한 건 읽고 내 말로 다시 쓰는 쪽이다.
 3. **레퍼런스로 쓰는 건 언제나 자유다.** 눈으로 보고 배우는 데 라이선스는 필요 없다.
 
 ## 마치며
@@ -187,3 +215,13 @@ Kinetics는 스프링 물리 라이브러리라는 간판을 달았지만, 스�
 - 임계감쇠(ζ=1, 오버슈트 없음)·저감쇠(ζ<1) 정의 — Wikipedia, "Damping": https://en.wikipedia.org/wiki/Damping
 - 라이선스 없는 퍼블릭 저장소의 지위 — GitHub Docs, "Licensing a repository": https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository
 - 프롬프트와 저작권 — U.S. Copyright Office, *Copyright and Artificial Intelligence, Part 2: Copyrightability* (2025): https://www.copyright.gov/ai/Copyright-and-Artificial-Intelligence-Part-2-Copyrightability-Report.pdf
+
+[^kinetics-colorion-co]: Kinetics 사이트 — 히어로 카피·117개 카드·코드 패널. [kinetics.colorion.co](https://kinetics.colorion.co) (2026-07-17 재확인)
+[^github-com-kinetics]: Kinetics 소스 저장소. [github.com/ckissi/kinetics](https://github.com/ckissi/kinetics) (2026-07-17 재확인)
+[^api-github-com-kinetics]: GitHub API — `license` 필드와 저장소 루트 목록. [api.github.com/repos/ckissi/kinetics](https://api.github.com/repos/ckissi/kinetics) (2026-07-14 확인)
+[^developer-mozilla-org-linear]: CSS `linear()` 이징 함수 — MDN. [developer.mozilla.org](https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function/linear)
+[^web-platform-dx-github-io-linear-easing]: CSS `linear()` 지원·Baseline (Widely available 2026-06-11) — web-features explorer. [web-platform-dx.github.io](https://web-platform-dx.github.io/web-features-explorer/features/linear-easing/)
+[^developer-chrome-com-css-linear-easing-f]: CSS `linear()` 지원·브라우저 버전 — Chrome for Developers. [developer.chrome.com](https://developer.chrome.com/docs/css-ui/css-linear-easing-function)
+[^en-wikipedia-org-damping]: 임계감쇠(ζ=1)·저감쇠(ζ<1) 정의 — Wikipedia, "Damping". [en.wikipedia.org](https://en.wikipedia.org/wiki/Damping)
+[^docs-github-com-licensing-a-repository]: 라이선스 없는 퍼블릭 저장소의 지위 — GitHub Docs, "Licensing a repository". [docs.github.com](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository)
+[^copyright-gov-copyright-and-artificial-i]: U.S. Copyright Office, *Copyright and Artificial Intelligence, Part 2: Copyrightability* (2025). [copyright.gov (PDF)](https://www.copyright.gov/ai/Copyright-and-Artificial-Intelligence-Part-2-Copyrightability-Report.pdf)

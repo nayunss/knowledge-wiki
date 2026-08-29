@@ -4,6 +4,31 @@ type: 플레이북
 description: OpenKnowledge의 MCP·워크플로·스킬 심링크를 로컬 전용으로 쓰는 법(v0.29.1 실측). ok init부터 코드베이스 위키 생성·그래프 위생 복구·인제스트까지, 최신 버전 재확인이 필요한 경계와 기존 위키 파이프라인의 연결 방식을 설명한다.
 tags: [openknowledge, mcp, 에이전트, 지식관리]
 resource: https://openknowledge.ai/docs
+sources:
+  - id: openknowledge-ai-mcp
+    resource: https://openknowledge.ai/docs/reference/mcp
+    title: The surface is 19 tools
+  - id: openknowledge-ai-agentic-search
+    resource: https://openknowledge.ai/docs/reference/agentic-search
+    title: never replaces lexical search
+  - id: openknowledge-ai-configuration
+    resource: https://openknowledge.ai/docs/reference/configuration
+    title: OpenKnowledge Docs
+  - id: openknowledge-ai-skills
+    resource: https://openknowledge.ai/docs/features/skills
+    title: OpenKnowledge Docs
+  - id: openknowledge-ai-codebase-wiki
+    resource: https://openknowledge.ai/docs/workflows/codebase-wiki
+    title: OpenKnowledge Docs
+  - id: openknowledge-ai-karpathy-llm-wiki
+    resource: https://openknowledge.ai/docs/workflows/karpathy-llm-wiki
+    title: OpenKnowledge Docs
+  - id: openknowledge-ai-meeting-ingestion
+    resource: https://openknowledge.ai/docs/workflows/meeting-ingestion
+    title: OpenKnowledge Docs
+  - id: openknowledge-ai-claude-code
+    resource: https://openknowledge.ai/docs/integrations/claude-code
+    title: OpenKnowledge Docs
 ---
 
 앱을 깔았고, 첫 실행 다이얼로그를 수락했고, Claude Code·Claude Desktop·Codex 세 군데에 MCP 서버가 등록됐다. 그런데 Claude Code에서 "내 노트 검색해줘"라고 하면 아무 일도 일어나지 않는다. 고장이 아니다. **OpenKnowledge의 MCP 서버는 프로젝트 스코프로 동작하고, 아직 프로젝트가 하나도 없기 때문이다.**
@@ -89,13 +114,13 @@ terminal:
 
 `terminal.enabled`는 앱 소스상 `agentSettable:false`다. 에이전트가 스스로 켤 수 없고, 커밋되는 프로젝트 파일에도 놓을 수 없다. 적용 후 `ok config validate`로 병합 결과를 확인한다. (참고로 `telemetry.localSink.enabled`는 기본 `true`지만 egress가 아니다 — `.ok/local/`에 진단 로그를 쓸 뿐이고, `ok diagnose bundle`을 직접 돌리기 전까지 머신을 떠나지 않는다. 민감한 워크스페이스라면 꺼도 된다.)
 
-설정은 여러 층으로 병합된다 — 기본값 → 유저 → 프로젝트(`./.ok/config.yml`, git 공유) → 프로젝트-로컬(`./.ok/local/config.yml`) 순으로 뒤가 앞을 덮고, CLI 플래그가 최우선이다. 층별 우선순위를 외우기보다 `ok config validate`로 최종 병합값을 보는 편이 빠르다.
+설정은 여러 층으로 병합된다 — 기본값 → 유저 → 프로젝트(`./.ok/config.yml`, git 공유) → 프로젝트-로컬(`./.ok/local/config.yml`) 순으로 뒤가 앞을 덮고, CLI 플래그가 최우선이다.[^openknowledge-ai-configuration] 층별 우선순위를 외우기보다 `ok config validate`로 최종 병합값을 보는 편이 빠르다.
 
 ---
 
 ## 2. MCP 툴 20개를 "작업 단위"로 묶기
 
-툴 목록을 외울 필요는 없다. **네 가지 상황**에 각각 어떤 조합이 붙는지만 알면 된다. 툴 나열은 공식 레퍼런스에 있다.
+툴 목록을 외울 필요는 없다. **네 가지 상황**에 각각 어떤 조합이 붙는지만 알면 된다. 툴 나열은 공식 레퍼런스에 있다.[^openknowledge-ai-mcp]
 
 ### 탐색 — `search` → `exec` → `links`
 
@@ -131,7 +156,7 @@ links(kind=dead)                                              방금 쓴 글의 
 
 ## 3. 벡터 DB 없이 에이전틱 서치 쓰기
 
-**시맨틱을 켜지 않아도 되는 이유는 이 도구의 검색이 "한 번의 임베딩 조회"가 아니라 "루프"이기 때문이다.** 공식 레퍼런스의 표현을 그대로 옮기면, 에이전트는 *"searches, greps, and follows backlinks in a loop over live files that come back with their graph context attached"*. 질문을 한 번 임베딩해 고정된 청크를 뽑는 RAG와 설계가 다르다.
+**시맨틱을 켜지 않아도 되는 이유는 이 도구의 검색이 "한 번의 임베딩 조회"가 아니라 "루프"이기 때문이다.** 공식 레퍼런스의 표현을 그대로 옮기면, 에이전트는 *"searches, greps, and follows backlinks in a loop over live files that come back with their graph context attached"*.[^openknowledge-ai-agentic-search] 질문을 한 번 임베딩해 고정된 청크를 뽑는 RAG와 설계가 다르다.
 
 루프의 각 스텝은 MCP 툴 호출이고, 다음 행동은 모델이 정한다 — 검색할지, 읽을지, 백링크를 따라갈지, 질의를 다시 쓸지. 인덱스 역할은 **저자가 만든 구조**(링크·폴더·description)가 대신한다. 링크가 잘 걸린 위키에서는 이게 임베딩보다 정확하다. 사람이 "이 둘은 관련 있다"고 명시적으로 선언한 신호이기 때문이다.
 
@@ -151,7 +176,7 @@ links(kind=dead)                                              방금 쓴 글의 
 
 `workflow`는 **데이터를 반환하지 않는다.** 앱 소스의 툴 설명이 명시한다 — *"returns a procedural guide, not data. Use it when the work fits the layer."* 즉 에이전트가 "지금부터 이 절차를 따르라"는 지시문을 스스로 받아오는 툴이다. [[하네스-엔지니어링]] 관점에서는 **런타임에 로드되는 스킬**이나 마찬가지다.
 
-`kind`는 다섯 개고, 앞의 넷은 Karpathy식 3계층 지식베이스(`external-sources/` → `research/` → `articles/`)의 각 층에 대응한다.
+`kind`는 다섯 개고, 앞의 넷은 Karpathy식 3계층 지식베이스(`external-sources/` → `research/` → `articles/`)의 각 층에 대응한다.[^openknowledge-ai-karpathy-llm-wiki]
 
 | kind | 언제 | 산출 |
 |---|---|---|
@@ -167,7 +192,7 @@ links(kind=dead)                                              방금 쓴 글의 
 
 ## 5. 스킬 = 콘텐츠 (심링크 SSOT)
 
-이 도구에서 가장 [[하네스-엔지니어링]]스러운 기능. **스킬이 설정 파일이 아니라 위키 문서다.** 공식 문서 표현으로 *"A skill in OpenKnowledge is content, not a config file: authored in the WYSIWYG editor, versioned with your base, and symlinked into every editor from one source."*
+이 도구에서 가장 [[하네스-엔지니어링]]스러운 기능. **스킬이 설정 파일이 아니라 위키 문서다.** 공식 문서 표현으로 *"A skill in OpenKnowledge is content, not a config file: authored in the WYSIWYG editor, versioned with your base, and symlinked into every editor from one source."*[^openknowledge-ai-skills]
 
 동작은 이렇다.
 
@@ -191,7 +216,7 @@ ok skills manage --on   # .claude/skills 등을 OK 관리로 흡수, 원본 자�
 
 ### A. 코드베이스 위키 자동 생성 (`seed` → `wiki`)
 
-여기서 경로 함정을 하나 밟기 쉽다. `codebase-wiki` 팩은 **루트 아래에 `wiki/` 하위폴더를 깐다** — `wiki/OVERVIEW.md`, `wiki/architecture/`, `wiki/modules/`, `wiki/flows/`, `wiki/concepts/`, `wiki/guides/`, 그리고 감사 추적용 `wiki/log.md`. 그래서 `--content-dir`를 `docs/wiki`로 잡아두고 `ok seed`를 그냥 돌리면 산출물이 `./wiki/`에 떨어져 **인덱싱 대상 밖**이 된다. 에이전트가 자기가 만든 위키를 못 읽는다.
+여기서 경로 함정을 하나 밟기 쉽다. `codebase-wiki` 팩은 **루트 아래에 `wiki/` 하위폴더를 깐다** — `wiki/OVERVIEW.md`, `wiki/architecture/`, `wiki/modules/`, `wiki/flows/`, `wiki/concepts/`, `wiki/guides/`, 그리고 감사 추적용 `wiki/log.md`.[^openknowledge-ai-codebase-wiki] 그래서 `--content-dir`를 `docs/wiki`로 잡아두고 `ok seed`를 그냥 돌리면 산출물이 `./wiki/`에 떨어져 **인덱싱 대상 밖**이 된다. 에이전트가 자기가 만든 위키를 못 읽는다.
 
 `--root`로 맞춰준다.
 
@@ -253,7 +278,7 @@ consolidate the X research into a canonical article
 
 `articles/`로 승격되고 `status: canonical` + `supersedes:` 체인이 붙는다. **잠정본이 지워지지 않고 체인으로 남는 게 요점이다.** 나중에 "왜 이렇게 결론 냈지"를 되짚을 수 있다.
 
-회의록은 `meetings/<source>-<source_meeting_id>` 이름 규칙을 쓴다. 소스+회의ID가 중복 제거 키라서, 같은 회의를 다시 싱크해도 **새 문서가 생기지 않고 같은 문서를 덮어쓴다.** 규율 하나 — *"Keep the transcript verbatim. Notes and summaries are yours to edit; the transcript is the record."*
+회의록은 `meetings/<source>-<source_meeting_id>` 이름 규칙을 쓴다.[^openknowledge-ai-meeting-ingestion] 소스+회의ID가 중복 제거 키라서, 같은 회의를 다시 싱크해도 **새 문서가 생기지 않고 같은 문서를 덮어쓴다.** 규율 하나 — *"Keep the transcript verbatim. Notes and summaries are yours to edit; the transcript is the record."*
 
 ### D. Obsidian 볼트에 에이전트 붙이기
 
@@ -348,3 +373,11 @@ ok init --local-only --scope project --content-dir .
 - OpenKnowledge Docs — Meeting Ingestion workflow: https://openknowledge.ai/docs/workflows/meeting-ingestion (`meetings/<source>-<source_meeting_id>` 중복 제거 키, 트랜스크립트 원문 보존)
 - OpenKnowledge Docs — Claude Code integration: https://openknowledge.ai/docs/integrations/claude-code
 - 로컬 설치본 v0.29.1 (2026-07-11 실측. 2026-07-17 기준 최신은 v0.32.0 — 아래 출력물은 v0.29.1 기준이다) — `ok --help` / `ok init --help` / `ok seed --list-packs` / `ok seed --pack codebase-wiki --dry-run` / `ok migrate --help` / `ok skills --help` / `ok config --help` 출력, `cli/dist/config-schema.json`·`config.user.schema.json`(키별 `scope`·기본값), `cli/dist`의 MCP 툴 등록부·자동 승인 deny 목록(`delete`·`move`·`share_link`·`install`)·에디터별 승인 인자 배선, `~/.agents/skills/open-knowledge-discovery/SKILL.md`
+
+[^openknowledge-ai-mcp]: OpenKnowledge Docs — MCP Reference. [openknowledge.ai/docs/reference/mcp](https://openknowledge.ai/docs/reference/mcp)
+[^openknowledge-ai-agentic-search]: OpenKnowledge Docs — Agentic Search. [openknowledge.ai/docs/reference/agentic-search](https://openknowledge.ai/docs/reference/agentic-search)
+[^openknowledge-ai-configuration]: OpenKnowledge Docs — Configuration. [openknowledge.ai/docs/reference/configuration](https://openknowledge.ai/docs/reference/configuration)
+[^openknowledge-ai-skills]: OpenKnowledge Docs — Skills. [openknowledge.ai/docs/features/skills](https://openknowledge.ai/docs/features/skills)
+[^openknowledge-ai-codebase-wiki]: OpenKnowledge Docs — Codebase Wiki workflow. [openknowledge.ai/docs/workflows/codebase-wiki](https://openknowledge.ai/docs/workflows/codebase-wiki)
+[^openknowledge-ai-karpathy-llm-wiki]: OpenKnowledge Docs — Karpathy LLM Wiki workflow. [openknowledge.ai/docs/workflows/karpathy-llm-wiki](https://openknowledge.ai/docs/workflows/karpathy-llm-wiki)
+[^openknowledge-ai-meeting-ingestion]: OpenKnowledge Docs — Meeting Ingestion workflow. [openknowledge.ai/docs/workflows/meeting-ingestion](https://openknowledge.ai/docs/workflows/meeting-ingestion)

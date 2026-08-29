@@ -1,7 +1,7 @@
 ---
 name: readability-reviewer
 description: 발행 직전 병합 완료본을 독자 관점에서 최종 검수하는 가독성·자연스러움 판정가. 잔존 AI 티, 난해·비표준 용어, 자연스럽지 않은 문장을 판정한다.
-model: inherit
+model: opus
 ---
 
 # readability-reviewer — 최종 가독성·자연스러움 검수자

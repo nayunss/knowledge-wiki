@@ -4,13 +4,35 @@ type: 설계결정
 description: 종료 조건·증거 기반 검증·라우팅·멀티 에이전트의 경계를 중심으로 Avid의 에이전트 스택을 비판적으로 재구성한다.
 tags: [ai-agent, harness, evals, multi-agent]
 resource: https://x.com/Av1dlive/status/2076705482904101136
+sources:
+  - id: x-com-2076705482904101136
+    resource: https://x.com/Av1dlive/status/2076705482904101136
+    title: Avid, AI Agent Stack everyone must use with GPT 5.6 + Fable 5
+  - id: openai-com-gpt-5-6
+    resource: https://openai.com/index/gpt-5-6/
+    title: OpenAI, GPT-5.6
+  - id: anthropic-com-redeploying-fable-5
+    resource: https://www.anthropic.com/news/redeploying-fable-5
+    title: Anthropic, Redeploying Fable 5
+  - id: anthropic-com-building-c-compiler
+    resource: https://www.anthropic.com/engineering/building-c-compiler
+    title: Anthropic, Building a C compiler with a team of parallel Claudes
+  - id: arxiv-org-2601-07206
+    resource: https://arxiv.org/abs/2601.07206
+    title: LLMRouterBench
+  - id: arxiv-org-2604-02460
+    resource: https://arxiv.org/abs/2604.02460
+    title: Single-Agent LLMs Outperform Multi-Agent Systems on Multi-Hop Reasoning Under Equal Thinking Token Budgets
+  - id: arxiv-org-2605-01566
+    resource: https://arxiv.org/abs/2605.01566
+    title: Multi-Agent Reasoning Improves Compute Efficiency
 ---
 
 # AI 에이전트의 경쟁력은 모델이 아니라 통제 시스템에서 나온다
 
 더 강한 모델을 붙이면 더 믿을 만한 에이전트가 될까. 한 번의 답변은 좋아질 수 있다. 그러나 사람이 자리를 비운 뒤에도 비용을 제한하고, 실패를 드러내고, 증거가 없으면 완료를 거부하는 능력은 모델 크기만으로 생기지 않는다.
 
-Avid가 2026년 7월 공개한 에이전트 스택 가이드의 핵심은 특정 모델 조합이 아니다. **자율 실행의 품질은 모델을 둘러싼 종료 조건·검증·기록·권한 구조에서 결정된다.** 이 글은 그 주장을 실무에서 재사용할 수 있는 원칙으로 다시 정리하고, 그대로 받아들이기 어려운 수치와 일반화는 걷어낸다.
+Avid가 2026년 7월 공개한 에이전트 스택 가이드의 핵심은 특정 모델 조합이 아니다.[^x-com-2076705482904101136] **자율 실행의 품질은 모델을 둘러싼 종료 조건·검증·기록·권한 구조에서 결정된다.** 이 글은 그 주장을 실무에서 재사용할 수 있는 원칙으로 다시 정리하고, 그대로 받아들이기 어려운 수치와 일반화는 걷어낸다.
 
 ## 챗봇에서 루프로
 
@@ -82,9 +104,9 @@ Avid가 2026년 7월 공개한 에이전트 스택 가이드의 핵심은 특정
 + 에이전트 간 조정 비용
 ```
 
-OpenAI는 GPT-5.6을 Sol·Terra·Luna 세 계층으로 제공한다. 공개 당시 API 가격은 입력·출력 100만 토큰당 Sol 5·30달러, Terra 2.5·15달러, Luna 1·6달러다. 캐시 읽기에는 90% 할인이 적용된다. 반복되는 시스템 프롬프트와 도구 정의를 안정적인 접두부로 유지하는 일이 곧 비용 설계가 된 셈이다.
+OpenAI는 GPT-5.6을 Sol·Terra·Luna 세 계층으로 제공한다.[^openai-com-gpt-5-6] 공개 당시 API 가격은 입력·출력 100만 토큰당 Sol 5·30달러, Terra 2.5·15달러, Luna 1·6달러다. 캐시 읽기에는 90% 할인이 적용된다. 반복되는 시스템 프롬프트와 도구 정의를 안정적인 접두부로 유지하는 일이 곧 비용 설계가 된 셈이다.
 
-그렇다고 라우터를 추가하면 자동으로 좋아지는 것은 아니다. LLMRouterBench는 40만 건이 넘는 사례와 33개 모델을 통합 평가했고, 일부 최신 방법과 상용 라우터가 단순 기준선을 안정적으로 넘지 못했다고 보고했다. 라우터도 제품이다. 자체 업무 데이터에서 가장 좋은 단일 모델보다 낫다는 사실을 먼저 증명해야 한다.
+그렇다고 라우터를 추가하면 자동으로 좋아지는 것은 아니다. LLMRouterBench는 40만 건이 넘는 사례와 33개 모델을 통합 평가했고, 일부 최신 방법과 상용 라우터가 단순 기준선을 안정적으로 넘지 못했다고 보고했다.[^arxiv-org-2601-07206] 라우터도 제품이다. 자체 업무 데이터에서 가장 좋은 단일 모델보다 낫다는 사실을 먼저 증명해야 한다.
 
 실무 순서는 다음과 같다.
 
@@ -100,9 +122,9 @@ OpenAI는 GPT-5.6을 Sol·Terra·Luna 세 계층으로 제공한다. 공개 당�
 
 에이전트 수를 늘린다고 시스템이 자동으로 더 똑똑해지지는 않는다. 각 에이전트가 같은 문서를 다시 읽고 결과를 요약해 전달하면 토큰 사용량과 정보 손실 지점만 늘어난다.
 
-동일한 추론 토큰 예산에서 다단계 추론을 비교한 2026년 연구에서는 단일 에이전트가 여러 멀티 에이전트 구조와 같거나 더 좋은 결과를 보였다. 반대로 다른 연구에서는 토론과 혼합 에이전트 구조가 일부 단일 에이전트 전략보다 계산 효율이 높았다. 과제와 비교 대상이 다르므로 어느 한쪽을 보편 법칙으로 읽으면 안 된다.
+동일한 추론 토큰 예산에서 다단계 추론을 비교한 2026년 연구에서는 단일 에이전트가 여러 멀티 에이전트 구조와 같거나 더 좋은 결과를 보였다.[^arxiv-org-2604-02460] 반대로 다른 연구에서는 토론과 혼합 에이전트 구조가 일부 단일 에이전트 전략보다 계산 효율이 높았다.[^arxiv-org-2605-01566] 과제와 비교 대상이 다르므로 어느 한쪽을 보편 법칙으로 읽으면 안 된다.
 
-멀티 에이전트가 강한 자리는 독립적인 하위 작업을 동시에 진행할 수 있을 때다. Anthropic은 16개 에이전트와 약 2,000회의 Claude Code 세션, 약 2만 달러의 API 비용으로 10만 줄 규모 C 컴파일러를 구축했다. 이것은 멀티 에이전트의 가능성을 보여주는 프로젝트 사례이지, 일반적인 생산성 배수를 증명하는 실험은 아니다.
+멀티 에이전트가 강한 자리는 독립적인 하위 작업을 동시에 진행할 수 있을 때다. Anthropic은 16개 에이전트와 약 2,000회의 Claude Code 세션, 약 2만 달러의 API 비용으로 10만 줄 규모 C 컴파일러를 구축했다.[^anthropic-com-building-c-compiler] 이것은 멀티 에이전트의 가능성을 보여주는 프로젝트 사례이지, 일반적인 생산성 배수를 증명하는 실험은 아니다.
 
 멀티 에이전트는 다음 조건에서 도입할 만하다.
 
@@ -181,3 +203,10 @@ abort_when:
 - [LLMRouterBench: A Massive Benchmark and Unified Framework for LLM Routing](https://arxiv.org/abs/2601.07206)
 - [Single-Agent LLMs Outperform Multi-Agent Systems on Multi-Hop Reasoning Under Equal Thinking Token Budgets](https://arxiv.org/abs/2604.02460)
 - [Multi-Agent Reasoning Improves Compute Efficiency: Pareto-Optimal Test-Time Scaling](https://arxiv.org/abs/2605.01566)
+
+[^x-com-2076705482904101136]: Avid, "AI Agent Stack everyone must use with GPT 5.6 + Fable 5". [x.com](https://x.com/Av1dlive/status/2076705482904101136) — 이 글이 재구성한 원 가이드.
+[^openai-com-gpt-5-6]: OpenAI, "GPT-5.6: Frontier intelligence that scales with your ambition". [openai.com](https://openai.com/index/gpt-5-6/) — 계층 구성과 공개 당시 API 가격.
+[^anthropic-com-building-c-compiler]: Anthropic, "Building a C compiler with a team of parallel Claudes". [anthropic.com](https://www.anthropic.com/engineering/building-c-compiler)
+[^arxiv-org-2601-07206]: "LLMRouterBench: A Massive Benchmark and Unified Framework for LLM Routing". [arXiv:2601.07206](https://arxiv.org/abs/2601.07206)
+[^arxiv-org-2604-02460]: "Single-Agent LLMs Outperform Multi-Agent Systems on Multi-Hop Reasoning Under Equal Thinking Token Budgets". [arXiv:2604.02460](https://arxiv.org/abs/2604.02460)
+[^arxiv-org-2605-01566]: "Multi-Agent Reasoning Improves Compute Efficiency: Pareto-Optimal Test-Time Scaling". [arXiv:2605.01566](https://arxiv.org/abs/2605.01566)

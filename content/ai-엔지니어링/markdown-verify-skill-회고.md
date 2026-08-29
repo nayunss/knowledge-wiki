@@ -5,11 +5,36 @@ description: 깨진 Markdown을 막는 검수 스킬을 만들고, 단일 원본
 tags: [agent-skills, markdown, codex, claude-code]
 resource: https://github.com/nayunss/md-verify-skill
 date: 2026-08-03
+sources:
+  - id: github-com-md-verify-skill
+    resource: https://github.com/nayunss/md-verify-skill
+    title: Markdown Verify Skill 저장소
+  - id: spec-commonmark-org-current
+    resource: https://spec.commonmark.org/current/
+    title: CommonMark Specification
+  - id: github-github-com-gfm
+    resource: https://github.github.com/gfm/
+    title: GitHub Flavored Markdown Specification
+  - id: developers-openai-com-plugins
+    resource: https://developers.openai.com/plugins/build/plugins
+    title: OpenAI, Package your plugin
+  - id: developers-openai-com-submission
+    resource: https://developers.openai.com/plugins/deploy/submission
+    title: OpenAI, Submit plugins
+  - id: code-claude-com-plugin-marketplaces
+    resource: https://code.claude.com/docs/en/plugin-marketplaces
+    title: Claude Code, Create and distribute a plugin marketplace
+  - id: code-claude-com-plugins
+    resource: https://code.claude.com/docs/en/plugins
+    title: Claude Code, Create plugins
+  - id: code-claude-com-plugins-reference
+    resource: https://code.claude.com/docs/en/plugins-reference
+    title: Claude Code, Plugins reference
 ---
 
 문서 생성은 성공했는데 결과를 열어 보면 강조 기호가 글자 그대로 남고, 줄바꿈은 붙고, 목록은 불릿이 아니라 평문으로 보였다. 내용은 맞아도 읽을 수 없는 Markdown은 완성품이 아니다. 그런데 이 문제를 매번 눈으로만 찾으면 같은 실수가 반복된다.
 
-그래서 Markdown Verify Skill을 만들었다. 출발점은 `**`와 `~~`, `<br>`, 목록과 개행 같은 눈에 띄는 파손이었다. 결과적으로 만든 것은 문법 팁 모음이 아니라 **정적 검사 → 사람의 문맥 판단 → 실제 렌더링 → 배포 환경 설치 검증**으로 이어지는 품질 게이트였다.
+그래서 Markdown Verify Skill을 만들었다.[^github-com-md-verify-skill] 출발점은 `**`와 `~~`, `<br>`, 목록과 개행 같은 눈에 띄는 파손이었다. 결과적으로 만든 것은 문법 팁 모음이 아니라 **정적 검사 → 사람의 문맥 판단 → 실제 렌더링 → 배포 환경 설치 검증**으로 이어지는 품질 게이트였다.
 
 ## 결론부터: 스킬의 본체보다 검증층과 배포 경계가 더 중요했다
 
@@ -32,7 +57,7 @@ date: 2026-08-03
 
 조사를 시작하자 범위가 넓어졌다. 닫히지 않은 코드 펜스는 문서 나머지를 코드로 삼킬 수 있고, 닫히지 않은 HTML 주석은 이후 내용을 숨길 수 있다. reference link와 footnote 정의가 빠질 수 있고, frontmatter가 닫히지 않으면 본문이 metadata로 오인될 수 있다. 중복 제목은 deep link anchor를 흔들고, raw HTML은 렌더러의 sanitizer와 tag filter에 따라 사라지거나 글자로 남는다.
 
-CommonMark와 GFM을 함께 본 이유가 여기 있다. CommonMark가 코드 펜스·목록·강조·링크·줄바꿈의 기본 파싱을 정한다면, GFM은 표·task list·취소선·autolink 같은 확장을 더한다. MDX, 수학, Mermaid, wiki link까지 가면 “유효한 Markdown”이라는 단일 판정만으로는 부족하다. **어디서 렌더링할 것인지가 문법의 일부다.**
+CommonMark와 GFM을 함께 본 이유가 여기 있다. CommonMark가 코드 펜스·목록·강조·링크·줄바꿈의 기본 파싱을 정한다면, GFM은 표·task list·취소선·autolink 같은 확장을 더한다.[^spec-commonmark-org-current][^github-github-com-gfm] MDX, 수학, Mermaid, wiki link까지 가면 “유효한 Markdown”이라는 단일 판정만으로는 부족하다. **어디서 렌더링할 것인지가 문법의 일부다.**
 
 ## 구현: 정적 검사기는 판사가 아니라 선별기다
 
@@ -78,11 +103,11 @@ review-markdown/
 
 ## 마켓플레이스: 같은 단어, 다른 계약
 
-Codex 쪽은 `.codex-plugin/plugin.json`으로 plugin identity를 정의하고, 저장소의 `.agents/plugins/marketplace.json`이 설치 가능한 plugin을 가리킨다. GitHub 원격 저장소를 격리된 설정에서 추가한 뒤 `md-verify` 설치와 활성 상태까지 확인했다.
+Codex 쪽은 `.codex-plugin/plugin.json`으로 plugin identity를 정의하고, 저장소의 `.agents/plugins/marketplace.json`이 설치 가능한 plugin을 가리킨다.[^developers-openai-com-plugins] GitHub 원격 저장소를 격리된 설정에서 추가한 뒤 `md-verify` 설치와 활성 상태까지 확인했다.
 
-Claude Code는 저장소 루트의 `.claude-plugin/marketplace.json`과 plugin 내부의 `.claude-plugin/plugin.json`을 읽는다. plugin skill은 namespace가 붙어 `/md-verify:review-markdown`으로 호출된다. 이쪽도 로컬 경로와 GitHub 원격 저장소 양쪽에서 marketplace 추가와 plugin 설치를 확인했다.
+Claude Code는 저장소 루트의 `.claude-plugin/marketplace.json`과 plugin 내부의 `.claude-plugin/plugin.json`을 읽는다.[^code-claude-com-plugin-marketplaces][^code-claude-com-plugins] plugin skill은 namespace가 붙어 `/md-verify:review-markdown`으로 호출된다.[^code-claude-com-plugins-reference] 이쪽도 로컬 경로와 GitHub 원격 저장소 양쪽에서 marketplace 추가와 plugin 설치를 확인했다.
 
-여기서 표현을 바로잡아야 한다. **이번에 완료한 것은 두 제품에서 설치 가능한 GitHub 기반 독립 마켓플레이스다.** OpenAI의 universal plugin directory와 Anthropic의 community marketplace에 공개 심사 등재된 상태는 아니다. 두 벤더 모두 공개 directory 제출에는 별도 심사 절차가 있다. repository marketplace가 배포 가능한 상태라는 것과 공식 catalog에 검색 노출된다는 것은 다르다.
+여기서 표현을 바로잡아야 한다. **이번에 완료한 것은 두 제품에서 설치 가능한 GitHub 기반 독립 마켓플레이스다.** OpenAI의 universal plugin directory와 Anthropic의 community marketplace에 공개 심사 등재된 상태는 아니다. 두 벤더 모두 공개 directory 제출에는 별도 심사 절차가 있다.[^developers-openai-com-submission] repository marketplace가 배포 가능한 상태라는 것과 공식 catalog에 검색 노출된다는 것은 다르다.
 
 이 구분은 사소하지 않다. “마켓플레이스 등록”이라고만 쓰면 독자는 공식 directory에서 검색될 것으로 기대한다. 배포 문서에는 custom marketplace, workspace 공유, public directory를 서로 다른 release channel로 써야 한다.
 
@@ -140,3 +165,12 @@ Python syntax, 회귀 테스트, skill manifest validator, plugin validator, Mar
 - [Claude Code, Create and distribute a plugin marketplace](https://code.claude.com/docs/en/plugin-marketplaces)
 - [Claude Code, Create plugins](https://code.claude.com/docs/en/plugins)
 - [Claude Code, Plugins reference](https://code.claude.com/docs/en/plugins-reference)
+
+[^github-com-md-verify-skill]: 이 회고가 다루는 스킬의 저장소. [github.com/nayunss/md-verify-skill](https://github.com/nayunss/md-verify-skill)
+[^spec-commonmark-org-current]: CommonMark 명세 — 코드 펜스·목록·강조·링크·줄바꿈의 기본 파싱 규칙. [spec.commonmark.org](https://spec.commonmark.org/current/)
+[^github-github-com-gfm]: GitHub Flavored Markdown 명세 — 표·task list·취소선·autolink 확장. [github.github.com/gfm](https://github.github.com/gfm/)
+[^developers-openai-com-plugins]: OpenAI, "Package your plugin" — Codex plugin manifest와 marketplace 파일 규격. [developers.openai.com](https://developers.openai.com/plugins/build/plugins)
+[^developers-openai-com-submission]: OpenAI, "Submit plugins" — 공개 디렉터리 제출 절차. [developers.openai.com](https://developers.openai.com/plugins/deploy/submission)
+[^code-claude-com-plugin-marketplaces]: Claude Code, "Create and distribute a plugin marketplace" — 저장소 루트 `.claude-plugin/marketplace.json`. [code.claude.com](https://code.claude.com/docs/en/plugin-marketplaces)
+[^code-claude-com-plugins]: Claude Code, "Create plugins" — plugin 내부 `.claude-plugin/plugin.json`. [code.claude.com](https://code.claude.com/docs/en/plugins)
+[^code-claude-com-plugins-reference]: Claude Code, "Plugins reference" — plugin skill의 namespace 호출 규칙. [code.claude.com](https://code.claude.com/docs/en/plugins-reference)

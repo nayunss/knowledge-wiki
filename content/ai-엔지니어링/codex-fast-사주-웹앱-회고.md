@@ -3,6 +3,19 @@ title: 프롬프트를 다듬지 않고 Codex fast로 사주 웹앱을 만든 �
 type: 회고
 description: 빈 저장소에서 사용자 API 키 방식의 사주 웹앱을 만든 과정을 돌아보고, 빠른 구현을 가능하게 한 조건과 남은 기술 부채를 정리한다.
 tags: [codex, 바이브코딩, 프론트엔드, 회고]
+sources:
+  - id: developers-openai-com-codex
+    resource: https://developers.openai.com/codex/
+    title: OpenAI Codex 문서
+  - id: console-upstage-ai-api-keys-api-chat
+    resource: https://console.upstage.ai/api-keys?api=chat
+    title: Upstage Console Chat API
+  - id: ai-google-dev-models
+    resource: https://ai.google.dev/gemini-api/docs/models
+    title: Gemini API 모델 목록
+  - id: ai-google-dev-interactions-overview
+    resource: https://ai.google.dev/gemini-api/docs/interactions-overview
+    title: Gemini Interactions API
 ---
 
 프롬프트를 길게 다듬지 않으면 결과도 거칠어질까. 이번에는 요구사항을 평범한 한국어로 전달하고, 별도의 프롬프트 최적화 과정 없이 작은 사주 웹앱을 만들었다. 실행 환경은 사용자가 지정한 Codex `gpt-5.6-sol`, `default fast`였다.
@@ -60,7 +73,7 @@ tags: [codex, 바이브코딩, 프론트엔드, 회고]
 
 코드 생성은 빨랐다. 폼 구조, 반응형 CSS, 제공자별 fetch, 상태 전환이 한 번에 만들어졌다. 작은 UI의 반복적인 배선에는 fast 설정이 충분했다는 것이 이번 한 건의 관찰이다.
 
-반대로 외부 API 모델명은 기억에 맡길 수 없었다. Upstage와 Gemini 모델은 바뀔 수 있으므로 공식 페이지를 확인했다. 코드가 빠르게 나오는 것과 현재 API를 정확히 아는 것은 다른 문제였다. 특히 모델 ID 같은 시간 민감 정보는 생성 속도와 무관하게 조회가 필요하다.
+반대로 외부 API 모델명은 기억에 맡길 수 없었다. Upstage와 Gemini 모델은 바뀔 수 있으므로 공식 페이지를 확인했다.[^console-upstage-ai-api-keys-api-chat][^ai-google-dev-models] 코드가 빠르게 나오는 것과 현재 API를 정확히 아는 것은 다른 문제였다. 특히 모델 ID 같은 시간 민감 정보는 생성 속도와 무관하게 조회가 필요하다.
 
 검증에서도 경계가 드러났다. `node --check`, `git diff --check`, HTML 파싱, 로컬 HTTP 응답은 통과했다. 하드코딩된 키와 브라우저 저장소 사용도 검색으로 확인했다. 그러나 자동화 브라우저 CLI가 없어 스크린샷 검증을 하지 못했고, 실제 유효 키로 AI 응답을 받는 종단 간 테스트도 하지 않았다. “실행된다”는 말의 범위는 여기까지다.
 
@@ -99,3 +112,5 @@ Codex `gpt-5.6-sol`, `default fast`는 이번 세션에서 사용자가 지정�
 - [Gemini API 모델 목록](https://ai.google.dev/gemini-api/docs/models)
 - [Gemini Interactions API](https://ai.google.dev/gemini-api/docs/interactions-overview)
 
+[^console-upstage-ai-api-keys-api-chat]: Upstage Console — Chat API 모델 목록(`solar-pro2`·`solar-pro3` 모델 ID 확인처). [console.upstage.ai](https://console.upstage.ai/api-keys?api=chat)
+[^ai-google-dev-models]: Google, Gemini API 모델 목록(`gemini-3.6-flash`·`gemini-3.7-flash` 모델 ID 확인처). [ai.google.dev](https://ai.google.dev/gemini-api/docs/models)

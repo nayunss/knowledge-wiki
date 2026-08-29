@@ -5,11 +5,30 @@ description: "AWS가 공개한 에이전트 거버넌스 언어 Dogwood를 원�
 tags: [ai-에이전트, 거버넌스, 정책언어, 런타임검증]
 resource: https://aws.amazon.com/ko/blogs/opensource/introducing-dogwood-runtime-verification-for-ai-agents/
 date: 2026-08-29
+sources:
+  - id: aws-amazon-com-introducing-dogwood-runti
+    resource: https://aws.amazon.com/ko/blogs/opensource/introducing-dogwood-runtime-verification-for-ai-agents/
+    title: 1차 출처
+  - id: github-com-dogwood
+    resource: https://github.com/dogwood-policy/dogwood
+    title: Dogwood 저장소 (README·CONTRIBUTING, Apache 2.0)
+  - id: github-com-07-api-and-workflow-md
+    resource: https://github.com/dogwood-policy/dogwood/blob/main/dogwood-docs/guide/07-api-and-workflow.md
+    title: Dogwood 언어 가이드
+  - id: github-com-12-cli-md
+    resource: https://github.com/dogwood-policy/dogwood/blob/main/dogwood-docs/guide/12-cli.md
+    title: Dogwood 언어 가이드
+  - id: aws-amazon-com-authoring-dogwood-policie
+    resource: https://aws.amazon.com/blogs/machine-learning/authoring-dogwood-policies-from-natural-language-in-amazon-bedrock-agentcore/
+    title: AgentCore에서의 집행 단위
+  - id: aws-agentcore-chose-cedar
+    resource: https://aws.amazon.com/blogs/security/why-policy-in-amazon-bedrock-agentcore-chose-cedar-for-securing-agentic-workflows/
+    title: Why Policy in Amazon Bedrock AgentCore chose Cedar for securing agentic workflows
 ---
 
 에이전트에게 "5천 달러 넘게 송금하지 마"라는 규칙을 써본 적이 있다면, 그 규칙이 왜 잘 안 써지는지도 알 것이다. 요청 하나만 보면 이번 송금은 2천 달러다. 문제없다. 문제는 이번이 세 번째라는 사실인데, 그건 요청 안에 안 적혀 있다.
 
-2026년 8월 6일 AWS가 오픈소스로 공개한 **Dogwood**는 정확히 그 빈칸을 겨냥한다. 원문의 표현으로 "에이전트와 그 도구를 위해 설계한 오픈소스 거버넌스 언어"다. 이 글의 결론부터 말하면, Dogwood의 중요한 대목은 새 연산자 네 개가 아니다.
+2026년 8월 6일 AWS가 오픈소스로 공개한 **Dogwood**는 정확히 그 빈칸을 겨냥한다. 원문의 표현으로 "에이전트와 그 도구를 위해 설계한 오픈소스 거버넌스 언어"다.[^aws-amazon-com-introducing-dogwood-runti] 이 글의 결론부터 말하면, Dogwood의 중요한 대목은 새 연산자 네 개가 아니다.
 
 ## 핵심 주장
 
@@ -270,15 +289,15 @@ when temporal {
 
 여기서 한 번 걸린다. 시간 조건은 정의상 시스템 상태(이벤트 로그)를 입력으로 받는다. 동일한 요청이 로그 상태에 따라 다른 판정을 내는 것이 이 언어의 존재 이유다. 4절의 트레이스가 바로 그 그림이다. 그러면 그 결정성은 어디로 갔나.
 
-답은 원문 밖, 함께 공개된 언어 가이드에 있다. Dogwood 정책은 Cedar로 **하강**(lowering)한다. 시간 조건은 `context.<id>` 슬롯이 되고, 시간 모니터가 이벤트 이력을 보고 그 슬롯을 채운 뒤, 최종 판정은 평범한 Cedar가 내린다. 가이드는 이걸 정확하게 적어뒀다. Dogwood는 값이 채워진 컨텍스트를 만들고, 최종 Cedar 판정은 정책 저장소가 내린다. 그러니 결정성은 사라진 게 아니라 자리를 옮겼다. **이제 그것은 요청 하나가 아니라 "요청 + 채워진 컨텍스트"에 대해 성립한다.**
+답은 원문 밖, 함께 공개된 언어 가이드에 있다. Dogwood 정책은 Cedar로 **하강**(lowering)한다. 시간 조건은 `context.<id>` 슬롯이 되고, 시간 모니터가 이벤트 이력을 보고 그 슬롯을 채운 뒤, 최종 판정은 평범한 Cedar가 내린다. 가이드는 이걸 정확하게 적어뒀다. Dogwood는 값이 채워진 컨텍스트를 만들고, 최종 Cedar 판정은 정책 저장소가 내린다.[^github-com-07-api-and-workflow-md] 그러니 결정성은 사라진 게 아니라 자리를 옮겼다. **이제 그것은 요청 하나가 아니라 "요청 + 채워진 컨텍스트"에 대해 성립한다.**
 
 바뀐 것은 결정성의 유무가 아니라 그것이 성립하는 단위이고, 그래서 감사와 재현에 남겨야 할 것도 함께 바뀐다. 예전에는 요청 하나를 다시 넣으면 같은 답이 나왔다. 이제는 요청만으로 부족하고 그 시점의 컨텍스트가 함께 있어야 한다. 가이드는 이 구분을 API 이름으로 못 박아뒀다.
 
 `is_self_contained_cedar()`는 하강 과정에서 시간·프로바이더 슬롯이 하나도 올라오지 않았을 때만 참이다. 거짓이면 내보낸 Cedar 산출물만으로는 그 정책의 의미를 재현할 수 없고, 가이드 주석의 표현으로 "재현하려면 Dogwood의 모니터가 필요하지 내보낸 Cedar만으로는 안 된다".
 
-재현 경로도 따로 마련돼 있다. CLI의 `dogwood replay`는 이벤트 트레이스 전체를 상태를 가진 인가 엔진에 흘려보내 판정 지점마다 결과를 찍는다. 가이드가 이걸 검증과 나란히 세운다 — 검증은 정책이 적법한지를 증명하고, `replay`는 그것이 실제로 무엇을 하는지를 보여준다.
+재현 경로도 따로 마련돼 있다. CLI의 `dogwood replay`는 이벤트 트레이스 전체를 상태를 가진 인가 엔진에 흘려보내 판정 지점마다 결과를 찍는다. 가이드가 이걸 검증과 나란히 세운다 — 검증은 정책이 적법한지를 증명하고, `replay`는 그것이 실제로 무엇을 하는지를 보여준다.[^github-com-12-cli-md]
 
-딸려오는 문제가 하나 더 있다. 저장소 문서는 Dogwood가 판정을 반환할 뿐 스스로 기록하지는 않는다고 적는다. 감사 로그는 도입하는 쪽이 인가 호출 주위에 직접 붙일 몫이다. 판정 하나를 나중에 해명해야 하는 조직이라면, 남겨야 할 것이 판정만이 아니라 **그 판정이 본 이력**이라는 뜻이다.
+딸려오는 문제가 하나 더 있다. 저장소 문서는 Dogwood가 판정을 반환할 뿐 스스로 기록하지는 않는다고 적는다.[^github-com-dogwood] 감사 로그는 도입하는 쪽이 인가 호출 주위에 직접 붙일 몫이다. 판정 하나를 나중에 해명해야 하는 조직이라면, 남겨야 할 것이 판정만이 아니라 **그 판정이 본 이력**이라는 뜻이다.
 
 ## 6. 원문이 스스로 밝힌 대가
 
@@ -298,7 +317,7 @@ AWS는 이 트레이드오프를 이렇게 정리한다. 에이전트 행동을 
 
 여기서부터는 원문에 답이 없는 항목들이다. 없다는 사실 자체가 결함이라는 뜻은 아니다. 소개 블로그의 분량 문제일 수 있다. 몇 개는 저장소와 언어 가이드가 이미 답을 갖고 있고, 그 답이 그대로 도입 조건이 된다. 나머지는 아직 열려 있다. 어느 쪽이든 도입을 검토하는 쪽에서는 이 목록이 곧 다음 회의의 안건이다.
 
-**① 이벤트 로그는 어디에 살고 얼마나 남는가.** 원문은 평가 비용이 로그 길이에 의존할 수 있다고만 말한다. 저장 위치, 보존 기간, 재시작·장애 조치 시의 거동에 대한 서술은 없다. 그런데 `within 1h`라는 창은 "지난 한 시간의 이벤트를 갖고 있다"는 전제 위에서만 뜻을 갖는다. 이 전제는 생각보다 쉽게 깨진다. 저장소 README가 직접 인정한다. 참조 인터프리터는 순수 인메모리라 크래시나 재시작 뒤에는 트레이스가 사라지고, 기본 시간 엔진에는 축출도 용량 상한도 없다.
+**① 이벤트 로그는 어디에 살고 얼마나 남는가.** 원문은 평가 비용이 로그 길이에 의존할 수 있다고만 말한다. 저장 위치, 보존 기간, 재시작·장애 조치 시의 거동에 대한 서술은 없다. 그런데 `within 1h`라는 창은 "지난 한 시간의 이벤트를 갖고 있다"는 전제 위에서만 뜻을 갖는다. 이 전제는 생각보다 쉽게 깨진다. 저장소 README가 직접 인정한다. 참조 인터프리터는 순수 인메모리라 크래시나 재시작 뒤에는 트레이스가 사라지고, 기본 시간 엔진에는 축출도 용량 상한도 없다.[^github-com-dogwood]
 
 이력이 사라진 직후의 판정은 어느 쪽으로 기울까. 두 경우를 갈라야 한다. 시간 엔진이 **오류를 내는** 경우는 안전하다. 언어 가이드는 외부 저장소에 닿지 못하는 것 같은 실패가 판정을 닫는다(fail closed)고 명시한다. 위험한 쪽은 엔진은 멀쩡한데 이력만 빈 경우다. 창이 비었으니 `forbid ... count_within > 5` 같은 가드는 조건이 성립하지 않아 **아무것도 막지 못한다.** 기본 거부 아래이므로 최종 허용 여부는 여전히 `permit`이 정하지만, 넓은 `permit` 위에 가드를 얹는 흔한 구성이라면 한도만 조용히 사라진 채 문이 열려 있는 셈이다.
 
@@ -306,7 +325,7 @@ AWS는 이 트레이드오프를 이렇게 정리한다. 에이전트 행동을 
 
 **② 멀티 에이전트에서 로그의 경계는 어디인가.** 원문은 예제를 단일 에이전트로 한정하면서도 이런 얽힘이 멀티 에이전트 환경에서도 생긴다고 언급하고, 로드맵에서는 여러 에이전트가 함께 이룬 묶음(앙상블) 차원의 성질을 목표로 든다. 그렇다면 창은 에이전트별인가, 세션별인가, 테넌트별인가. 원문 자체에는 답이 없지만 이후 자료에는 있다. 그리고 그 답이 하나가 아니라는 점이 핵심이다. **경계는 언어가 정하지 않는다. 실행 환경이 정하고, 두 쪽이 서로 반대로 정해져 있다.**
 
-관리형 쪽은 세션이다. AWS는 2026년 8월 20일 글에서 집행이 한 세션 안의 궤적을 평가한다고 명시한다. 세션을 가로질러 합산되는 한도는 정책 문장을 어떻게 고쳐 써도 얻을 수 없다는 뜻이다. 자체 호스팅 쪽 기본값은 정반대다. 저장소 README는 인가 엔진 인스턴스 하나가 이벤트 이력 하나를 감시하며 주체 사이에 격리도 분할도 없다고 적는다. `pin` 기능이 지정한 키로 분할된 *것처럼* 정책을 해석해주긴 하지만, 그렇다고 이력이 실제로 분할 저장된다는 뜻은 아니라고 README가 덧붙인다.
+관리형 쪽은 세션이다. AWS는 2026년 8월 20일 글에서 집행이 한 세션 안의 궤적을 평가한다고 명시한다.[^aws-amazon-com-authoring-dogwood-policie] 세션을 가로질러 합산되는 한도는 정책 문장을 어떻게 고쳐 써도 얻을 수 없다는 뜻이다. 자체 호스팅 쪽 기본값은 정반대다. 저장소 README는 인가 엔진 인스턴스 하나가 이벤트 이력 하나를 감시하며 주체 사이에 격리도 분할도 없다고 적는다. `pin` 기능이 지정한 키로 분할된 *것처럼* 정책을 해석해주긴 하지만, 그렇다고 이력이 실제로 분할 저장된다는 뜻은 아니라고 README가 덧붙인다.
 
 같은 언어인데 한쪽은 세션 단위로 미리 좁혀져 있고 다른 쪽은 전부가 한 통에 담긴다. 그러니 경계는 문법에서 읽어낼 수 있는 값이 아니라 배포자가 먼저 정해야 하는 값이다. 세션보다 넓은 한도가 필요하다면 그 지점이 첫 번째 설계 결정이 된다.
 
@@ -367,3 +386,9 @@ Dogwood를 쓰지 말아야 할 경우가 먼저다.
 - **Dogwood 언어 가이드** (저장소 동봉, `dogwood-docs/guide/`) — 하강(lowering)과 `context.<id>` 슬롯, `is_self_contained_cedar()`, 시간 엔진 실패 시 판정을 닫는다는 서술은 [07-api-and-workflow.md](https://github.com/dogwood-policy/dogwood/blob/main/dogwood-docs/guide/07-api-and-workflow.md), `dogwood replay`와 "검증 대 재생" 대비는 [12-cli.md](https://github.com/dogwood-policy/dogwood/blob/main/dogwood-docs/guide/12-cli.md).
 - **AgentCore에서의 집행 단위**: AWS, *Authoring Dogwood policies from natural language in Amazon Bedrock AgentCore*, AWS Machine Learning Blog, 2026-08-20. [원문 링크](https://aws.amazon.com/blogs/machine-learning/authoring-dogwood-policies-from-natural-language-in-amazon-bedrock-agentcore/) — 집행이 한 세션 안의 궤적을 평가한다는 서술(7절 ②)의 근거. 릴리스 2주 뒤 자연어 정책 저작 기능이 붙었음도 이 글이 알린다.
 - 원문이 참조로 든 관련 글: *Why Policy in Amazon Bedrock AgentCore chose Cedar for securing agentic workflows* — Cedar 선택 이유와 automated reasoning의 중요성을 다룬다고 원문이 소개한다. (본 글에서는 원문의 소개 문장만 근거로 삼았고 해당 글 자체는 확인하지 않았다.)
+
+[^aws-amazon-com-introducing-dogwood-runti]: Marc Brooker·Joseph Tassarotti·Jean-Baptiste Tristan, "Introducing Dogwood: runtime verification for AI agents", AWS Open Source Blog (2026-08-06) — 이 글의 1차 출처. 코드 예제·트레이스·인용은 전부 여기서 옮겼다. [aws.amazon.com](https://aws.amazon.com/ko/blogs/opensource/introducing-dogwood-runtime-verification-for-ai-agents/)
+[^github-com-dogwood]: Dogwood 저장소 README·CONTRIBUTING (Apache 2.0) — 참조 인터프리터의 인메모리 트레이스·축출 부재, 판정을 기록하지 않는다는 서술. [github.com/dogwood-policy/dogwood](https://github.com/dogwood-policy/dogwood)
+[^github-com-07-api-and-workflow-md]: Dogwood 언어 가이드 `07-api-and-workflow.md` — Cedar 하강과 `context.<id>` 슬롯, `is_self_contained_cedar()`, 시간 엔진 실패 시 판정을 닫는다는 서술. [github.com](https://github.com/dogwood-policy/dogwood/blob/main/dogwood-docs/guide/07-api-and-workflow.md)
+[^github-com-12-cli-md]: Dogwood 언어 가이드 `12-cli.md` — `dogwood replay`와 "검증 대 재생" 대비. [github.com](https://github.com/dogwood-policy/dogwood/blob/main/dogwood-docs/guide/12-cli.md)
+[^aws-amazon-com-authoring-dogwood-policie]: AWS, "Authoring Dogwood policies from natural language in Amazon Bedrock AgentCore", AWS ML Blog (2026-08-20) — 집행이 한 세션 안의 궤적을 평가한다는 서술. [aws.amazon.com](https://aws.amazon.com/blogs/machine-learning/authoring-dogwood-policies-from-natural-language-in-amazon-bedrock-agentcore/)

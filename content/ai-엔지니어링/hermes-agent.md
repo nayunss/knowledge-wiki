@@ -5,17 +5,27 @@ description: Nous Research의 Hermes Agent는 스스로 스킬을 만들고 세�
 tags: [ai-에이전트, 오케스트레이션, 오픈소스, claude-code]
 resource: https://github.com/nousresearch/hermes-agent
 date: 2026-07-10
+sources:
+  - id: x-com-2075132466751549632
+    resource: https://x.com/i/status/2075132466751549632
+    title: AI 자동화 제대로 하려면 Hermes를 알면 좋습니다
+  - id: github-com-hermes-agent
+    resource: https://github.com/nousresearch/hermes-agent
+    title: Nous Research, hermes-agent README
+  - id: hermes-agent-nousresearch-com-autonomous
+    resource: https://hermes-agent.nousresearch.com/docs/user-guide/skills/bundled/autonomous-ai-agents/autonomous-ai-agents-claude-code
+    title: Hermes 공식 문서, Claude Code 번들 스킬
 ---
 
 ## 도구를 늘리는 게 아니라 연결하는 문제
 
 Claude로 코드를 짜고, Codex로 리뷰하고, ChatGPT로 문서를 다듬는다. 창을 세 개 띄워 놓고 결과물을 손으로 복사해 나른다. 도구는 늘었는데 작업은 여전히 사람의 손을 거쳐 이어 붙는다.
 
-문제는 도구의 수가 아니라 도구 사이의 연결이다. AI들을 따로 쓰지 말고 하나의 작업 흐름 안에서 엮으라는 것 — 이것이 감자(@nowlovepan)의 X 포스트가 던진 문제의식이다. 그 연결을 맡는 계층으로 이 글은 Nous Research의 **Hermes Agent**를 본다.
+문제는 도구의 수가 아니라 도구 사이의 연결이다. AI들을 따로 쓰지 말고 하나의 작업 흐름 안에서 엮으라는 것 — 이것이 감자(@nowlovepan)의 X 포스트가 던진 문제의식이다.[^x-com-2075132466751549632] 그 연결을 맡는 계층으로 이 글은 Nous Research의 **Hermes Agent**를 본다.
 
 ## 핵심 주장: Hermes는 '연결 계층'이고, Claude Code 위임이 그 증거다
 
-Hermes Agent는 두 얼굴을 가진다. 하나는 대화를 거치며 스스로 스킬을 만들고 세션을 넘어 기억을 유지하는 **자가개선형 에이전트**다. 다른 하나는 텔레그램·슬랙·CLI 같은 채널과 300개 넘는 모델, 40여 개 도구를 단일 프로세스로 묶는 **오케스트레이션 게이트웨이**다.
+Hermes Agent는 두 얼굴을 가진다. 하나는 대화를 거치며 스스로 스킬을 만들고 세션을 넘어 기억을 유지하는 **자가개선형 에이전트**다. 다른 하나는 텔레그램·슬랙·CLI 같은 채널과 300개 넘는 모델, 40여 개 도구를 단일 프로세스로 묶는 **오케스트레이션 게이트웨이**다.[^github-com-hermes-agent]
 
 이 두 번째 얼굴을 가장 잘 보여주는 것이 Claude Code 위임이다. Hermes는 자기가 코딩을 직접 하는 대신, 코딩에 특화된 Claude Code CLI를 번들 스킬로 호출해 작업을 넘긴다. 이는 [[codex-교차모델-위임]]에서 다룬 교차 모델 위임 — 한 에이전트가 다른 모델·CLI에 하위 작업을 맡기는 패턴 — 의 또 다른 실사례다. "AI를 하나의 작업 안에서 연결하라"는 주장이 제품 구조로 굳어진 셈이다.
 
@@ -64,7 +74,7 @@ hermes doctor   # 진단
 
 ## Claude Code 위임: 두 가지 실행 모드
 
-여기서 앞의 주장이 코드로 드러난다. Hermes는 코딩 작업을 Claude Code CLI에 넘기며, 상황에 따라 두 모드를 고른다.
+여기서 앞의 주장이 코드로 드러난다. Hermes는 코딩 작업을 Claude Code CLI에 넘기며, 상황에 따라 두 모드를 고른다.[^hermes-agent-nousresearch-com-autonomous]
 
 | 구분 | 프린트 모드 (`claude -p`) | 대화형 PTY 모드 (tmux) |
 |------|--------------------------|------------------------|
@@ -111,3 +121,7 @@ Hermes는 만능이 아니다. 도입 전에 다음을 저울질해야 한다.
 - 감자(@nowlovepan), "AI 자동화 제대로 하려면 Hermes를 알면 좋습니다", X 포스트 — https://x.com/i/status/2075132466751549632 (원문 직접 접근 불가, Notion 저장본 기준)
 - Nous Research, hermes-agent README — https://github.com/nousresearch/hermes-agent
 - Hermes 공식 문서, Claude Code 번들 스킬 — https://hermes-agent.nousresearch.com/docs/user-guide/skills/bundled/autonomous-ai-agents/autonomous-ai-agents-claude-code
+
+[^x-com-2075132466751549632]: 감자(@nowlovepan), "AI 자동화 제대로 하려면 Hermes를 알면 좋습니다", X 포스트. [x.com](https://x.com/i/status/2075132466751549632) (원문 직접 접근 불가, Notion 저장본 기준)
+[^github-com-hermes-agent]: Nous Research, hermes-agent README — 아키텍처·컴포넌트·채널/모델/도구 생태계. [github.com/nousresearch/hermes-agent](https://github.com/nousresearch/hermes-agent)
+[^hermes-agent-nousresearch-com-autonomous]: Hermes 공식 문서, Claude Code 번들 스킬 — 프린트/PTY 두 모드, 에이전트 규칙 10가지, 비용 팁. [hermes-agent.nousresearch.com](https://hermes-agent.nousresearch.com/docs/user-guide/skills/bundled/autonomous-ai-agents/autonomous-ai-agents-claude-code)

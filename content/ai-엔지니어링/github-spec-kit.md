@@ -5,6 +5,22 @@ description: spec-kit v0.12.11을 실제로 설치해 뜯어본 기록. 워크�
 tags: [spec-driven-development, 코딩에이전트, sdlc, 도구비교]
 resource: https://github.com/github/spec-kit
 date: 2026-07-11
+sources:
+  - id: github-com-spec-kit
+    resource: https://github.com/github/spec-kit
+    title: 30+ AI coding agents
+  - id: github-github-io-spec-kit
+    resource: https://github.github.io/spec-kit/
+    title: GitHub, Spec Kit 공식 문서
+  - id: github-com-releases
+    resource: https://github.com/github/spec-kit/releases
+    title: GitHub, spec-kit 릴리스 노트
+  - id: papers-ssrn-com-papers-cfm-abstract-id-6
+    resource: https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6515898
+    title: Does Spec-Driven Development Reduce Defects? An Empirical Test of Industry Claims Across 119 Open-Source Repositories
+  - id: medium-com-is-your-safe-choice-burning-y
+    resource: https://medium.com/it-chronicles/is-your-safe-choice-burning-your-budget-1cfddf8782e4
+    title: Is Your Safe Choice Burning Your Budget?
 ---
 
 프롬프트 한 줄로 기능을 만들어달라고 하면 에이전트는 만들어준다. 문제는 그다음이다. 무엇을 만들기로 했는지가 어디에도 남지 않아서, 다음 세션의 에이전트는 어제의 결정을 모른다. spec-kit은 이 구멍을 "명세를 파일로 남기고, 파일을 게이트로 삼는다"로 메운다.
@@ -30,7 +46,7 @@ specify init my-project --integration claude
 # 기존 폴더 안에서: specify init --here --integration claude  (비어있지 않으면 --force)
 ```
 
-요구 사항은 Python 3.11+, git, uv(또는 pipx)다. `specify integration list`로 지원 에이전트를 확인한다 — 실측 목록에 Claude Code(`installed (default)`), Copilot, Gemini CLI, Codex CLI, Cursor, Cline, Devin, Amp, Auggie, Antigravity, Generic 등이 늘어서 있고, 공식 README는 이를 "30+ agents"로 표현한다.
+요구 사항은 Python 3.11+, git, uv(또는 pipx)다. `specify integration list`로 지원 에이전트를 확인한다 — 실측 목록에 Claude Code(`installed (default)`), Copilot, Gemini CLI, Codex CLI, Cursor, Cline, Devin, Amp, Auggie, Antigravity, Generic 등이 늘어서 있고, 공식 README는 이를 "30+ agents"로 표현한다.[^github-com-spec-kit]
 
 이 구조가 중요하다. **`specify` CLI는 전역에 한 번 설치되지만, 실제 규칙(스킬·템플릿·스크립트)은 프로젝트 디렉터리 안에 복사돼 들어간다.** 플러그인처럼 "설치하면 모든 프로젝트에서 쓰이는" 물건이 아니다. spec-kit을 쓰는 저장소는 자기 안에 자기 규칙을 통째로 들고 다닌다. 팀원이 clone하면 규칙도 따라오고, 규칙 수정은 커밋으로 남는다. 뒤에서 다룰 비교의 핵심 축이 여기서 갈린다.
 
@@ -67,7 +83,7 @@ CLI 자체도 단순한 스캐폴더를 넘어섰다. v0.12.11의 서브커맨�
 
 ### 워크플로
 
-기본 사이클은 이렇게 흐른다.
+기본 사이클은 이렇게 흐른다.[^github-github-io-spec-kit]
 
 ```
 constitution → specify → (clarify) → plan → (checklist) → tasks → (analyze) → implement
@@ -88,7 +104,7 @@ constitution → specify → (clarify) → plan → (checklist) → tasks → (a
 | 7.5 | `/speckit-converge` | `tasks.md`에 `## Phase N: Convergence` 추가 | 조건부 |
 | — | `/speckit-taskstoissues` | GitHub 이슈 동기화 | 선택 |
 
-**converge는 v0.11.2에 들어온 새 얼굴이다**(릴리스 노트: "feat: add /speckit.converge command"). SKILL.md의 정의를 그대로 옮기면 "현재 코드베이스를 해당 기능의 spec·plan·tasks에 비추어 평가하고, 남은 미구현 작업을 새 태스크로 tasks.md에 덧붙여 implement가 마저 끝내게 한다". 갭을 `missing / partial / contradicts / unrequested` 네 종류로 분류하고, **append-only**로만 쓴다 — spec.md·plan.md는 손대지 않고, 기존 태스크를 재작성·재번호·삭제하지 않으며, 다 만족됐으면 `tasks.md`를 **바이트 단위로 그대로 둔다**. 이게 왜 중요한가. SDD의 최대 약점은 "그린필드에서만 예쁜 방법론"이라는 것인데, converge는 **이미 코드가 있는 상태를 명세 기준으로 다시 수렴시키는** 진입로다. 브라운필드에 spec-kit을 얹을 때 첫 문장이 여기서 시작한다.
+**converge는 v0.11.2에 들어온 새 얼굴이다**(릴리스 노트: "feat: add /speckit.converge command").[^github-com-releases] SKILL.md의 정의를 그대로 옮기면 "현재 코드베이스를 해당 기능의 spec·plan·tasks에 비추어 평가하고, 남은 미구현 작업을 새 태스크로 tasks.md에 덧붙여 implement가 마저 끝내게 한다". 갭을 `missing / partial / contradicts / unrequested` 네 종류로 분류하고, **append-only**로만 쓴다 — spec.md·plan.md는 손대지 않고, 기존 태스크를 재작성·재번호·삭제하지 않으며, 다 만족됐으면 `tasks.md`를 **바이트 단위로 그대로 둔다**. 이게 왜 중요한가. SDD의 최대 약점은 "그린필드에서만 예쁜 방법론"이라는 것인데, converge는 **이미 코드가 있는 상태를 명세 기준으로 다시 수렴시키는** 진입로다. 브라운필드에 spec-kit을 얹을 때 첫 문장이 여기서 시작한다.
 
 ### "권고"가 아니라 "강제"인 지점들
 
@@ -125,7 +141,7 @@ constitution → specify → (clarify) → plan → (checklist) → tasks → (a
 
 **토큰과 시간.** 한 기능에 대해 헌법·명세·계획·태스크·체크리스트·분석 리포트가 각각 LLM 호출로 생성되고, 각 단계는 이전 산출물을 다시 읽는다. 코드 한 줄 쓰기 전에 문서 수천 줄이 만들어진다. 실측하면 스킬·템플릿 본문 합계가 약 151KB다. 스킬은 호출될 때만 로드되므로 전부가 매번 들어가진 않지만, `/speckit-specify` 한 번에 348줄짜리 스킬 + 131줄 템플릿 + 헌법이 함께 읽히고, 뒤 단계일수록 읽어야 할 선행 산출물이 늘어난다.
 
-오버헤드의 크기는? 같은 과제(스트리밍·세션을 갖춘 AI 챗 MVP)를 두 SDD 도구에 각각 물린 공개 벤치마크가 있다. spec-kit은 OpenSpec 대비 토큰을 약 두 배 썼다 — 1차 120,947 대 57,740, 2차 181,040 대 91,729. 어시스턴트 턴과 툴 콜도 더 많았다. 단서를 정확히 달자. 이건 **SDD 도구끼리의 비교이지 "그냥 시켰을 때"와의 대조가 아니다.** 무명세 베이스라인과 spec-kit을 붙인 공개 자료는 아직 없다. 그래도 이 숫자는 오버헤드가 실재하고 작지 않다는 하한선은 준다.
+오버헤드의 크기는? 같은 과제(스트리밍·세션을 갖춘 AI 챗 MVP)를 두 SDD 도구에 각각 물린 공개 벤치마크가 있다. spec-kit은 OpenSpec 대비 토큰을 약 두 배 썼다 — 1차 120,947 대 57,740, 2차 181,040 대 91,729.[^medium-com-is-your-safe-choice-burning-y] 어시스턴트 턴과 툴 콜도 더 많았다. 단서를 정확히 달자. 이건 **SDD 도구끼리의 비교이지 "그냥 시켰을 때"와의 대조가 아니다.** 무명세 베이스라인과 spec-kit을 붙인 공개 자료는 아직 없다. 그래도 이 숫자는 오버헤드가 실재하고 작지 않다는 하한선은 준다.
 
 **경직성.** 파이프라인은 기능 단위로 설계돼 있다. 오타 수정, 의존성 업그레이드, 로그 한 줄 추가에 헌법 체크와 태스크 분해를 통과시키는 것은 명백한 낭비다. 실무에선 "spec-kit 쓸 일"과 "그냥 할 일"을 사람이 매번 판단해야 하고, 이 판단 자체가 마찰이다.
 
@@ -137,7 +153,7 @@ constitution → specify → (clarify) → plan → (checklist) → tasks → (a
 
 "명세를 먼저 쓰면 결과물이 좋아진다"는 직관은 강력하다. 그런데 이 명제를 정면으로 검증한 대규모 실증 연구는 **벤더 주장에서 도출한 5개 가설 중 하나도 지지하지 못했다.**
 
-Brenn Hill의 연구(SSRN, 2026-04-28)는 오픈소스 119개 저장소의 PR 100,247건을 SZZ 알고리즘으로 결함 추적하고 저자 내 고정효과로 분석했다. 같은 사람이 쓴 PR끼리 비교했더니, 명세가 붙은 PR은 결함률이 오히려 1.4pp 높았고(p=0.056) 재작업은 5.0pp 높았다(p<0.001). 명세의 품질이 재작업에 미치는 효과는 사실상 0이었다(p=0.997). 저자의 해석은 이렇다 — 명세는 품질의 **원인**이 아니라 **어려운 과제의 표식**이다. 어려우니까 명세를 쓰고, 어려우니까 결함과 재작업이 는다는 것이다. 이 연구는 GitHub Spec Kit을 명시적으로 지목한다.
+Brenn Hill의 연구(SSRN, 2026-04-28)는 오픈소스 119개 저장소의 PR 100,247건을 SZZ 알고리즘으로 결함 추적하고 저자 내 고정효과로 분석했다.[^papers-ssrn-com-papers-cfm-abstract-id-6] 같은 사람이 쓴 PR끼리 비교했더니, 명세가 붙은 PR은 결함률이 오히려 1.4pp 높았고(p=0.056) 재작업은 5.0pp 높았다(p<0.001). 명세의 품질이 재작업에 미치는 효과는 사실상 0이었다(p=0.997). 저자의 해석은 이렇다 — 명세는 품질의 **원인**이 아니라 **어려운 과제의 표식**이다. 어려우니까 명세를 쓰고, 어려우니까 결함과 재작업이 는다는 것이다. 이 연구는 GitHub Spec Kit을 명시적으로 지목한다.
 
 과장하지는 말자. 이건 무작위 대조 실험(RCT)이 아니라 관측 연구다. 인과를 확정하지 못하고, 관측 연구 한 편이 도구를 사형시키지도 않는다. 하지만 온도는 정확히 맞춰야 한다. **spec-kit을 도입하면 규율의 값을 문서 산출물로 지불하는데, 그 문서가 결함을 줄인다는 증거는 지금 없고 반대 방향의 관측이 하나 서 있다.** GitHub 별 약 11만 9천 개는 관심의 지표지 효과의 지표가 아니다. 그럴듯한 프로세스가 실제 성공률을 담보하지 않는다는 [[에이전트-평가-evals]]의 함정이 여기에도 적용된다.
 
@@ -160,7 +176,7 @@ Brenn Hill의 연구(SSRN, 2026-04-28)는 오픈소스 119개 저장소의 PR 10
 
 훅 메커니즘 자체가 죽은 건 아니다. converge를 포함한 모든 스킬 본문에 여전히 "`.specify/extensions.yml`이 있으면 훅을 읽어라"는 조건부 체크가 남아 있다. **기본 설치에서 빠졌을 뿐 옵트인으로 살아 있다.** 그래도 결과는 분명하다 — 0.9.x에서 기본으로 얻던 "기능 = 브랜치 = specs 디렉터리, 단계마다 자동 커밋"이라는 그림은 0.12.x 기본 설치에는 **없다.**
 
-표의 좌우 열은 두 태그의 기본 init 결과를 직접 비교한 실측이고, 핵심 항목은 릴리스 노트로 교차 확인했다 — git 확장 옵트인 전환과 `--no-git` 제거는 v0.10.0, CLAUDE.md 생성을 담당하던 agent-context 확장의 옵트인 전환은 v0.12.0이다. (스킬 15종에서 10종으로 줄어든 산수와 `.specify/extensions.yml`이 기본 생성되지 않는다는 사실은 릴리스 노트에 직접 문장이 없다. 이 두 항목은 로컬 실측이 유일한 근거이며, 위 두 릴리스의 옵트인 전환과 정합적이다.)
+표의 좌우 열은 두 태그의 기본 init 결과를 직접 비교한 실측이고, 핵심 항목은 릴리스 노트로 교차 확인했다 — git 확장 옵트인 전환과 `--no-git` 제거는 v0.10.0, CLAUDE.md 생성을 담당하던 agent-context 확장의 옵트인 전환은 v0.12.0이다.[^github-com-releases] (스킬 15종에서 10종으로 줄어든 산수와 `.specify/extensions.yml`이 기본 생성되지 않는다는 사실은 릴리스 노트에 직접 문장이 없다. 이 두 항목은 로컬 실측이 유일한 근거이며, 위 두 릴리스의 옵트인 전환과 정합적이다.)
 
 시사점은 뚜렷하다. 저장소가 2025-08-21에 생겼고 1년이 채 안 돼 마이너 버전이 열두 번 넘게 올랐다. README도 별도의 "실험적 목표(Experimental Goals)" 절을 두고 프로젝트를 연구·실험의 산물로 규정한다. **프로젝트에 파일로 박히는 스캐폴드가 이 속도로 갈라진다는 것 자체가 도입 리스크의 실증이다.** 버전은 태그로 고정하고, 업그레이드는 별도 작업으로 취급하라.
 
@@ -258,3 +274,9 @@ spec-kit은 [[agents-cli-lifecycle-sdlc]]가 그리는 "AI 시대의 SDLC"를 Gi
 - 로컬 실측 (2026-07-11): `specify 0.9.5` 동일 폴더 init 산출물 — 버전 diff 표의 좌측 열 근거
 - obra/superpowers v6.1.1 (Anthropic 공식 마켓플레이스) — 로컬 설치 스킬 14종
 - kimyoon21/brown-claude-marketplace, ideas-come-true v1.0.0 — 로컬 설치 스킬 2종(sharpen, productify)
+
+[^github-com-spec-kit]: GitHub, `github/spec-kit` 저장소 README — "30+ AI coding agents" 표현, "Experimental Goals" 절. [github.com/github/spec-kit](https://github.com/github/spec-kit)
+[^github-github-io-spec-kit]: GitHub, Spec Kit 공식 문서 — SDD 정의와 워크플로 명령. [github.github.io/spec-kit](https://github.github.io/spec-kit/)
+[^github-com-releases]: GitHub, spec-kit 릴리스 노트 — v0.10.0(git 확장 옵트인·`--no-git` 제거), v0.11.0(Superpowers Implementation Bridge), v0.11.2(`/speckit.converge` 추가), v0.12.0(agent-context 옵트인 전환). [github.com/github/spec-kit/releases](https://github.com/github/spec-kit/releases)
+[^papers-ssrn-com-papers-cfm-abstract-id-6]: Brenn Hill, "Does Spec-Driven Development Reduce Defects? An Empirical Test of Industry Claims Across 119 Open-Source Repositories" (SSRN, 2026-04-28) — 관측 연구, 벤더 주장 5개 가설 모두 미지지. [papers.ssrn.com](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6515898)
+[^medium-com-is-your-safe-choice-burning-y]: Jamie Telin, "Is Your Safe Choice Burning Your Budget?" (2026-03-18) — 동일 과제 Spec-Kit 대 OpenSpec 토큰 비교. [medium.com](https://medium.com/it-chronicles/is-your-safe-choice-burning-your-budget-1cfddf8782e4)

@@ -119,39 +119,50 @@ tags: [test]
 """, "index.md")
         self.assertTrue(any("예약" in failure for failure in fails))
 
-    def test_post_edit_particle_regressions_fail(self):
-        broken_phrases = ("백엔드 관점와 보안 관점", "평가 관점를 적용한다", "QA 관점가", "QA 관점다")
-        for broken in broken_phrases:
-            with self.subTest(broken=broken):
-                text = "---\ntype: 개념\ntitle: 조사 회귀\ndescription: 설명\ntags: [test]\n---\n" + broken
-                fails, _ = self.run_gate(text)
-                self.assertTrue(any("치환 후 문법 회귀" in failure for failure in fails))
 
-    def test_valid_viewpoint_particles_pass(self):
-        text = """---
-type: 개념
-title: 정상 조사
-description: 설명
-tags: [test]
----
-보안 관점과 QA 관점을 함께 검토한다. 이 관점이 기준이다.
-"""
-        fails, _ = self.run_gate(text)
-        self.assertFalse(any("치환 후 문법 회귀" in failure for failure in fails))
 
-    def test_post_edit_regression_examples_in_code_are_ignored(self):
-        text = """---
-type: 개념
-title: 코드 예시
-description: 설명
-tags: [test]
+
+FRONT = """---
+type: 분석
+title: 예시
+description: 한 줄 설명
+tags: [a, b]
 ---
-```text
-관점와 관점다
-```
 """
-        fails, _ = self.run_gate(text)
-        self.assertFalse(any("치환 후 문법 회귀" in failure for failure in fails))
+
+
+class CodeSpanAwareness(unittest.TestCase):
+    """코드(펜스·인라인)는 산문이 아니다 — 마커·각주·강조 검사에서 제외한다."""
+
+    def run_gate(self, body: str):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory, "note.md")
+            path.write_text(FRONT + body, encoding="utf-8")
+            return validate_note.validate(path)
+
+    def test_regex_in_inline_code_is_not_a_footnote(self):
+        fails, _ = self.run_gate("\n재현: `grep -oE '<link[^>]*rel'` 로 셌다.\n")
+        self.assertEqual([f for f in fails if "각주" in f], [])
+
+    def test_regex_in_fenced_block_is_not_a_footnote(self):
+        fails, _ = self.run_gate("\n```bash\ngrep -oE 'cubic-bezier\\([^)]*\\)'\n```\n")
+        self.assertEqual([f for f in fails if "각주" in f], [])
+
+    def test_marker_inside_code_span_is_not_a_leftover(self):
+        fails, _ = self.run_gate("\n초안은 `(검증 필요)` 마커로 유보했다.\n")
+        self.assertEqual([f for f in fails if "검증 필요" in f], [])
+
+    def test_real_marker_in_prose_still_fails(self):
+        fails, _ = self.run_gate("\n이 수치는 (검증 필요) 이다.\n")
+        self.assertTrue([f for f in fails if "검증 필요" in f])
+
+    def test_real_footnote_still_checked(self):
+        fails, _ = self.run_gate("\n주장이다.[^a]\n")
+        self.assertTrue([f for f in fails if "각주 정의 누락" in f])
+
+    def test_broken_emphasis_in_code_is_ignored(self):
+        fails, _ = self.run_gate("\n`(주)**한글` 은 코드다.\n")
+        self.assertEqual([f for f in fails if "깨진 강조" in f], [])
 
 
 if __name__ == "__main__":

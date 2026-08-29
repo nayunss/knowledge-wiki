@@ -3,6 +3,16 @@ title: X 북마크 관리, 앱을 만들 줄 알았는데 AI 자동화로 끝났
 type: 플레이북
 description: X 북마크 통합 아카이브를 하루 만에 만든 경험기 — 앱 대신 기존 플랫폼과 Claude 일일 루틴을 조합해 서버 0·프론트 0·운영비 0원으로 끝낸 SDLC·엔지니어링 기법·실전 시행착오. 운영 첫날 발견한 결함을 당일 스펙에 되먹인 기록까지.
 tags: [바이브코딩, ai-에이전트, 개인도구, 프롬프트, sdlc]
+sources:
+  - id: publish-x-com-oembed
+    resource: https://publish.x.com/oembed
+    title: X oEmbed 공식 엔드포인트
+  - id: api-fxtwitter-com
+    resource: https://api.fxtwitter.com
+    title: FixTweet / fxtwitter API
+  - id: notion-web-clipper
+    resource: https://www.notion.com/web-clipper
+    title: Notion Web Clipper (공식·무료 브라우저 확장)
 ---
 
 X 북마크는 저장할 때만 뿌듯하다. 며칠 지나면 수백 개가 쌓여 다시는 안 열어보는 무덤이 된다. 분류도, 검색도 안 되니까. 나도 이 문제를 풀려고 하루를 잡았고, 시작할 때는 당연히 "무언가를 만들어야 한다"고 생각했다. 크롬 익스텐션이든, 작은 웹앱이든.
@@ -41,8 +51,8 @@ SDLC 앞단(1–2단계)이 하는 일은 코드를 늘리는 게 아니라 만�
 
 ### 이슈 1 — 첫 실행에서 전 행이 보강 실패했다
 
-- **원인**: 본문 보강을 X 공개 oEmbed 엔드포인트(`publish.x.com/oembed`, 무료·인증 불필요)로 설계하고 로컬에서 실호출 검증까지 마쳤다(301→200 정상). 그런데 이 엔드포인트가 **데이터센터 IP를 HTTP 402(Payment Required)로 차단**하고 있었다. 로컬·주거용 IP에서만 응답하는 것이다. 로컬 검증만 믿고 실행 환경의 차이를 놓친 검증 공백이었다.
-- **해결**: 1차 소스를 `fxtwitter` API(오픈소스 FixTweet)로 교체했다. 데이터센터 IP에서 동작하는 게 필수 조건이었는데, 부수 효과가 딸려왔다 — oEmbed가 `…`로 자르던 장문 트윗 대부분을 전문으로 주고(아주 긴 일부 글은 여전히 잘린다), oEmbed가 t.co 링크만 반환하던 아티클(롱폼)도 `article` 필드로 본문 전문을 준다. 스펙에 "아티클 검색은 범위 외"라 적어둔 한계가 통째로 해소됐다. 여기에 **보강실패 행을 매일 조회에 포함해 자동 재시도**하도록 바꿔, 일시적 실패는 스스로 회복하게 했다. 비공식 서비스라 실패 시 oEmbed를 대체 경로로 남겨뒀다.
+- **원인**: 본문 보강을 X 공개 oEmbed 엔드포인트(`publish.x.com/oembed`, 무료·인증 불필요)로 설계하고 로컬에서 실호출 검증까지 마쳤다(301→200 정상).[^publish-x-com-oembed] 그런데 이 엔드포인트가 **데이터센터 IP를 HTTP 402(Payment Required)로 차단**하고 있었다. 로컬·주거용 IP에서만 응답하는 것이다. 로컬 검증만 믿고 실행 환경의 차이를 놓친 검증 공백이었다.
+- **해결**: 1차 소스를 `fxtwitter` API(오픈소스 FixTweet)로 교체했다.[^api-fxtwitter-com] 데이터센터 IP에서 동작하는 게 필수 조건이었는데, 부수 효과가 딸려왔다 — oEmbed가 `…`로 자르던 장문 트윗 대부분을 전문으로 주고(아주 긴 일부 글은 여전히 잘린다), oEmbed가 t.co 링크만 반환하던 아티클(롱폼)도 `article` 필드로 본문 전문을 준다. 스펙에 "아티클 검색은 범위 외"라 적어둔 한계가 통째로 해소됐다. 여기에 **보강실패 행을 매일 조회에 포함해 자동 재시도**하도록 바꿔, 일시적 실패는 스스로 회복하게 했다. 비공식 서비스라 실패 시 oEmbed를 대체 경로로 남겨뒀다.
 
 ### 이슈 2 — 연관 콘텐츠가 하나도 안 붙었다
 
@@ -159,3 +169,6 @@ AI 루틴은 앱의 대체재가 될 수 있다. 단, 그 대체가 성립하려
 - X oEmbed 공식 엔드포인트: `https://publish.x.com/oembed` (무료·인증 불필요, 데이터센터 IP 402 차단은 2026-07-08 실측)
 - FixTweet / fxtwitter API: `https://api.fxtwitter.com` (오픈소스 비공식)
 - Notion Web Clipper (공식·무료 브라우저 확장)
+
+[^publish-x-com-oembed]: X oEmbed 공식 엔드포인트 (무료·인증 불필요). [publish.x.com/oembed](https://publish.x.com/oembed)
+[^api-fxtwitter-com]: FixTweet / fxtwitter API (오픈소스 비공식). [api.fxtwitter.com](https://api.fxtwitter.com)
