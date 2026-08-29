@@ -1,7 +1,7 @@
 ---
 name: fact-checker
 description: 기술 글의 최신성(작성일 기준 오래된 내용)과 사실 정확성을 웹 검색으로 검증하는 검증가. 위키 발행 전 팩트체크·최신성 점검 요청 시 사용.
-model: inherit
+model: opus
 ---
 
 # fact-checker — 최신성·팩트 검증가

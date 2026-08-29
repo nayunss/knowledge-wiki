@@ -6,17 +6,21 @@ description: IT 기술 글을 작성→검증→발행까지 한 번에 처리�
 # wiki-post — 작성→검증→발행 오케스트레이터
 
 tech-writer가 쓰고, fact-checker·copy-editor가 병렬 검증하고, 병합본을 readability-reviewer가 최종 검수한 뒤 wiki-note 방식으로 발행한다.
-**실행 모드: 서브 에이전트 파이프라인** (검증 2종만 병렬). 데이터 전달: 파일 기반(`_workspace/`). 에이전트 frontmatter는 특정 제품 모델명이 아니라 `model: inherit`을 사용하고, 런타임이 서브에이전트를 지원하지 않으면 같은 역할을 순차 실행한다.
+**실행 모드: 서브 에이전트 파이프라인** (검증 2종만 병렬). 데이터 전달: 파일 기반(`_workspace/`).
 
 ## Phase 0: 컨텍스트 확인
 
-0. **의존성 프리플라이트** — 실행 전에 다음 파일을 현재 프로젝트 `.claude/` 또는 설치 경로에서 확인한다.
+0. **의존성 프리플라이트** — 실행 전에 다음 구성요소를 확인한다.
    - 필수 에이전트: `tech-writer`, `fact-checker`, `copy-editor`, `readability-reviewer`
    - 필수 스킬: `tech-writing`, `wiki-verify`, `readability-review`, `wiki-note`, `wiki-debug`
    - 필수 게이트: `wiki-post/scripts/validate-domain-brief.py`, `wiki-post/scripts/validate-note.py`
    - 선택 의존성: `humanize-korean`. 없으면 copy-editor의 자체 최소 윤문 폴백을 쓰고 리포트에 기록한다.
 
-   저장소 안에서는 `python3 .claude/skills/wiki-post/scripts/preflight.py .claude`로 이를 결정적으로 확인한다. 필수 구성요소가 없으면 **발행을 시작하지 않는다**. `claude-skill/install.sh`로 설치하거나 프로젝트 `.claude/`를 복구한 뒤 다시 프리플라이트한다. 필수 검증을 SKIP하고 발행하는 폴백은 없다.
+   ```bash
+   python3 ~/.claude/skills/wiki-post/scripts/preflight.py ~/.claude
+   ```
+
+   필수 구성요소가 없으면 **발행을 시작하지 않는다.** 위키 레포의 `claude-skill/install.sh`로 설치한 뒤 다시 프리플라이트한다. 필수 검증을 SKIP하고 발행하는 폴백은 없다.
 
 작업 폴더: `{scratchpad}/wiki-post-workspace/` (= `_workspace`).
 - `_workspace` 있음 + 부분 수정 요청("검증만 다시", "윤문만", "가독성/최종 검수만 다시") → **부분 재실행**: 해당 에이전트만 재호출(예: "가독성만 다시" → Phase 3.5의 readability-reviewer만).
@@ -36,16 +40,20 @@ tech-writer가 쓰고, fact-checker·copy-editor가 병렬 검증하고, 병합�
    ```
 
    tech-writer에 넘길 땐 **"가설 목록"으로 명시**하고 리드를 그대로 옮기지 말라고 지시한다. fact-checker에는 이 파일이 검증 대상임을(⑦) 알린다.
-1. 위키 최신 상태 파악: 레포(`~/.claude/wiki-note-repo.txt`)를 temp clone해 기존 노트 목록·frontmatter를 수집 → `_workspace/00_wiki_inventory.md` (링크 걸 관련 노트 파악용).
-2. **Agent 호출**: `tech-writer` (호출 런타임의 상속 모델). 입력 = 주제 + 인벤토리 + (사용자 제공 자료). tech-writing 스킬을 따르게 한다. 본문 전에 도메인 캘리브레이션을 수행한다.
+1. 위키 최신 상태 파악: 레포(`~/.claude/wiki-note-repo.txt`)를 temp clone해 기존 노트 목록·frontmatter를 수집 → `_workspace/00_wiki_inventory.md` (링크 걸 관련 노트 파악용). **각 줄에 파일명을 백틱으로도 함께 적는다** — 병합 게이트가 백틱 안의 이름만 읽으므로 이게 없으면 위키링크 전건이 오탐으로 뜬다.
+
+   ```
+   - [[이름]] (`이름.md`) — title: … | date: … | tags: …
+   ```
+2. **Agent 호출**: `tech-writer` (model: opus). 입력 = 주제 + 인벤토리 + (사용자 제공 자료). tech-writing 스킬을 따르게 한다. 본문 전에 **도메인 캘리브레이션**(tech-writing §0)을 수행하게 한다.
 3. 산출: `_workspace/00_domain_brief.md` + `_workspace/01_writer_draft.md` (대상 독자·도메인·작성일 메타 필수 — 오늘 날짜). 아래 게이트를 통과하지 못하면 브리프를 보완하며 Phase 2로 넘어가지 않는다.
    ```bash
-   python3 <resolved-wiki-post>/scripts/validate-domain-brief.py _workspace/00_domain_brief.md
+   python3 ~/.claude/skills/wiki-post/scripts/validate-domain-brief.py _workspace/00_domain_brief.md
    ```
 
 ## Phase 2: 검증 (병렬)
 
-**Agent 병렬 호출** (런타임이 지원하면 병렬, 아니면 순차; 둘 다 상속 모델, wiki-verify 스킬을 따르게 한다):
+**Agent 병렬 호출** (`run_in_background: true`, 둘 다 model: opus, wiki-verify 스킬을 따르게 한다):
 - `fact-checker` → `02_factcheck_report.md` (최신성 §1 + 팩트 §2 + 도메인·용어 §2.5)
 - `copy-editor` → `02_edited_draft.md` + `02_editing_report.md` (오탈자 §3 + 윤문 §4)
 
@@ -57,7 +65,7 @@ tech-writer가 쓰고, fact-checker·copy-editor가 병렬 검증하고, 병합�
 4. 병합 충돌(같은 문장을 팩트·윤문이 다르게 수정) 시 **팩트 수정 우선**.
 5. **병합 게이트 (필수)** — 병합도 작업이므로 검증한다(MAST '작업 검증 실패' 방지). `03_final.md`에 대해 실행:
    ```bash
-   python3 <resolved-wiki-post>/scripts/validate-note.py _workspace/03_final.md _workspace/00_wiki_inventory.md
+   python3 ~/.claude/skills/wiki-post/scripts/validate-note.py _workspace/03_final.md _workspace/00_wiki_inventory.md
    ```
    FAIL(마커 잔존·frontmatter 누락·메타주석·펜스 불일치) 시 병합을 고치고 재실행 — 게이트 통과 전엔 Phase 3.5 진입 금지.
 
@@ -65,7 +73,7 @@ tech-writer가 쓰고, fact-checker·copy-editor가 병렬 검증하고, 병합�
 
 기계 게이트(validate-note.py)는 결함을 막지만 **읽기 경험**은 못 본다. 발행 직전, 병합본을 독자 눈으로 최종 판정한다.
 
-1. **Agent 호출**: `readability-reviewer` (상속 모델, readability-review 스킬을 따르게 한다). 입력 = `03_final.md` + 도메인·용어 기준용 `00_domain_brief.md` + 대상 독자 확인용 `01_writer_draft.md`. 산출 = `03b_readability_report.md`.
+1. **Agent 호출**: `readability-reviewer` (model: opus, readability-review 스킬을 따르게 한다). 입력 = `03_final.md` + 도메인·용어 기준용 `00_domain_brief.md` + 대상 독자 확인용 `01_writer_draft.md`. 산출 = `03b_readability_report.md`.
 2. **PASS/PASS-WITH-NOTES** → 🟡 지적은 오케스트레이터 재량으로 `03_final.md`에 반영(문체·용어 표현·흐름만, 사실·수치·링크·마커 불가침) → 병합 게이트(validate-note.py) **재실행** → Phase 4.
 3. **FAIL** → 지적을 라우팅: 문체·AI 티·문장 → `copy-editor` 재호출(해당 구간 재윤문), 용어 풀이 누락 → `tech-writer` 재호출(보강). 수정본을 `03_final.md`에 병합 → 병합 게이트 재실행 → `readability-reviewer` 재검수. **최대 2회**, 그래도 FAIL이면 발행 중단하고 쟁점을 사용자에게 보고.
 4. 이 게이트의 제안이 사실·수치를 건드리는 것으로 보이면 **적용하지 말고** fact-checker 소관으로 리포트에만 남긴다(가독성 게이트는 문체 층위만 바꾼다).
@@ -94,7 +102,7 @@ temp clone → `content/`(AI 엔지니어링 주제는 `content/ai-엔지니어�
 | 상황 | 처리 |
 |---|---|
 | 작성 에이전트 1회 실패 | 1회 재시도 → 재실패 시 중단하고 보고 |
-| 필수 검증 에이전트 실패 | 1회 재시도 → 재실패 시 발행 중단. SKIP 발행 금지 |
+| 필수 검증 에이전트 실패 | 1회 재시도 → 재실패 시 발행 중단. **SKIP 발행 금지** |
 | 선택 humanize-korean 실패 | copy-editor 자체 최소 윤문으로 폴백하고 리포트에 명시 |
 | 검증 2회 루프 후에도 FAIL | 발행 중단, 쟁점 보고 (강행은 사용자 승인 필요) |
 | 가독성 게이트 과검열(사소한 취향 지적으로 FAIL) | ⚪ 참고로 내려 발행 진행 — 잔존 AI 티보다 발행 지연이 나쁠 때. 리포트에 남긴다 |

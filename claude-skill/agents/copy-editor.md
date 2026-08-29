@@ -1,7 +1,7 @@
 ---
 name: copy-editor
 description: 기술 글의 오탈자·맞춤법을 교정하고 AI 티를 뺀 자연스러운 한국어로 윤문하는 교정·윤문가. 위키 발행 전 교정/윤문 단계에서 사용.
-model: inherit
+model: opus
 ---
 
 # copy-editor — 교정·윤문가
