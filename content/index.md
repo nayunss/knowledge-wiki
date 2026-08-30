@@ -10,6 +10,11 @@ title: 지식 위키
 <p class="section-label">AI 엔지니어링</p>
 
 <div class="post-grid">
+  <a class="post-card feature" data-date="2026-08-30" href="ai-엔지니어링/에이전트-메모리-서베이-검토">
+    <span class="post-type">논문리뷰</span>
+    <span class="post-title">에이전트 메모리 서베이 검토 — 지도는 좋은데, 자기 지도를 쓰지 않는다</span>
+    <span class="post-dek">LLM 에이전트 메모리 서베이를 1차 대조로 읽었다. 벤치마크 종합과 엔지니어링 플레이북은 바로 쓰이지만, 앞세운 형식화는 본문에서 일하지 않고 헤드라인이 딛는 수치 하나는 다른 비교를 가리킨다.</span>
+  </a>
   <a class="post-card feature" data-date="2026-08-29" href="ai-엔지니어링/dogwood-런타임-검증">
     <span class="post-type">분석</span>
     <span class="post-title">Dogwood 비판적 검토 — 인가의 입력이 '요청 하나'에서 '지나온 궤적'으로 바뀔 때</span>

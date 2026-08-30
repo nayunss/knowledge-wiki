@@ -164,6 +164,30 @@ class CodeSpanAwareness(unittest.TestCase):
         fails, _ = self.run_gate("\n`(주)**한글` 은 코드다.\n")
         self.assertEqual([f for f in fails if "깨진 강조" in f], [])
 
+class InventoryMatching(unittest.TestCase):
+    """인벤토리는 `이름.md`로, 위키링크는 [[이름]]으로 적힌다 — 확장자를 떼고 대조해야 한다."""
+
+    def run_gate(self, body: str, inventory: str):
+        with tempfile.TemporaryDirectory() as d:
+            note = Path(d, "note.md"); note.write_text(FRONT + body, encoding="utf-8")
+            inv = Path(d, "inv.md"); inv.write_text(inventory, encoding="utf-8")
+            return validate_note.validate(note, inv)
+
+    def test_backticked_filename_with_extension_matches_wikilink(self):
+        _f, warns = self.run_gate("\n본문 [[컨텍스트-엔지니어링]] 참조.\n",
+                                  "- [[컨텍스트-엔지니어링]] (`컨텍스트-엔지니어링.md`) — title: x")
+        self.assertEqual([w for w in warns if "미존재" in w], [])
+
+    def test_backticked_filename_without_extension_still_matches(self):
+        _f, warns = self.run_gate("\n본문 [[루프-엔지니어링]] 참조.\n",
+                                  "- [[루프-엔지니어링]] (`루프-엔지니어링`) — title: x")
+        self.assertEqual([w for w in warns if "미존재" in w], [])
+
+    def test_genuinely_missing_target_still_warns(self):
+        _f, warns = self.run_gate("\n본문 [[없는-노트]] 참조.\n",
+                                  "- [[있는-노트]] (`있는-노트.md`) — title: x")
+        self.assertTrue([w for w in warns if "미존재" in w])
+
 
 if __name__ == "__main__":
     unittest.main()

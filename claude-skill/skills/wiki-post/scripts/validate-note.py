@@ -215,7 +215,10 @@ def validate(path: Path, inventory: Path | None = None) -> tuple[list[str], list
         warns.append(f"물결 표기 — 근사 '약 N', 범위 'N–M' 권장: …{text[max(0, match.start()-10):match.end()+8]}…")
 
     if inventory and inventory.exists():
-        known = {os.path.basename(item) for item in re.findall(r"`([^`]+)`", inventory.read_text(encoding="utf-8"))}
+        # 인벤토리는 `이름.md`로, 위키링크는 [[이름]]으로 적힌다 — 확장자를 떼고 대조한다.
+        # 안 떼면 전건이 오탐으로 떠서 진짜 깨진 링크가 경고 더미에 묻힌다.
+        known = {re.sub(r"\.md$", "", os.path.basename(item))
+                 for item in re.findall(r"`([^`]+)`", inventory.read_text(encoding="utf-8"))}
         for target in set(re.findall(r"\[\[([^\]|#]+)", text)):
             if target.strip() not in known:
                 warns.append(f"[[{target.strip()}]] 대상 미존재 — 의도적 stub인지 확인")
