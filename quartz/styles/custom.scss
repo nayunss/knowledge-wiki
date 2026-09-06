@@ -532,15 +532,46 @@ blockquote { border-left: 3px solid var(--tertiary); border-radius: 0 var(--radi
   background: rgba(23, 20, 16, 0.28);
 }
 
-// 입력과 결과는 딤 위에 자기 면으로 또렷하게 얹힌다
-.search > .search-container > .search-space > input,
+// 입력은 디자인 시스템의 폼 컨트롤과 같은 계약을 쓴다.
+// 값의 출처는 nayunss-ds의 `src/lib/fieldStyles.ts` — controlBase와 controlSizes.lg다.
+//   controlBase   : 테두리 border-default · 면 surface-raised · 자리글 text-tertiary
+//                   전환 150ms cubic-bezier(.2,0,0,1)
+//   controlSizes.lg: 높이 48px · 좌우 여백 16px · 글자 18px
+//   모서리         : --radius-md 8px
+//   포커스 링      : 2px --focus-ring, 바깥 2px (globals.css의 전역 규칙)
+// 돋보기 자리를 왼쪽에 비워 두는 것도 SearchField와 같다. 아이콘이 글자를 덮지
+// 않도록 크기 여백보다 **뒤에** 오게 적는다 — 그 순서를 뒤집어 생긴 결함을
+// 디자인 시스템 쪽에서 이미 한 번 고쳤다
+.search > .search-container > .search-space > input {
+  box-sizing: border-box;
+  height: 48px;
+  padding: 0 16px 0 44px;
+  font-size: 18px;
+  color: var(--dark);
+  background-color: var(--light);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Ccircle cx='7' cy='7' r='4.5' fill='none' stroke='%238c867b' stroke-width='1.5'/%3E%3Cpath d='M10.5 10.5 L14 14' stroke='%238c867b' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 16px center;
+  border: 1px solid var(--gray);
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  transition: border-color 150ms cubic-bezier(0.2, 0, 0, 1);
+
+  &::placeholder { color: var(--gray); }
+  &:hover { border-color: var(--darkgray); }
+  &:focus, &:focus-visible {
+    border-color: var(--darkgray);
+    outline: 2px solid var(--dark);
+    outline-offset: 2px;
+  }
+}
+
+// 결과 목록도 같은 면과 모서리를 쓴다
 .search > .search-container > .search-space > .search-layout {
   background: var(--light);
   border: 1px solid var(--lightgray);
+  border-radius: 8px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
-}
-.search > .search-container > .search-space > input {
-  border-radius: var(--radius);
 }
 
 // ═══ 800px 이하: Quartz의 모바일 탐색기 패널을 서랍 안에서 끈다 ═══
@@ -605,4 +636,31 @@ blockquote { border-left: 3px solid var(--tertiary); border-radius: 0 var(--radi
   padding: 0;
   border: 0;
   pointer-events: none;
+}
+
+// ═══ 서랍이 열리면 뒤는 굴러가지 않는다 ═══
+//
+// 딤 뒤의 본문이 마우스 휠에 반응하면, 닫고 돌아왔을 때 읽던 자리가 사라진다.
+// 서랍은 fixed라 자기 스크롤을 그대로 갖는다
+:root[data-nav="open"],
+:root[data-nav="open"] body { overflow: hidden !important; }
+
+// "탐색기" 제목 버튼은 서랍에서 할 일이 없다.
+// 서랍 자체가 이미 탐색기이고, 여닫는 일은 헤더의 햄버거가 한다
+.left.sidebar .explorer > .title-button.explorer-toggle { display: none !important; }
+
+// ═══ 서랍 목록의 NEW 뱃지 ═══
+// 홈 카드와 같은 신호를 같은 자리에서 쓴다. 다만 여기서는 제목 왼쪽에 붙는다
+.explorer-ul a.is-new::before {
+  content: "NEW";
+  display: inline-block;
+  margin-right: 0.4rem;
+  padding: 0.05rem 0.4rem;
+  border-radius: 999px;
+  background: var(--secondary);
+  color: var(--light);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  vertical-align: 0.08em;
 }

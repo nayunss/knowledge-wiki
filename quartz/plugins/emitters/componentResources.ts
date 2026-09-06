@@ -355,8 +355,44 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
       if (e.clientX > bar.getBoundingClientRect().right) setNav(false, true)
     })
 
-    document.addEventListener("nav", mountHamburger)
+    // 서랍 목록에도 NEW 뱃지를 붙인다.
+    //
+    // 날짜의 출처는 홈 카드의 data-date다 — 이 위키에서 글의 날짜를 들고 있는
+    // 곳이 거기뿐이고, contentIndex.json에는 date 필드가 없다(실측).
+    // 홈을 한 번 받아 href→날짜 표를 만들고 sessionStorage에 둔다.
+    // 3일 판정을 브라우저 시점으로 재는 것은 홈 카드와 같다 — 재배포 없이도 사라진다
+    const NEW_MAP_KEY = "nds-new-map"
+    const loadDateMap = async () => {
+      try { const c = sessionStorage.getItem(NEW_MAP_KEY); if (c) return JSON.parse(c) } catch (e) {}
+      try {
+        const home = document.querySelector(".site-header .page-title a")?.getAttribute("href") || "./"
+        const html = await fetch(home, { credentials: "same-origin" }).then((r) => r.text())
+        const doc = new DOMParser().parseFromString(html, "text/html")
+        const map = {}
+        doc.querySelectorAll(".post-card[data-date][href]").forEach((c) => {
+          try { map[new URL(c.getAttribute("href"), new URL(home, location.href)).pathname] = c.dataset.date } catch (e) {}
+        })
+        try { sessionStorage.setItem(NEW_MAP_KEY, JSON.stringify(map)) } catch (e) {}
+        return map
+      } catch (e) { return {} }
+    }
+
+    const markNewInDrawer = async () => {
+      const links = document.querySelectorAll(".left.sidebar .explorer-ul a[href]")
+      if (!links.length) return
+      const map = await loadDateMap()
+      links.forEach((a) => {
+        let path
+        try { path = new URL(a.getAttribute("href"), location.href).pathname } catch (e) { return }
+        const d = map[path] || map[path.replace(/\/$/, "")] || map[path + "/"]
+        const fresh = d && (Date.now() - Date.parse(d)) / 864e5 < 3
+        a.classList.toggle("is-new", !!fresh)
+      })
+    }
+
+    document.addEventListener("nav", () => { mountHamburger(); markNewInDrawer() })
     mountHamburger()
+    markNewInDrawer()
   `)
 
   if (cfg.enableSPA) {
