@@ -386,13 +386,31 @@ blockquote { border-left: 3px solid var(--tertiary); border-radius: 0 var(--radi
 // 닫힘 — 서랍이 통째로 사라진다. 햄버거는 헤더에 있으므로 남길 것이 없다
 :root[data-nav="closed"] .left.sidebar { display: none; }
 
-// 열림 — 어떤 규칙으로도 숨지 않는다. 마우스 위치와 무관하다
+// 열림 — 어떤 규칙으로도 숨지 않는다. 마우스 위치와 무관하다.
+//
+// !important가 붙은 이유는 Quartz의 모바일 규칙이 `#quartz-body .sidebar.left`로
+// **id 특정성**을 갖기 때문이다. 800px 이하에서 그 규칙이 padding을 0으로,
+// flex-direction을 row로 바꿔 서랍의 글이 왼쪽 끝에 붙고 자식이 가로로 누웠다.
+// 서랍은 폭과 무관하게 세로 목록이어야 하므로 여기서 되돌린다
 :root[data-nav="open"] .left.sidebar {
-  display: flex;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 1.2rem !important;
+  padding: 1.5rem !important;
+  height: calc(100dvh - var(--header-h)) !important;
   opacity: 1 !important;
   visibility: visible !important;
   transform: none !important;
   pointer-events: auto !important;
+}
+
+// 긴 제목이 서랍 폭에서 잘려 읽을 수 없었다. 줄을 넘겨 끝까지 보이게 한다
+.explorer-content a {
+  display: block;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.45;
 }
 
 // 덮개 — 뒤의 본문이 비쳐야 하므로 옅게 깐다. 바깥을 누르면 닫힌다
