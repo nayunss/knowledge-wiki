@@ -160,6 +160,11 @@ title: 지식 위키
 <p class="section-label">실전 · 도구</p>
 
 <div class="post-grid">
+  <a class="post-card feature" data-date="2026-09-06" href="디자인시스템-위키적용-후기">
+    <span class="post-type">회고</span>
+    <span class="post-title">토큰 이전은 CSS 237줄, 그 뒤가 341줄이었다 — 디자인 시스템을 위키에 입히며</span>
+    <span class="post-dek">색·서체·타이포·모서리는 커밋 하나로 건너갔다. 그 뒤로 custom.scss가 341줄 더 늘었는데 대부분 Quartz가 이미 내려둔 격자·명시도·반응형 결정을 되돌리는 데 쓴 줄이다. 열두 번 틀렸고, 하나는 사이트 스크립트를 통째로 죽였는데 CI는 그동안 초록이었다.</span>
+  </a>
   <a class="post-card feature" data-date="2026-09-06" href="디자인시스템-구축-후기">
     <span class="post-type">회고</span>
     <span class="post-title">다 됐다고 판정한 컴포넌트를 다른 형식으로 다시 그렸더니 — 개인 디자인 시스템 구축 후기</span>
