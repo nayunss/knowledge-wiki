@@ -28,14 +28,14 @@ for name in wiki-note wiki-post wiki-verify tech-writing readability-review wiki
   echo "  ← skill  $name"
 done
 
+for a in tech-writer fact-checker copy-editor readability-reviewer; do
+  [ -f "$SRC/agents/$a.md" ] && cp "$SRC/agents/$a.md" "agents/" && echo "  ← agent  $a"
+done
 # 프로젝트 로컬 미러도 같은 내용으로 유지한다. 저장소 안에서 실행되는
 # 에이전트가 배포 묶음과 다른 하네스를 읽는 드리프트를 막는다.
 mkdir -p ../.claude/skills ../.claude/agents
 rsync -a --delete skills/ ../.claude/skills/
 rsync -a --delete agents/ ../.claude/agents/
-for a in tech-writer fact-checker copy-editor readability-reviewer; do
-  [ -f "$SRC/agents/$a.md" ] && cp "$SRC/agents/$a.md" "agents/" && echo "  ← agent  $a"
-done
 [ -f "$HOME/Documents/vibe-coding/CLAUDE.md" ] && cp "$HOME/Documents/vibe-coding/CLAUDE.md" "CLAUDE.project.md" && echo "  ← CLAUDE.project.md"
 
 # 2. 시크릿 게이트 (실패 시 커밋 금지)

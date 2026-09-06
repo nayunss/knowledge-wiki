@@ -183,10 +183,47 @@ class InventoryMatching(unittest.TestCase):
                                   "- [[루프-엔지니어링]] (`루프-엔지니어링`) — title: x")
         self.assertEqual([w for w in warns if "미존재" in w], [])
 
+    def test_writer_attempt_note_must_not_ship(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory, "note.md")
+            path.write_text("주장이다. (1차 확인 시도: arXiv 원문에 해당 절 없음)\n", encoding="utf-8")
+            fails, _warns = validate_note.validate(path)
+        self.assertTrue([f for f in fails if "1차 확인 시도" in f])
+
     def test_genuinely_missing_target_still_warns(self):
         _f, warns = self.run_gate("\n본문 [[없는-노트]] 참조.\n",
                                   "- [[있는-노트]] (`있는-노트.md`) — title: x")
         self.assertTrue([w for w in warns if "미존재" in w])
+
+
+class RenderOnlyTests(unittest.TestCase):
+    """--render-only는 초안(프론트매터·각주 없음)에 걸어도 렌더 결함만 본다."""
+
+    DRAFT = "# 초안\n\n확신 없는 대목은 (검증 필요) 마커로 남긴다.\n"
+
+    def test_clean_draft_passes_without_frontmatter(self):
+        fails, _warns = validate_note.render_checks(self.DRAFT)
+        self.assertEqual([], fails)
+
+    def test_broken_emphasis_in_draft_fails(self):
+        fails, _warns = validate_note.render_checks(self.DRAFT + '**"인용")**이다.\n')
+        self.assertTrue([f for f in fails if "깨진 강조" in f])
+
+    def test_unbalanced_fence_in_draft_fails(self):
+        fails, _warns = validate_note.render_checks(self.DRAFT + "```python\nx = 1\n")
+        self.assertTrue([f for f in fails if "코드펜스" in f])
+
+    def test_tilde_in_draft_warns(self):
+        _fails, warns = validate_note.render_checks(self.DRAFT + "약 ~30개다.\n")
+        self.assertTrue([w for w in warns if "물결" in w])
+
+    def test_full_gate_still_reports_render_breakage(self):
+        """리팩터링 회귀 방지 — 렌더 검사가 발행 게이트에서 빠지지 않았는가."""
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory, "note.md")
+            path.write_text('없는 프론트매터.\n**"인용")**이다.\n', encoding="utf-8")
+            fails, _warns = validate_note.validate(path)
+        self.assertTrue([f for f in fails if "깨진 강조" in f])
 
 
 if __name__ == "__main__":

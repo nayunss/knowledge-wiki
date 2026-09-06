@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """knowledge-wiki 발행 게이트: OKF v0.2 + 위키 품질 프로필.
 
-사용: python3 validate-note.py <final.md> [inventory.md]
+사용: python3 validate-note.py [--render-only] <note.md> [inventory.md]
+      --render-only = 렌더 파손만 검사(초안 단계용)
 종료: 0=PASS, 1=FAIL, 2=호출 오류
 
 외부 YAML 패키지 없이 실행되도록, 검증에 필요한 최상위 키와 제한된
@@ -117,6 +118,27 @@ def strip_code(text: str) -> str:
     return INLINE_CODE.sub("", text)
 
 
+def render_checks(text: str) -> tuple[list[str], list[str]]:
+    """마크다운 렌더 파손만 본다 — 프론트매터·마커·인벤토리는 보지 않는다.
+
+    정규식으로 결정적으로 잡히는 항목이라 사람이 손으로 볼 일이 아니다.
+    `--render-only`로 Phase 1 초안에 걸어 윤문 단계 앞에서 치운다.
+    (실측: 발행 5편 이상에서 copy-editor가 잡아낸 게 이 패턴들이었다.)
+    """
+    fails: list[str] = []
+    warns: list[str] = []
+    prose_text = strip_code(text)
+    if text.count("```") % 2:
+        fails.append("코드펜스(```) 짝 불일치")
+    for match in re.finditer(r"[)\]]\*\*[가-힣]", prose_text):
+        fails.append(f"깨진 강조: …{text[max(0, match.start()-15):match.end()+5]}…")
+    for match in re.finditer(r"[\"\u201d\u2019']\*\*[가-힣]", prose_text):
+        warns.append(f"강조 인접 따옴표 — 렌더 확인: …{text[max(0, match.start()-15):match.end()+5]}…")
+    for match in re.finditer(r"~(?=[0-9])", prose_text):
+        warns.append(f"물결 표기 — 근사 '약 N', 범위 'N–M' 권장: …{text[max(0, match.start()-10):match.end()+8]}…")
+    return fails, warns
+
+
 def validate(path: Path, inventory: Path | None = None) -> tuple[list[str], list[str]]:
     text = path.read_text(encoding="utf-8")
     fails: list[str] = []
@@ -205,14 +227,11 @@ def validate(path: Path, inventory: Path | None = None) -> tuple[list[str], list
         fails.append(f"'(검증 필요)' 마커 {prose_text.count('(검증 필요)')}건 잔존")
     if re.search(r"<!--\s*대상독자:", text):
         fails.append("워크스페이스 대상독자 메타 주석 잔존")
-    if text.count("```") % 2:
-        fails.append("코드펜스(```) 짝 불일치")
-    for match in re.finditer(r"[)\]]\*\*[가-힣]", prose_text):
-        fails.append(f"깨진 강조: …{text[max(0, match.start()-15):match.end()+5]}…")
-    for match in re.finditer(r"[\"\u201d\u2019']\*\*[가-힣]", prose_text):
-        warns.append(f"강조 인접 따옴표 — 렌더 확인: …{text[max(0, match.start()-15):match.end()+5]}…")
-    for match in re.finditer(r"~(?=[0-9])", prose_text):
-        warns.append(f"물결 표기 — 근사 '약 N', 범위 'N–M' 권장: …{text[max(0, match.start()-10):match.end()+8]}…")
+    if "1차 확인 시도:" in prose_text:
+        fails.append("작성 단계 주석 '(1차 확인 시도: …)' 잔존 — 병합에서 제거")
+    render_fails, render_warns = render_checks(text)
+    fails.extend(render_fails)
+    warns.extend(render_warns)
 
     if inventory and inventory.exists():
         # 인벤토리는 `이름.md`로, 위키링크는 [[이름]]으로 적힌다 — 확장자를 떼고 대조한다.
@@ -227,15 +246,21 @@ def validate(path: Path, inventory: Path | None = None) -> tuple[list[str], list
 
 
 def main() -> int:
-    if len(sys.argv) not in (2, 3):
-        print("사용: validate-note.py <final.md> [inventory.md]", file=sys.stderr)
+    argv = [arg for arg in sys.argv[1:] if arg != "--render-only"]
+    render_only = "--render-only" in sys.argv[1:]
+    if len(argv) not in (1, 2) or (render_only and len(argv) != 1):
+        print("사용: validate-note.py [--render-only] <note.md> [inventory.md]", file=sys.stderr)
         return 2
-    path = Path(sys.argv[1])
+    path = Path(argv[0])
     if not path.is_file():
         print(f"입력 파일 없음: {path}", file=sys.stderr)
         return 2
-    inventory = Path(sys.argv[2]) if len(sys.argv) == 3 else None
-    fails, warns = validate(path, inventory)
+    if render_only:
+        # Phase 1 초안용 — 발행 계약(프론트매터·마커·각주)은 아직 성립하지 않는다.
+        fails, warns = render_checks(path.read_text(encoding="utf-8"))
+    else:
+        inventory = Path(argv[1]) if len(argv) == 2 else None
+        fails, warns = validate(path, inventory)
     for warning in warns:
         print(f"⚠️  {warning}")
     for failure in fails:
