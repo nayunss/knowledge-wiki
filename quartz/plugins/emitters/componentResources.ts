@@ -333,6 +333,17 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
       document.querySelector(".nav-hamburger")?.focus()
     })
 
+    // 메뉴에서 글을 고르면 닫는다. 서랍이 본문을 덮고 있으므로 열린 채로 두면
+    // 고른 글이 그 뒤에 가려서, 누른 사람이 한 번 더 닫아야 읽을 수 있다
+    document.addEventListener("click", (e) => {
+      if (root.dataset.nav !== "open") return
+      const a = e.target.closest(".left.sidebar a[href]")
+      if (!a) return
+      // 폴더를 접었다 펴는 버튼은 이동이 아니므로 닫지 않는다
+      if (a.closest(".folder-outer") && !a.getAttribute("href")) return
+      setNav(false, true)
+    })
+
     // 좁은 화면에서 덮개(사이드바의 ::after)를 누르면 닫는다.
     // 덮개는 가짜 요소라 클릭 대상이 사이드바 자신으로 잡히므로,
     // 사이드바 안쪽을 눌렀는지 그 오른쪽 바깥을 눌렀는지 좌표로 가른다
