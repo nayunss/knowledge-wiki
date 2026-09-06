@@ -289,17 +289,39 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
       if (remember) { try { localStorage.setItem(NAV_KEY, open ? "open" : "closed") } catch (e) {} }
     }
 
+    // 상단 고정 헤더를 만들고 사이드바에 있던 것들을 옮겨 담는다.
+    // 옮기는 것이지 복제가 아니므로(appendChild는 이동이다) Quartz가 검색·다크모드
+    // 버튼에 걸어둔 이벤트가 그대로 따라온다
     const mountHamburger = () => {
       const bar = document.querySelector(".left.sidebar")
-      if (!bar || bar.querySelector(".nav-hamburger")) return
-      const b = document.createElement("button")
-      b.type = "button"
-      b.className = "nav-hamburger"
-      b.setAttribute("aria-controls", "quartz-body")
-      // 줄 셋은 장식이므로 읽히지 않게 두고, 이름은 aria-label이 진다
-      b.innerHTML = '<span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>'
-      b.addEventListener("click", () => setNav(root.dataset.nav !== "open", true))
-      bar.prepend(b)
+      if (!bar) return
+      let head = document.querySelector(".site-header")
+      if (!head) {
+        head = document.createElement("header")
+        head.className = "site-header"
+        head.innerHTML = '<div class="site-header-inner"></div>'
+        document.body.prepend(head)
+      }
+      const inner = head.querySelector(".site-header-inner")
+
+      let b = head.querySelector(".nav-hamburger")
+      if (!b) {
+        b = document.createElement("button")
+        b.type = "button"
+        b.className = "nav-hamburger"
+        b.setAttribute("aria-controls", "quartz-body")
+        // 줄 셋은 장식이므로 읽히지 않게 두고, 이름은 aria-label이 진다
+        b.innerHTML = '<span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>'
+        b.addEventListener("click", () => setNav(root.dataset.nav !== "open", true))
+        inner.appendChild(b)
+      }
+      // 사이트 제목과 컨트롤 묶음을 헤더로 옮긴다. 페이지가 바뀌면 새 노드가 오므로
+      // 매번 현재 사이드바의 것을 다시 집어온다
+      const title = bar.querySelector(":scope > .page-title")
+      if (title) inner.appendChild(title)
+      const controls = bar.querySelector(":scope > .flex-component")
+      if (controls) inner.appendChild(controls)
+
       setNav(root.dataset.nav === "open", false)
     }
 

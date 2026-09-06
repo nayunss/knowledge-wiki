@@ -338,15 +338,13 @@ blockquote { border-left: 3px solid var(--tertiary); border-radius: 0 var(--radi
 
 .nav-hamburger {
   --bar: 2px;
-  position: fixed; top: 1rem; left: 1rem; z-index: 101;
   display: flex; flex-direction: column; justify-content: center; gap: 5px;
   // 부모가 세로 flex라 flex-shrink 기본값이 높이를 눌러 찌그러뜨린다(실측 40→22px).
   // 최소 터치 영역은 눌리면 안 되는 값이므로 shrink를 끄고 min-height로 바닥을 깐다
   flex: 0 0 auto;
   width: 40px; height: 40px; min-height: 40px;
   padding: 0 8px;
-  // 본문 위에 뜨므로 자기 면을 가져야 글자 위에서도 읽힌다
-  background: var(--light); border: 1px solid var(--lightgray); border-radius: var(--radius);
+  background: none; border: 1px solid transparent; border-radius: var(--radius);
   cursor: pointer;
   transition: background-color .15s ease, border-color .15s ease;
 
@@ -370,24 +368,28 @@ blockquote { border-left: 3px solid var(--tertiary); border-radius: 0 var(--radi
 :root[data-nav="closed"] .left.sidebar > *:not(.nav-hamburger) { display: none; }
 :root[data-nav="closed"] .left.sidebar { padding: 0; width: 0; }
 
+// 격자는 열림·닫힘에 **관계없이** 같다. 서랍은 늘 흐름 밖(fixed)에 있으므로
+// 왼쪽 트랙을 0으로 고정한다 — 열 때만 트랙을 살리면 서랍은 떠 있는데
+// 트랙만 생겨서 본문이 320px 오른쪽으로 밀린다. 여는 동작이 읽던 자리를
+// 흔들면 안 된다
 @media #{$desktop} {
-  :root[data-nav="closed"] #quartz-body { grid-template-columns: 0 minmax(0, 1fr) 320px !important; }
-  :root[data-nav="closed"]:has(.masthead) #quartz-body { grid-template-columns: 0 minmax(0, 1fr) !important; }
+  :root[data-nav] #quartz-body { grid-template-columns: 0 minmax(0, 1fr) 320px !important; }
+  :root[data-nav]:has(.masthead) #quartz-body { grid-template-columns: 0 minmax(0, 1fr) !important; }
 }
 @media not all and #{$desktop} {
-  :root[data-nav="closed"] #quartz-body { grid-template-columns: minmax(0, 1fr) !important; }
+  :root[data-nav] #quartz-body { grid-template-columns: minmax(0, 1fr) !important; }
 }
 
 // 열림 — 본문 위로 뜬다. 폭에 상관없이 같은 방식이다.
 // 본문을 밀지 않으므로 격자는 닫힘과 같은 모양을 유지한다
 :root[data-nav="open"] .left.sidebar {
-  position: fixed; inset: 0 auto 0 0; z-index: 100;
-  width: min(320px, 86vw); height: 100dvh;
+  position: fixed; inset: var(--header-h) auto 0 0; z-index: 100;
+  width: min(320px, 86vw); height: calc(100dvh - var(--header-h));
   overflow-y: auto;
   background: var(--light);
   border-right: 1px solid var(--lightgray);
   box-shadow: 0 8px 32px rgba(0,0,0,.18);
-  padding: 4.5rem 1.5rem 2rem;   // 위쪽은 떠 있는 햄버거를 피한다
+  padding: 1.5rem;
   // 어떤 규칙으로도 숨지 않는다. 마우스 위치와 무관하다
   opacity: 1 !important;
   visibility: visible !important;
@@ -397,6 +399,49 @@ blockquote { border-left: 3px solid var(--tertiary); border-radius: 0 var(--radi
 
 // 덮개 — 뒤의 본문이 비쳐야 하므로 옅게 깐다. 바깥을 누르면 닫힌다
 :root[data-nav="open"] .left.sidebar::after {
-  content: ""; position: fixed; inset: 0 0 0 min(320px, 86vw);
+  content: ""; position: fixed; inset: var(--header-h) 0 0 min(320px, 86vw);
   background: rgba(23, 20, 16, 0.28);
+}
+
+// ═══ 상단 고정 헤더 ═══
+//
+// 햄버거를 여기 담는다. 본문 위에 떠 있으면 글자와 겹치고, 겹치지 않게 하려면
+// 왼쪽에 그만큼 여백을 둬야 하는데 그러면 좌우 여백이 어긋난다.
+// 헤더에 담으면 본문은 좌우 대칭을 가질 수 있다.
+
+:root { --header-h: 56px; }
+
+.site-header {
+  position: sticky; top: 0; z-index: 102;
+  height: var(--header-h);
+  background: color-mix(in srgb, var(--light) 88%, transparent);
+  backdrop-filter: saturate(180%) blur(8px);
+  border-bottom: 1px solid var(--lightgray);
+}
+.site-header-inner {
+  display: flex; align-items: center; gap: 0.75rem;
+  height: 100%; padding: 0 2rem;   // 본문과 같은 좌우 여백
+}
+.site-header .page-title {
+  margin: 0; font-size: var(--fs-md); white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis;
+  a { color: var(--dark); text-decoration: none; }
+}
+// 컨트롤(검색·다크모드·리더모드)은 오른쪽 끝으로
+.site-header .flex-component { margin-left: auto; display: flex; align-items: center; gap: 0.4rem; }
+
+// 본문 좌우 여백을 같게 — 왼쪽이 0이라 오른쪽(2rem)과 어긋나 있었다(실측 5px vs 32px)
+#quartz-body { padding-left: 2rem; padding-right: 2rem; }
+@media not all and #{$desktop} { #quartz-body { padding-left: 1rem; padding-right: 1rem; } }
+
+// ═══ 메뉴·목차 항목 — 마우스를 올리면 밑줄 ═══
+// 밑줄은 "누를 수 있다"는 신호다. 색만으로는 전해지지 않는다.
+// 왼쪽 탐색기와 오른쪽 목차가 같은 성격이므로 같은 규칙을 쓴다
+.explorer-content a,
+.toc-content a {
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color .15s ease, color .15s ease;
+  &:hover { color: var(--secondary); border-bottom-color: currentColor; }
+  &:focus-visible { outline: 2px solid var(--secondary); outline-offset: 2px; }
 }
