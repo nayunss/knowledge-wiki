@@ -323,3 +323,71 @@ blockquote { border-left: 3px solid var(--tertiary); border-radius: 0 var(--radi
 
 // 우측 여백
 #quartz-body { padding-right: 2rem; }
+
+// ═══ 왼쪽 메뉴 — 눌러서 여는 햄버거 ═══
+//
+// 마우스를 올려서 여는 방식을 걷어냈다. 올려서 열리는 것은 손가락으로 쓸 수 없고,
+// 지나가다 열려서 놀라고, 열어둔 상태를 유지할 수 없다. 누르면 열리고, 열면 남는다.
+// 상태는 <html data-nav>에 있고 componentResources의 스크립트가 localStorage에 적는다.
+
+.nav-hamburger {
+  --bar: 2px;
+  display: flex; flex-direction: column; justify-content: center; gap: 5px;
+  align-self: flex-start;
+  width: 40px; height: 40px;           // 최소 터치 영역
+  padding: 0 8px; margin-bottom: 0.4rem;
+  background: none; border: 1px solid transparent; border-radius: var(--radius);
+  cursor: pointer;
+  transition: background-color .15s ease, border-color .15s ease;
+
+  span {
+    display: block; height: var(--bar); width: 100%;
+    background: var(--darkgray); border-radius: 999px;
+    transition: transform .18s ease, opacity .18s ease;
+  }
+  &:hover { background: var(--highlight); }
+  &:focus-visible { outline: 2px solid var(--secondary); outline-offset: 2px; }
+}
+
+// 열리면 가운데 줄이 사라지고 위아래가 X로 만난다 — 지금 누르면 닫힌다는 뜻
+:root[data-nav="open"] .nav-hamburger {
+  span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  span:nth-child(2) { opacity: 0; }
+  span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+}
+
+// 닫힘 — 햄버거만 남기고 목차를 접는다
+:root[data-nav="closed"] .left.sidebar > *:not(.nav-hamburger) { display: none; }
+
+// 열림 — 어떤 이유로도 숨지 않는다. 마우스가 어디에 있든 그대로 있는다
+:root[data-nav="open"] .left.sidebar {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  pointer-events: auto !important;
+}
+
+// 넓은 화면: 닫으면 그 자리를 본문이 가져간다
+@media #{$desktop} {
+  :root[data-nav="closed"] #quartz-body { grid-template-columns: 64px minmax(0, 1fr) 320px !important; }
+  :root[data-nav="closed"]:has(.masthead) #quartz-body { grid-template-columns: 64px minmax(0, 1fr) !important; }
+}
+
+// 좁은 화면: 열면 본문을 덮는 패널로 뜬다. 본문을 밀어내지 않는다
+@media not all and #{$desktop} {
+  :root[data-nav="open"] .left.sidebar {
+    position: fixed; inset: 0 auto 0 0; z-index: 100;
+    width: min(320px, 86vw); height: 100dvh;
+    overflow-y: auto;
+    background: var(--light);
+    border-right: 1px solid var(--lightgray);
+    box-shadow: 0 8px 32px rgba(0,0,0,.18);
+    padding: 1.25rem;
+  }
+  // 덮개 — 바깥을 눌러도 닫히도록 스크립트가 이걸 듣는다
+  :root[data-nav="open"] .left.sidebar::after {
+    content: ""; position: fixed; inset: 0 0 0 min(320px, 86vw);
+    background: rgba(0,0,0,.35);
+  }
+  .nav-hamburger { position: relative; z-index: 101; }
+}

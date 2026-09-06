@@ -45,6 +45,14 @@ export default (() => {
       <head>
         <title>{title}</title>
         <meta charSet="utf-8" />
+        {/* 메뉴 열림 상태를 페인트 전에 정한다. 안 그러면 새로고침마다
+            메뉴가 접힌 채 한 프레임 그려졌다 펴져 깜빡인다.
+            기본값은 열림 — 처음 온 사람에게 목차가 보여야 한다 */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var n=localStorage.getItem('nds-nav');document.documentElement.dataset.nav=n==='closed'?'closed':'open'}catch(e){document.documentElement.dataset.nav='open'}`,
+          }}
+        />
         {coreStylesheet && <link rel="preload" href={coreStylesheet} as="style" />}
         {coreScript && coreScript.contentType === "external" && (
           <link rel="preload" href={coreScript.src} as="script" />

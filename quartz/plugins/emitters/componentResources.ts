@@ -268,6 +268,64 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
     markNewPosts()
   `)
 
+  // 왼쪽 메뉴 햄버거 토글.
+  //
+  // 여는 방식이 마우스 올리기가 아니라 "누르기"인 이유는 하나다 — 올려서 열리는 것은
+  // 손가락으로 쓸 수 없고, 지나가다 열려서 놀라고, 열린 상태를 유지할 수 없다.
+  // 한 번 누르면 열린 채로 남고, 그 상태를 localStorage에 적어 다음 방문까지 간다.
+  //
+  // 상태는 <html>의 data-nav에 둔다. 페인트 전에 정하는 인라인 스크립트가 따로 있어
+  // 새로고침할 때 메뉴가 깜빡이며 접혔다 펴지지 않는다.
+  componentResources.afterDOMLoaded.push(`
+    const NAV_KEY = "nds-nav"
+    const root = document.documentElement
+
+    const setNav = (open, remember) => {
+      root.dataset.nav = open ? "open" : "closed"
+      document.querySelectorAll(".nav-hamburger").forEach((b) => {
+        b.setAttribute("aria-expanded", String(open))
+        b.setAttribute("aria-label", open ? "메뉴 닫기" : "메뉴 열기")
+      })
+      if (remember) { try { localStorage.setItem(NAV_KEY, open ? "open" : "closed") } catch (e) {} }
+    }
+
+    const mountHamburger = () => {
+      const bar = document.querySelector(".left.sidebar")
+      if (!bar || bar.querySelector(".nav-hamburger")) return
+      const b = document.createElement("button")
+      b.type = "button"
+      b.className = "nav-hamburger"
+      b.setAttribute("aria-controls", "quartz-body")
+      // 줄 셋은 장식이므로 읽히지 않게 두고, 이름은 aria-label이 진다
+      b.innerHTML = '<span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>'
+      b.addEventListener("click", () => setNav(root.dataset.nav !== "open", true))
+      bar.prepend(b)
+      setNav(root.dataset.nav === "open", false)
+    }
+
+    // 좁은 화면에서 메뉴가 본문을 덮고 있을 때는 Escape로 닫는다
+    document.addEventListener("keydown", (e) => {
+      if (e.key !== "Escape" || root.dataset.nav !== "open") return
+      if (window.matchMedia("(min-width: 1200px)").matches) return
+      setNav(false, true)
+      document.querySelector(".nav-hamburger")?.focus()
+    })
+
+    // 좁은 화면에서 덮개(사이드바의 ::after)를 누르면 닫는다.
+    // 덮개는 가짜 요소라 클릭 대상이 사이드바 자신으로 잡히므로,
+    // 사이드바 안쪽을 눌렀는지 그 오른쪽 바깥을 눌렀는지 좌표로 가른다
+    document.addEventListener("click", (e) => {
+      if (root.dataset.nav !== "open") return
+      if (window.matchMedia("(min-width: 1200px)").matches) return
+      const bar = document.querySelector(".left.sidebar")
+      if (!bar || !e.target.closest(".left.sidebar")) return
+      if (e.clientX > bar.getBoundingClientRect().right) setNav(false, true)
+    })
+
+    document.addEventListener("nav", mountHamburger)
+    mountHamburger()
+  `)
+
   if (cfg.enableSPA) {
     componentResources.afterDOMLoaded.push(spaRouterScript)
   } else {
