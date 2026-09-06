@@ -160,6 +160,11 @@ title: 지식 위키
 <p class="section-label">실전 · 도구</p>
 
 <div class="post-grid">
+  <a class="post-card feature" data-date="2026-09-06" href="디자인시스템-구축-후기">
+    <span class="post-type">회고</span>
+    <span class="post-title">다 됐다고 판정한 컴포넌트를 다른 형식으로 다시 그렸더니 — 개인 디자인 시스템 구축 후기</span>
+    <span class="post-dek">컴포넌트 83개에 프리뷰 107개를 손으로 쓰는 동안 결함 아홉 건과 계약 누락 네 건이 나왔다. 그중 셋은 새 지식이 필요한 결함이 아니라, 규칙이 이미 저장소 안에 글로 적혀 있는데 코드가 그 글을 어기고 있던 것이었다.</span>
+  </a>
   <a class="post-card feature" data-date="2026-08-15" href="심리테스트-프롬프트-세-개-회고">
     <span class="post-type">회고</span>
     <span class="post-title">프롬프트를 세 개 만들어 심리테스트를 하루에 띄웠다</span>
