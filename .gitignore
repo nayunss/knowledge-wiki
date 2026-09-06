@@ -3,3 +3,4 @@ public/
 .quartz/
 .DS_Store
 *.log
+quartz/.quartz-cache/

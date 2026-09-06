@@ -13,33 +13,33 @@ configuration:
     - templates
     - .obsidian
   theme:
-    fontOrigin: googleFonts
-    cdnCaching: true
+    fontOrigin: local
+    cdnCaching: false
     typography:
       header: IBM Plex Sans KR
       body: IBM Plex Sans KR
       code: IBM Plex Mono
     colors:
       lightMode:
-        light: "#f3efe6"
-        lightgray: "#dcd6c8"
-        gray: "#948b78"
-        darkgray: "#33373f"
-        dark: "#1c2029"
-        secondary: "#2f4c7a"
-        tertiary: "#5878ab"
-        highlight: rgba(47, 76, 122, 0.10)
-        textHighlight: "#aac2e688"
+        light: "#faf9f7"
+        lightgray: "#e9e6e0"
+        gray: "#8c867b"
+        darkgray: "#514b42"
+        dark: "#26221d"
+        secondary: "#8f680a"
+        tertiary: "#dfaa12"
+        highlight: rgba(242, 194, 48, 0.12)
+        textHighlight: "#fbe49488"
       darkMode:
-        light: "#17181d"
-        lightgray: "#2a2d34"
-        gray: "#6a6f7a"
-        darkgray: "#ccd2db"
-        dark: "#eef1f6"
-        secondary: "#7fa0d0"
-        tertiary: "#9db8e0"
-        highlight: rgba(127, 160, 208, 0.12)
-        textHighlight: "#7fa0d044"
+        light: "#171410"
+        lightgray: "#38332c"
+        gray: "#6b6459"
+        darkgray: "#d8d4cc"
+        dark: "#faf9f7"
+        secondary: "#f8d45c"
+        tertiary: "#f2c230"
+        highlight: rgba(248, 212, 92, 0.12)
+        textHighlight: "#8f680a55"
 plugins:
   - source: github:quartz-community/created-modified-date
     enabled: true
