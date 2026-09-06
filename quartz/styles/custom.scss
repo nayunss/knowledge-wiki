@@ -500,16 +500,20 @@ blockquote { border-left: 3px solid var(--tertiary); border-radius: 0 var(--radi
 // 탐색기는 목록이라 줄 단위가 하나의 대상이다. 글자에 밑줄을 긋는 대신
 // 줄 전체에 테두리를 준다 — 홈 카드가 호버에서 하는 것과 같은 신호(--tertiary)다
 .explorer-ul li {
-  // 테두리 자리를 미리 비워 둔다. 호버에서 생기면 줄이 밀린다
-  border: 1px solid transparent;
-  border-radius: var(--radius);
-  transition: border-color .15s ease, background-color .15s ease;
+  padding: 0.45rem 0;
+  // 위아래만 쓴다. 좌우 선은 목록에서 칸을 가르는 뜻이 없다.
+  // 자리를 미리 비워 둬야 호버에서 줄이 밀리지 않는다
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+  transition: border-color .15s ease;
 }
-.explorer-ul li + li { border-top-color: var(--lightgray); border-radius: 0; }
+.explorer-ul li + li { border-top-color: var(--lightgray); }
 .explorer-ul li:hover {
-  border-color: var(--tertiary);
-  border-radius: var(--radius);
+  border-top-color: var(--tertiary);
+  border-bottom-color: var(--tertiary);
 }
+// 호버한 줄의 아래 선과 다음 줄의 위 선이 맞닿아 두 겹으로 보인다. 하나만 남긴다
+.explorer-ul li:hover + li { border-top-color: transparent; }
 // 줄이 신호를 지므로 글자의 밑줄은 걷는다
 .explorer-content a {
   text-decoration: none;
@@ -574,4 +578,31 @@ blockquote { border-left: 3px solid var(--tertiary); border-radius: 0 var(--radi
   // 모바일 전용 토글 버튼은 서랍 안에서 할 일이 없다 — 그 일은 헤더의 햄버거가 한다
   .left.sidebar .explorer .mobile-explorer { display: none !important; }
   .left.sidebar .explorer .desktop-explorer { display: flex !important; }
+}
+
+// ═══ 서랍이 스크롤을 맡는다 ═══
+//
+// 안쪽 탐색기(.explorer / .explorer-content / .explorer-ul.overflow)가 각자
+// 높이와 overflow를 붙잡고 있어 목록이 중간에 잘리고, 서랍을 굴려도 스크롤이
+// 먹지 않았다. 스크롤 주체는 하나여야 한다 — 서랍이 진다.
+:root[data-nav="open"] .left.sidebar {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+:root[data-nav="open"] .left.sidebar .explorer,
+:root[data-nav="open"] .left.sidebar .explorer-content,
+:root[data-nav="open"] .left.sidebar .explorer-ul {
+  flex: 0 0 auto !important;
+  height: auto !important;
+  max-height: none !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+}
+
+// 목록 끝을 알리는 빈 항목. 선도 여백도 호버도 필요 없다 —
+// 눌러서 갈 곳이 없는 줄에 호버 신호를 주면 거짓말이 된다
+.explorer-ul li.overflow-end {
+  padding: 0;
+  border: 0;
+  pointer-events: none;
 }
