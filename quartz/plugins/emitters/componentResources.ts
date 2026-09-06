@@ -384,14 +384,28 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
       links.forEach((a) => {
         let path
         try { path = new URL(a.getAttribute("href"), location.href).pathname } catch (e) { return }
-        const d = map[path] || map[path.replace(/\/$/, "")] || map[path + "/"]
+        // 정규식을 쓰지 않는다 — 이 문자열은 TS 템플릿 리터럴을 거쳐 JS로 나가므로
+        // 이스케이프가 한 겹 벗겨지면 슬래시 두 개가 되어 줄 전체가 주석이 된다(실제로 그렇게 죽었다)
+        const stripped = path.endsWith("/") ? path.slice(0, -1) : path
+        const d = map[path] || map[stripped] || map[stripped + "/"]
         const fresh = d && (Date.now() - Date.parse(d)) / 864e5 < 3
         a.classList.toggle("is-new", !!fresh)
       })
     }
 
-    document.addEventListener("nav", () => { mountHamburger(); markNewInDrawer() })
+    // 탐색기는 나중에 그려진다. 한 번만 훑으면 빈 목록을 보고 끝난다
+    let drawerObserver = null
+    const watchDrawer = () => {
+      const target = document.querySelector(".left.sidebar")
+      if (!target) return
+      drawerObserver?.disconnect()
+      drawerObserver = new MutationObserver(() => markNewInDrawer())
+      drawerObserver.observe(target, { childList: true, subtree: true })
+    }
+
+    document.addEventListener("nav", () => { mountHamburger(); watchDrawer(); markNewInDrawer() })
     mountHamburger()
+    watchDrawer()
     markNewInDrawer()
   `)
 
