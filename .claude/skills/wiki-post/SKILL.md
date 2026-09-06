@@ -56,7 +56,9 @@ tech-writer가 쓰고, fact-checker·copy-editor가 병렬 검증하고, 병합�
 3. 산출: `_workspace/00_domain_brief.md` + `_workspace/01_writer_draft.md` (대상 독자·도메인·작성일 메타 필수 — 오늘 날짜). 아래 게이트를 통과하지 못하면 브리프를 보완하며 Phase 2로 넘어가지 않는다.
    ```bash
    python3 ~/.claude/skills/wiki-post/scripts/validate-domain-brief.py _workspace/00_domain_brief.md
+   python3 ~/.claude/skills/wiki-post/scripts/validate-note.py --render-only _workspace/01_writer_draft.md
    ```
+4. **렌더 게이트 출력을 copy-editor 입력에 그대로 첨부한다.** `--render-only`는 초안용 모드라 프론트매터·마커·각주 계약은 보지 않고 렌더 파손(깨진 강조·물결 취소선·펜스 짝)만 본다. 이걸 앞에서 돌려야 copy-editor가 정규식으로 될 일을 손으로 훑지 않고 문체에 시간을 쓴다(wiki-verify §3). FAIL이면 초안 단계에서 먼저 고친다 — 뒤로 미룰수록 같은 결함을 더 많은 눈이 지나친다.
 
 ## Phase 2: 검증 (병렬)
 
@@ -67,8 +69,13 @@ tech-writer가 쓰고, fact-checker·copy-editor가 병렬 검증하고, 병합�
 ## Phase 3: 판정·수정 루프
 
 1. 두 리포트 판정 수집.
-2. **모두 PASS/PASS-WITH-NOTES** → 병합: `02_edited_draft.md`(윤문본)에 팩트 지적의 각주/수정 반영 + 검증 통과한 `(검증 필요)` 마커 제거 + 선두 워크스페이스 메타 주석 제거 → `03_final.md`는 **발행 준비 완료본**이어야 한다. Phase 4는 이 파일을 그대로 배치만 한다.
-3. **FAIL 있음** → `tech-writer` 재호출(수정 모드, FAIL 항목 전달) → FAIL 항목만 해당 검증자로 재검증. **최대 2회**, 그래도 FAIL이면 중단하고 쟁점을 사용자에게 보고.
+2. **모두 PASS/PASS-WITH-NOTES** → 병합: `02_edited_draft.md`(윤문본)에 팩트 지적의 각주/수정 반영 + 검증 통과한 `(검증 필요)` 마커와 그 옆 `(1차 확인 시도: …)` 기록 제거 + 선두 워크스페이스 메타 주석 제거 → `03_final.md`는 **발행 준비 완료본**이어야 한다. Phase 4는 이 파일을 그대로 배치만 한다.
+3. **FAIL 있음** → `tech-writer` 재호출(수정 모드) → FAIL 항목만 해당 검증자로 재검증. **최대 2회**, 그래도 FAIL이면 중단하고 쟁점을 사용자에게 보고.
+
+   **재호출은 국소 패치다 — 초안을 다시 쓰게 하지 마라.** 입력은 ⑴ FAIL 항목과 근거, ⑵ 그 문장이 든 **절만**, ⑶ 판정에 필요한 **원문 발췌만**(전문 아님). 산출도 그 절만 받아 오케스트레이터가 갈아 끼운다. 원문 전문·초안 전문을 다시 실으면 재호출이 초안 작성과 같은 값이 되고, 손대지 않아도 될 문장이 바뀌어 재검증 범위까지 넓어진다.
+   - **실측**: 재호출 52–90k는 초안 작성 45–95k와 거의 같다. AIDE² 편이 비쌌던 것도 글이 길어서가 아니라 원문 약 30k를 작성·검증·재검증이 각각 다시 읽어서였다.
+   - 원문 전문을 쓰는 편이면 Phase 1에서 `_workspace/00_source_verbatim.md`로 한 번만 떨궈두고, 이후 단계엔 **해당 발췌**를 인용해 넘긴다.
+   - FAIL이 글의 뼈대(논지·구조)를 흔드는 경우만 예외 — 그때는 절 단위로 못 고치므로 범위를 넓히되, 넓힌 이유를 리포트에 남긴다.
 4. 병합 충돌(같은 문장을 팩트·윤문이 다르게 수정) 시 **팩트 수정 우선**.
 5. **병합 게이트 (필수)** — 병합도 작업이므로 검증한다(MAST '작업 검증 실패' 방지). `03_final.md`에 대해 실행:
    ```bash
