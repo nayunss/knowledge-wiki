@@ -364,33 +364,31 @@ blockquote { border-left: 3px solid var(--tertiary); border-radius: 0 var(--radi
   span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 }
 
-// 닫힘 — 왼쪽 열을 격자에서 아예 뺀다. 본문이 그 폭을 전부 가져간다
-:root[data-nav="closed"] .left.sidebar > *:not(.nav-hamburger) { display: none; }
-:root[data-nav="closed"] .left.sidebar { padding: 0; width: 0; }
+// 서랍은 격자에 살지 않는다. 늘 흐름 밖(fixed)이므로 왼쪽 트랙 자체를 없앤다.
+//
+// 트랙을 0으로만 두면 두 가지가 어긋난다. ⑴ column-gap 5px이 0폭 트랙 뒤에도
+// 붙어 본문이 5px 밀린다(실측 좌 37 / 우 32). ⑵ .center는 명시적 격자 영역이
+// 없어 자동 배치되는데, 서랍이 fixed가 되면 첫 칸이 비고 거기로 들어가 폭이
+// 0이 된다(실측). 트랙을 지우고 영역을 다시 그리면 둘 다 사라진다.
 
-// 격자는 열림·닫힘에 **관계없이** 같다. 서랍은 늘 흐름 밖(fixed)에 있으므로
-// 왼쪽 트랙을 0으로 고정한다 — 열 때만 트랙을 살리면 서랍은 떠 있는데
-// 트랙만 생겨서 본문이 320px 오른쪽으로 밀린다. 여는 동작이 읽던 자리를
-// 흔들면 안 된다
-@media #{$desktop} {
-  :root[data-nav] #quartz-body { grid-template-columns: 0 minmax(0, 1fr) 320px !important; }
-  :root[data-nav]:has(.masthead) #quartz-body { grid-template-columns: 0 minmax(0, 1fr) !important; }
-}
-@media not all and #{$desktop} {
-  :root[data-nav] #quartz-body { grid-template-columns: minmax(0, 1fr) !important; }
-}
-
-// 열림 — 본문 위로 뜬다. 폭에 상관없이 같은 방식이다.
-// 본문을 밀지 않으므로 격자는 닫힘과 같은 모양을 유지한다
-:root[data-nav="open"] .left.sidebar {
-  position: fixed; inset: var(--header-h) auto 0 0; z-index: 100;
+.left.sidebar {
+  position: fixed !important;
+  inset: var(--header-h) auto 0 0;
+  z-index: 100;
   width: min(320px, 86vw); height: calc(100dvh - var(--header-h));
   overflow-y: auto;
   background: var(--light);
   border-right: 1px solid var(--lightgray);
   box-shadow: 0 8px 32px rgba(0,0,0,.18);
   padding: 1.5rem;
-  // 어떤 규칙으로도 숨지 않는다. 마우스 위치와 무관하다
+}
+
+// 닫힘 — 서랍이 통째로 사라진다. 햄버거는 헤더에 있으므로 남길 것이 없다
+:root[data-nav="closed"] .left.sidebar { display: none; }
+
+// 열림 — 어떤 규칙으로도 숨지 않는다. 마우스 위치와 무관하다
+:root[data-nav="open"] .left.sidebar {
+  display: flex;
   opacity: 1 !important;
   visibility: visible !important;
   transform: none !important;
@@ -401,6 +399,30 @@ blockquote { border-left: 3px solid var(--tertiary); border-radius: 0 var(--radi
 :root[data-nav="open"] .left.sidebar::after {
   content: ""; position: fixed; inset: var(--header-h) 0 0 min(320px, 86vw);
   background: rgba(23, 20, 16, 0.28);
+}
+
+// 자동 배치에 맡기지 않는다 — 서랍이 빠져도 본문이 제 칸을 지킨다
+#quartz-body > .center { grid-area: grid-center; }
+
+@media #{$desktop} {
+  #quartz-body {
+    grid-template-columns: minmax(0, 1fr) 320px !important;
+    grid-template-areas:
+      "grid-header grid-sidebar-right"
+      "grid-center grid-sidebar-right"
+      "grid-footer grid-sidebar-right" !important;
+  }
+  :root:has(.masthead) #quartz-body {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-areas: "grid-header" "grid-center" "grid-footer" !important;
+  }
+}
+@media not all and #{$desktop} {
+  #quartz-body {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-areas:
+      "grid-header" "grid-center" "grid-sidebar-right" "grid-footer" !important;
+  }
 }
 
 // ═══ 상단 고정 헤더 ═══
